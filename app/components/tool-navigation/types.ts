@@ -12,6 +12,7 @@ export interface ToolNavigationItem {
   href: string;
   label: string;
   icon: ReactNode;
+  hideLabel?: boolean;
   isCurrent?: boolean;
 }
 

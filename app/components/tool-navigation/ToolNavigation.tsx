@@ -32,7 +32,8 @@ export function ToolNavigation({
 
       setIndicatorStyle({
         width: `${linkRect.width}px`,
-        transform: `translateX(${offset}px)`,
+        left: `${offset}px`,
+        transform: "none",
         opacity: 1,
       });
     },
@@ -141,9 +142,15 @@ export function ToolNavigation({
         />
         <ul className={styles.list} ref={listRef}>
           {items.map((item) => {
-            const linkClassName = item.isCurrent
+            const baseLinkClass = item.isCurrent
               ? `${styles.link} ${styles.linkActive}`
               : styles.link;
+            const linkClassName = item.hideLabel
+              ? `${baseLinkClass} ${styles.linkIconOnly}`
+              : baseLinkClass;
+            const labelClassName = item.hideLabel
+              ? styles.hiddenLabel
+              : styles.label;
 
             return (
               <li key={item.href} className={styles.item}>
@@ -158,7 +165,7 @@ export function ToolNavigation({
                   <span className={styles.icon} aria-hidden="true">
                     {item.icon}
                   </span>
-                  <span className={styles.label}>{item.label}</span>
+                  <span className={labelClassName}>{item.label}</span>
                 </Link>
               </li>
             );

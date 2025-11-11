@@ -13,6 +13,7 @@ const BASE_ITEMS: ReadonlyArray<Omit<ToolNavigationItem, "isCurrent">> = [
     href: "/",
     label: "Menu principal",
     icon: <LogoMark />,
+    hideLabel: true,
   },
   {
     key: "offres",

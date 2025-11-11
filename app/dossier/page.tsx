@@ -40,15 +40,6 @@ export default function DossierPage() {
         items={navigationItems}
       />
 
-      <header className={styles.header}>
-        <h1 className={styles.title}>Dossiers étudiants</h1>
-        <p className={styles.lead}>
-          Importez la liste d&apos;étudiants, sélectionnez l&apos;onglet et
-          associez les colonnes pour générer automatiquement les dossiers de
-          suivi, les autoévaluations et les documents d&apos;accompagnement.
-        </p>
-      </header>
-
       <div className={styles.grid}>
         <section id="programme" className={styles.section}>
           <h2 className={styles.sectionTitle}>1. Choisissez le programme</h2>
