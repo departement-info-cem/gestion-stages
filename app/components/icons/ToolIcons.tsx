@@ -1,161 +1,32 @@
-import type { ComponentProps, ReactElement } from "react";
+import type { ComponentType, ReactElement } from "react";
+import type { IconProps } from "./types";
 
-interface IconProps extends ComponentProps<"svg"> {
-  className?: string;
+import ConventionSvg from "@/public/assets/icons/convention.svg";
+import DossierSvg from "@/public/assets/icons/dossier.svg";
+import OfferSvg from "@/public/assets/icons/offer.svg";
+import TeamsSvg from "@/public/assets/icons/teams.svg";
+import LogoSvg from "@/public/assets/logo.svg";
+
+type SvgComponent = ComponentType<IconProps>;
+
+type IconFactory = (props: IconProps) => ReactElement;
+
+function createIcon(Svg: SvgComponent): IconFactory {
+  return function IconComponent(props: IconProps): ReactElement {
+    const { ["aria-hidden"]: ariaHidden, focusable, ...rest } = props;
+
+    return (
+      <Svg
+        {...rest}
+        aria-hidden={ariaHidden ?? "true"}
+        focusable={focusable ?? "false"}
+      />
+    );
+  };
 }
 
-export function OfferIcon(props: IconProps): ReactElement {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
-      <path d="M14 3v5h5" />
-      <path d="M9 13h6" />
-      <path d="M9 17h6" />
-    </svg>
-  );
-}
-
-export function ConventionIcon(props: IconProps): ReactElement {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <path d="M13.5 5.5 18.5 10.5" />
-      <path d="m5 19 3.76-0.75a2 2 0 0 0 1.05-0.56l7.44-7.44a1.5 1.5 0 0 0 0-2.12L14.62 5.06a1.5 1.5 0 0 0-2.12 0L5.06 12.5a2 2 0 0 0-0.56 1.05L3.75 17.3A1.5 1.5 0 0 0 5 19Z" />
-      <path d="M11 7 17 13" />
-      <path d="M3 21h15" />
-    </svg>
-  );
-}
-
-export function DevoirIcon(props: IconProps): ReactElement {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2228.833 2073.333">
-      <path
-        fill="#5059C9"
-        d="M1554.637,777.5h575.713c54.391,0,98.483,44.092,98.483,98.483c0,0,0,0,0,0v524.398	c0,199.901-162.051,361.952-361.952,361.952h0h-1.711c-199.901,0.028-361.975-162-362.004-361.901c0-0.017,0-0.034,0-0.052V828.971	C1503.167,800.544,1526.211,777.5,1554.637,777.5L1554.637,777.5z"
-      />
-      <circle fill="#5059C9" cx="1943.75" cy="440.583" r="233.25" />
-      <circle fill="#7B83EB" cx="1218.083" cy="336.917" r="336.917" />
-      <path
-        fill="#7B83EB"
-        d="M1667.323,777.5H717.01c-53.743,1.33-96.257,45.931-95.01,99.676v598.105	c-7.505,322.519,247.657,590.16,570.167,598.053c322.51-7.893,577.671-275.534,570.167-598.053V877.176	C1763.579,823.431,1721.066,778.83,1667.323,777.5z"
-      />
-      <path
-        opacity=".1"
-        d="M1244,777.5v838.145c-0.258,38.435-23.549,72.964-59.09,87.598	c-11.316,4.787-23.478,7.254-35.765,7.257H667.613c-6.738-17.105-12.958-34.21-18.142-51.833	c-18.144-59.477-27.402-121.307-27.472-183.49V877.02c-1.246-53.659,41.198-98.19,94.855-99.52H1244z"
-      />
-      <path
-        opacity=".2"
-        d="M1192.167,777.5v889.978c-0.002,12.287-2.47,24.449-7.257,35.765	c-14.634,35.541-49.163,58.833-87.598,59.09H691.975c-8.812-17.105-17.105-34.21-24.362-51.833	c-7.257-17.623-12.958-34.21-18.142-51.833c-18.144-59.476-27.402-121.307-27.472-183.49V877.02	c-1.246-53.659,41.198-98.19,94.855-99.52H1192.167z"
-      />
-      <path
-        opacity=".2"
-        d="M1192.167,777.5v786.312c-0.395,52.223-42.632,94.46-94.855,94.855h-447.84	c-18.144-59.476-27.402-121.307-27.472-183.49V877.02c-1.246-53.659,41.198-98.19,94.855-99.52H1192.167z"
-      />
-      <path
-        opacity=".2"
-        d="M1140.333,777.5v786.312c-0.395,52.223-42.632,94.46-94.855,94.855H649.472	c-18.144-59.476-27.402-121.307-27.472-183.49V877.02c-1.246-53.659,41.198-98.19,94.855-99.52H1140.333z"
-      />
-      <path
-        opacity=".1"
-        d="M1244,509.522v163.275c-8.812,0.518-17.105,1.037-25.917,1.037	c-8.812,0-17.105-0.518-25.917-1.037c-17.496-1.161-34.848-3.937-51.833-8.293c-104.963-24.857-191.679-98.469-233.25-198.003	c-7.153-16.715-12.706-34.071-16.587-51.833h258.648C1201.449,414.866,1243.801,457.217,1244,509.522z"
-      />
-      <path
-        opacity=".2"
-        d="M1192.167,561.355v111.442c-17.496-1.161-34.848-3.937-51.833-8.293	c-104.963-24.857-191.679-98.469-233.25-198.003h190.228C1149.616,466.699,1191.968,509.051,1192.167,561.355z"
-      />
-      <path
-        opacity=".2"
-        d="M1192.167,561.355v111.442c-17.496-1.161-34.848-3.937-51.833-8.293	c-104.963-24.857-191.679-98.469-233.25-198.003h190.228C1149.616,466.699,1191.968,509.051,1192.167,561.355z"
-      />
-      <path
-        opacity=".2"
-        d="M1140.333,561.355v103.148c-104.963-24.857-191.679-98.469-233.25-198.003	h138.395C1097.783,466.699,1140.134,509.051,1140.333,561.355z"
-      />
-      <linearGradient
-        id="a"
-        gradientUnits="userSpaceOnUse"
-        x1="198.099"
-        y1="1683.0726"
-        x2="942.2344"
-        y2="394.2607"
-        gradientTransform="matrix(1 0 0 -1 0 2075.3333)"
-      >
-        <stop offset="0" stop-color="#5a62c3" />
-        <stop offset=".5" stop-color="#4d55bd" />
-        <stop offset="1" stop-color="#3940ab" />
-      </linearGradient>
-      <path
-        fill="url(#a)"
-        d="M95.01,466.5h950.312c52.473,0,95.01,42.538,95.01,95.01v950.312c0,52.473-42.538,95.01-95.01,95.01	H95.01c-52.473,0-95.01-42.538-95.01-95.01V561.51C0,509.038,42.538,466.5,95.01,466.5z"
-      />
-      <path
-        fill="#FFF"
-        d="M820.211,828.193H630.241v517.297H509.211V828.193H320.123V727.844h500.088V828.193z"
-      />
-    </svg>
-  );
-}
-
-export function DossierIcon(props: IconProps): ReactElement {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <path d="M4 7h4l2 2h10a2 2 0 0 1 2 2v6.5a2.5 2.5 0 0 1-2.5 2.5H6.5A2.5 2.5 0 0 1 4 17.5V7z" />
-      <path d="M4 7V5.5A1.5 1.5 0 0 1 5.5 4H9l2 2" />
-      <path d="M9 14h6" />
-    </svg>
-  );
-}
-
-interface LogoMarkProps {
-  className?: string;
-}
-
-export function LogoMark({ className }: LogoMarkProps): ReactElement {
-  return (
-    <svg
-      viewBox="0 0 250 250"
-      role="img"
-      aria-hidden="true"
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <g transform="matrix(1.3333333,0,0,-1.3333333,0,389.04)">
-        <g transform="matrix(0.1,0,0,0.1,-0.36138015,10.026757)">
-          <path
-            d="m 1636.7874,2523.3154 c 0.01,19.58 -4.86,39.41 -15.35,57.58 -31.81,55.1 -102.26,73.97 -157.36,42.17 l -518.36996,-299.3 -518.398,299.3 c -55.094,31.8 -125.551,12.93 -157.364,-42.17 -31.808,-55.1 -12.933,-125.55 42.165,-157.36 l 575.997,-332.55 c 35.64,-20.58 79.56,-20.58 115.19996,0 l 403.19,232.78 v -772.84 c 0,-63.62 51.58,-115.2 115.2,-115.2 63.62,0 115.2,51.58 115.2,115.2 0,0 -0.1,972.39 -0.11,972.39 z m -633.48,-1205.2 -575.99796,332.55 c -55.094,31.81 -125.551,12.94 -157.364,-42.16 -31.808,-55.1 -12.933,-125.55 42.165,-157.36 l 575.997,-332.549 c 55.09,-31.812 125.54996,-12.941 157.35996,42.16 31.81,55.098 12.93,125.547 -42.16,157.359 z m 42.16,328.84 c -31.81,-55.11 -102.26996,-73.97 -157.35996,-42.17 l -575.997,332.55 c -55.098,31.81 -73.973,102.27 -42.165,157.37 31.813,55.1 102.27,73.97 157.364,42.16 l 575.99796,-332.55 c 55.09,-31.81 73.97,-102.27 42.16,-157.36"
-            fill="#8dc640"
-            fillRule="nonzero"
-          />
-        </g>
-      </g>
-    </svg>
-  );
-}
+export const OfferIcon = createIcon(OfferSvg);
+export const ConventionIcon = createIcon(ConventionSvg);
+export const DevoirIcon = createIcon(TeamsSvg);
+export const DossierIcon = createIcon(DossierSvg);
+export const LogoMark = createIcon(LogoSvg);

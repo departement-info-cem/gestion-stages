@@ -135,8 +135,8 @@ export function ToolNavigation({
     <nav className={navClassName} aria-label={ariaLabel}>
       <div
         className={styles.shell}
-        ref={shellRef}
-        onPointerLeave={syncIndicator}
+  ref={shellRef}
+  onPointerLeave={syncIndicator}
       >
         <div
           className={styles.indicator}
@@ -162,9 +162,7 @@ export function ToolNavigation({
                   href={item.href}
                   aria-current={item.isCurrent ? "page" : undefined}
                   data-tool-nav-key={item.key}
-                  onPointerEnter={() => showIndicatorForKey(item.key)}
-                  onPointerDown={() => showIndicatorForKey(item.key)}
-                  onFocus={() => showIndicatorForKey(item.key)}
+                  onFocus={syncIndicator}
                   onBlur={(event) => {
                     const next = event.relatedTarget as Node | null;
                     const navElement = shellRef.current?.closest("nav");
