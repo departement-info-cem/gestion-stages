@@ -26,7 +26,7 @@ console.log(`Launching Next.js dev server at ${displayUrl}`);
 const binary = process.platform === "win32" ? "next.cmd" : "next";
 const nextExecutable = path.join(process.cwd(), "node_modules", ".bin", binary);
 
-const devProcess = spawn(nextExecutable, ["dev", "--webpack"], {
+const devProcess = spawn(nextExecutable, ["dev"], {
   stdio: "inherit",
   env: process.env,
 });
