@@ -32,8 +32,7 @@ export function ToolNavigation({
 
       setIndicatorStyle({
         width: `${linkRect.width}px`,
-        left: `${offset}px`,
-        transform: "none",
+        transform: `translate3d(${offset}px, 0, 0)`,
         opacity: 1,
       });
     },
@@ -134,7 +133,11 @@ export function ToolNavigation({
 
   return (
     <nav className={navClassName} aria-label={ariaLabel}>
-      <div className={styles.shell} ref={shellRef}>
+      <div
+        className={styles.shell}
+        ref={shellRef}
+        onPointerLeave={syncIndicator}
+      >
         <div
           className={styles.indicator}
           style={indicatorStyle}
@@ -159,8 +162,16 @@ export function ToolNavigation({
                   href={item.href}
                   aria-current={item.isCurrent ? "page" : undefined}
                   data-tool-nav-key={item.key}
-                  onFocus={syncIndicator}
-                  onMouseEnter={syncIndicator}
+                  onPointerEnter={() => showIndicatorForKey(item.key)}
+                  onPointerDown={() => showIndicatorForKey(item.key)}
+                  onFocus={() => showIndicatorForKey(item.key)}
+                  onBlur={(event) => {
+                    const next = event.relatedTarget as Node | null;
+                    const navElement = shellRef.current?.closest("nav");
+                    if (!navElement || !next || !navElement.contains(next)) {
+                      syncIndicator();
+                    }
+                  }}
                 >
                   <span className={styles.icon} aria-hidden="true">
                     {item.icon}
