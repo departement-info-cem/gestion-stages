@@ -135,8 +135,8 @@ export function ToolNavigation({
     <nav className={navClassName} aria-label={ariaLabel}>
       <div
         className={styles.shell}
-  ref={shellRef}
-  onPointerLeave={syncIndicator}
+        ref={shellRef}
+        onPointerLeave={syncIndicator}
       >
         <div
           className={styles.indicator}
