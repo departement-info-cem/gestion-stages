@@ -1,0 +1,83 @@
+.mappingGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.mappingItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.mappingLabel {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: rgba(15, 23, 42, 0.86);
+}
+
+.columnSample {
+  margin-top: 0.35rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(59, 130, 246, 0.18);
+  background: rgba(59, 130, 246, 0.08);
+  min-height: 3.1rem;
+}
+
+.columnSampleList {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.columnSampleItem {
+  display: grid;
+  grid-template-columns: 3ch 1fr;
+  gap: 0.55rem;
+  align-items: center;
+  padding: 0.55rem 0.2rem;
+  line-height: 1.35;
+  word-break: break-word;
+  font-size: 0.9rem;
+  color: rgba(15, 23, 42, 0.85);
+}
+
+.columnSampleItem + .columnSampleItem {
+  border-top: 1px solid rgba(59, 130, 246, 0.12);
+}
+
+.columnSamplePlaceholder {
+  display: inline-block;
+  font-size: 0.88rem;
+  color: rgba(15, 23, 42, 0.6);
+}
+
+.columnSampleValuePlaceholder {
+  color: rgba(15, 23, 42, 0.35);
+}
+
+@media (prefers-color-scheme: dark) {
+  .mappingLabel {
+    color: rgba(226, 232, 240, 0.85);
+  }
+
+  .columnSample {
+    border-color: rgba(96, 165, 250, 0.35);
+    background: rgba(37, 99, 235, 0.25);
+  }
+
+  .columnSampleItem {
+    color: rgba(226, 232, 240, 0.92);
+  }
+
+  .columnSamplePlaceholder {
+    color: rgba(203, 213, 225, 0.7);
+  }
+
+  .columnSampleValuePlaceholder {
+    color: rgba(148, 163, 184, 0.65);
+  }
+}
