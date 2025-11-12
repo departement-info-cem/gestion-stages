@@ -15,18 +15,11 @@ export function TeamsIcon(
       {...rest}
     >
       <rect x="9" y="5" width="8.5" height="11.5" rx="1.9" fill="#5b3fd3" />
-      <rect
-        x="4.75"
-        y="9.25"
-        width="4.75"
-        height="6.5"
-        rx="1.6"
-        fill="#4c2eb5"
-      />
+      <rect x="4.75" y="9.25" width="4.75" height="6.5" rx="1.6" fill="#4c2eb5" />
       <circle cx="17.75" cy="6.75" r="2.2" fill="#7b83eb" />
       <circle cx="6.9" cy="7.75" r="1.9" fill="#7b83eb" />
       <path
-        d="M11.35 7.9a0.75 0.75 0 0 1 0.75-0.75h3.1a0.75 0.75 0 0 1 0 1.5h-1.2v5.3a0.9 0.9 0 0 1-1.8 0V8.65h-1.1a0.75 0.75 0 0 1-0.75-0.75Z"
+        d="M11.35 7.9a.75.75 0 0 1 .75-.75h3.1a.75.75 0 0 1 0 1.5h-1.2v5.3a.9.9 0 0 1-1.8 0V8.65h-1.1a.75.75 0 0 1-.75-.75Z"
         fill="#ffffff"
       />
       <path

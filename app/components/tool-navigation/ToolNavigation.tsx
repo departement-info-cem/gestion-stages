@@ -17,12 +17,17 @@ export function ToolNavigation({
   const shellRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const [indicatorStyle, setIndicatorStyle] = useState<CSSProperties>();
+  const indicatorStateRef = useRef<{ left: number; width: number } | null>(
+    null
+  );
+  const stretchTimeoutRef = useRef<number | undefined>(undefined);
 
   const applyIndicatorFromLink = useCallback(
-    (link: HTMLAnchorElement | null) => {
+    (link: HTMLAnchorElement | null, options?: { animate?: boolean }) => {
       const shell = shellRef.current;
       if (!shell || !link) {
         setIndicatorStyle(undefined);
+        indicatorStateRef.current = null;
         return;
       }
 
@@ -30,30 +35,75 @@ export function ToolNavigation({
       const linkRect = link.getBoundingClientRect();
       const offset = linkRect.left - shellRect.left;
 
+      const width = linkRect.width;
+      const animate = options?.animate ?? false;
+
+      if (animate && indicatorStateRef.current) {
+        const { left: previousLeft, width: previousWidth } =
+          indicatorStateRef.current;
+        if (stretchTimeoutRef.current !== undefined) {
+          window.clearTimeout(stretchTimeoutRef.current);
+          stretchTimeoutRef.current = undefined;
+        }
+
+        const movingForward = offset > previousLeft;
+        const previousRight = previousLeft + previousWidth;
+        const stretchStart = movingForward ? previousLeft : offset;
+        const stretchWidth = movingForward
+          ? Math.max(offset + width - previousLeft, width, previousWidth)
+          : Math.max(previousRight - offset, width, previousWidth);
+
+        setIndicatorStyle({
+          width: `${stretchWidth}px`,
+          transform: `translate3d(${stretchStart}px, 0, 0)`,
+          opacity: 1,
+        });
+
+        stretchTimeoutRef.current = window.setTimeout(() => {
+          setIndicatorStyle({
+            width: `${width}px`,
+            transform: `translate3d(${offset}px, 0, 0)`,
+            opacity: 1,
+          });
+          indicatorStateRef.current = { left: offset, width };
+          stretchTimeoutRef.current = undefined;
+        }, 48);
+        return;
+      }
+
+      if (stretchTimeoutRef.current !== undefined) {
+        window.clearTimeout(stretchTimeoutRef.current);
+        stretchTimeoutRef.current = undefined;
+      }
+
       setIndicatorStyle({
-        width: `${linkRect.width}px`,
+        width: `${width}px`,
         transform: `translate3d(${offset}px, 0, 0)`,
         opacity: 1,
       });
+      indicatorStateRef.current = { left: offset, width };
     },
     []
   );
 
-  const syncIndicator = useCallback(() => {
-    const shell = shellRef.current;
-    if (!shell) {
-      setIndicatorStyle(undefined);
-      return;
-    }
+  const syncIndicator = useCallback(
+    (animate = false) => {
+      const shell = shellRef.current;
+      if (!shell) {
+        setIndicatorStyle(undefined);
+        return;
+      }
 
-    const activeLink = shell.querySelector<HTMLAnchorElement>(
-      'a[aria-current="page"]'
-    );
-    applyIndicatorFromLink(activeLink ?? null);
-  }, [applyIndicatorFromLink]);
+      const activeLink = shell.querySelector<HTMLAnchorElement>(
+        'a[aria-current="page"]'
+      );
+      applyIndicatorFromLink(activeLink ?? null, { animate });
+    },
+    [applyIndicatorFromLink]
+  );
 
   const showIndicatorForKey = useCallback(
-    (key: ToolNavigationKey | null) => {
+    (key: ToolNavigationKey | null, animate = false) => {
       if (!key) {
         return false;
       }
@@ -70,7 +120,7 @@ export function ToolNavigation({
         return false;
       }
 
-      applyIndicatorFromLink(link);
+      applyIndicatorFromLink(link, { animate });
       return true;
     },
     [applyIndicatorFromLink]
@@ -87,17 +137,18 @@ export function ToolNavigation({
     ) as ToolNavigationKey | null;
 
     if (previousKey && previousKey !== activeKey) {
-      showIndicatorForKey(previousKey);
+      showIndicatorForKey(previousKey, false);
     }
 
     const frame = window.requestAnimationFrame(() => {
-      syncIndicator();
+      const shouldAnimate = Boolean(previousKey);
+      syncIndicator(shouldAnimate);
       if (activeKey) {
         window.sessionStorage.setItem(STORAGE_KEY, activeKey);
       }
     });
 
-    const handleResize = () => syncIndicator();
+    const handleResize = () => syncIndicator(false);
     window.addEventListener("resize", handleResize);
 
     const list = listRef.current;
@@ -105,7 +156,7 @@ export function ToolNavigation({
 
     const observer =
       typeof ResizeObserver !== "undefined"
-        ? new ResizeObserver(() => syncIndicator())
+        ? new ResizeObserver(() => syncIndicator(false))
         : undefined;
     if (observer) {
       const shell = shellRef.current;
@@ -120,7 +171,7 @@ export function ToolNavigation({
       }
     }
 
-    const timer = window.setTimeout(() => syncIndicator(), 48);
+    const timer = window.setTimeout(() => syncIndicator(false), 48);
 
     return () => {
       window.cancelAnimationFrame(frame);
@@ -128,6 +179,10 @@ export function ToolNavigation({
       list?.removeEventListener("scroll", handleResize);
       observer?.disconnect();
       window.clearTimeout(timer);
+      if (stretchTimeoutRef.current !== undefined) {
+        window.clearTimeout(stretchTimeoutRef.current);
+        stretchTimeoutRef.current = undefined;
+      }
     };
   }, [items, showIndicatorForKey, syncIndicator]);
 
@@ -136,7 +191,7 @@ export function ToolNavigation({
       <div
         className={styles.shell}
         ref={shellRef}
-        onPointerLeave={syncIndicator}
+        onPointerLeave={() => syncIndicator(false)}
       >
         <div
           className={styles.indicator}
@@ -162,12 +217,12 @@ export function ToolNavigation({
                   href={item.href}
                   aria-current={item.isCurrent ? "page" : undefined}
                   data-tool-nav-key={item.key}
-                  onFocus={syncIndicator}
+                  onFocus={() => syncIndicator(false)}
                   onBlur={(event) => {
                     const next = event.relatedTarget as Node | null;
                     const navElement = shellRef.current?.closest("nav");
                     if (!navElement || !next || !navElement.contains(next)) {
-                      syncIndicator();
+                      syncIndicator(false);
                     }
                   }}
                 >
