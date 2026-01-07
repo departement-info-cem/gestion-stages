@@ -105,8 +105,9 @@ export default function DossierPage() {
           </div>
         </section>
 
-        <section id="importation" className={styles.section}>
-          <h2 className={styles.sectionTitle}>2. Importez la liste Excel</h2>
+        {program && (
+          <section id="importation" className={styles.section}>
+            <h2 className={styles.sectionTitle}>2. Importez la liste Excel</h2>
           <label className={styles.fileInput}>
             <span>
               {sourceFileName ||
@@ -136,6 +137,7 @@ export default function DossierPage() {
             </>
           )}
         </section>
+        )}
       </div>
 
       {sheetColumns.length > 0 && (
@@ -278,8 +280,7 @@ export default function DossierPage() {
                             )
                           ) : (
                             <span className={mappingStyles.columnSamplePlaceholder}>
-                              Sélectionnez une colonne pour voir les 5 premières
-                              valeurs.
+                              Sélectionnez une colonne pour voir les valeurs.
                             </span>
                           )}
                         </div>
@@ -382,7 +383,8 @@ export default function DossierPage() {
         </section>
       )}
 
-      <section id="generation" className={styles.section}>
+      {readyToGenerate && (
+        <section id="generation" className={styles.section}>
         <h2 className={styles.sectionTitle}>4. Génération</h2>
         <div className={styles.actions}>
           <button
@@ -420,6 +422,7 @@ export default function DossierPage() {
           </div>
         )}
       </section>
+      )}
 
       {isPreviewOpen && (
         <div
