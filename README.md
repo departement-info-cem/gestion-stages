@@ -2,6 +2,8 @@
 
 Utilitaires pour faciliter la gestion des stages au DEC technique ou à l'AEC.
 
+> Aucune information n'est gardée sur quelconque serveur. Tout se passe localement sur votre navigateur. Les informations des étudiants ne sont hébergées nulle part.
+
 ## Modifier les templates
 
 Certains documents sont générés en se basant sur un *template*. Les template peuvent être modifié dans le répertoire [`public/assets/templates`](https://github.com/departement-info-cem/gestion-stages/tree/main/public/assets/templates).
