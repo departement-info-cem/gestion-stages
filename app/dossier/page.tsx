@@ -1,23 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import styles from "./page.module.css";
-import mappingStyles from "./mapping.module.css";
 import modalStyles from "./modal.module.css";
 import statusStyles from "./status.module.css";
 import sharedStyles from "./shared.module.css";
-import { COLUMN_LABELS, REQUIRED_KEYS } from "./constants";
 import { useDossierGenerator } from "./useDossierGenerator";
 import { ToolNavigation } from "../components/tool-navigation/ToolNavigation";
 import { buildToolNavigationItems } from "../components/tool-navigation/navigation";
 import { ProgramSelector } from "./program-selector/ProgramSelector";
 import { ExcelImportSection } from "./excel-import/ExcelImportSection";
-import { EyeIcon } from "../components/icons/ToolIcons";
+import { ColumnMappingSection } from "./column-mapping/ColumnMappingSection";
 
 export default function DossierPage() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-  const scrollRefs = useRef<Map<string, HTMLDivElement>>(new Map());
-  const isScrollingRef = useRef(false);
   const {
     program,
     setProgram,
@@ -37,44 +33,6 @@ export default function DossierPage() {
   } = useDossierGenerator();
 
   const navigationItems = buildToolNavigationItems("dossier");
-
-  useEffect(() => {
-    const handleScroll = (sourceKey: string) => {
-      if (isScrollingRef.current) return;
-
-      const sourceElement = scrollRefs.current.get(sourceKey);
-      if (!sourceElement) return;
-
-      const scrollTop = sourceElement.scrollTop;
-
-      isScrollingRef.current = true;
-      scrollRefs.current.forEach((element, key) => {
-        if (key !== sourceKey && element) {
-          element.scrollTop = scrollTop;
-        }
-      });
-
-      requestAnimationFrame(() => {
-        isScrollingRef.current = false;
-      });
-    };
-
-    const listeners = new Map<string, () => void>();
-    scrollRefs.current.forEach((element, key) => {
-      const listener = () => handleScroll(key);
-      element.addEventListener('scroll', listener, { passive: true });
-      listeners.set(key, listener);
-    });
-
-    return () => {
-      listeners.forEach((listener, key) => {
-        const element = scrollRefs.current.get(key);
-        if (element) {
-          element.removeEventListener('scroll', listener);
-        }
-      });
-    };
-  }, [columnMapping, sheetColumns]);
 
   return (
     <div className={styles.wrapper}>
@@ -102,108 +60,13 @@ export default function DossierPage() {
       </div>
 
       {sheetColumns.length > 0 && (
-        <section id="colonnes" className={sharedStyles.section}>
-          <div className={styles.sectionTitleBar}>
-            <h2 className={sharedStyles.sectionTitle}>3. Associez les colonnes</h2>
-            <button
-              type="button"
-              className={styles.previewIconButton}
-              onClick={() => setIsPreviewOpen(true)}
-              disabled={columnSamples.length === 0}
-              aria-label="Voir un aperçu des colonnes"
-              title="Voir un aperçu des colonnes"
-            >
-              <span className={styles.visuallyHidden}>
-                Voir un aperçu des colonnes
-              </span>
-              <EyeIcon className={styles.previewIcon} />
-            </button>
-          </div>
-
-          <div className={mappingStyles.mappingGrid}>
-            {REQUIRED_KEYS.map((key) => {
-              const selectedColumn = columnMapping[key];
-              const sample = columnSamples.find(
-                (entry) => entry.header === selectedColumn
-              );
-              const sampleValues = sample?.values ?? [];
-
-              return (
-                <div key={key} className={mappingStyles.mappingItem}>
-                  <label
-                    className={mappingStyles.mappingLabel}
-                    htmlFor={`column-${key}`}
-                  >
-                    {COLUMN_LABELS[key]}
-                  </label>
-                  <select
-                    id={`column-${key}`}
-                    className={sharedStyles.select}
-                    value={selectedColumn}
-                    onChange={(event) =>
-                      handleColumnMappingChange(key, event.target.value)
-                    }
-                  >
-                    <option value="">Sélectionnez une colonne…</option>
-                    {sheetColumns.map((column) => (
-                      <option key={column} value={column}>
-                        {column}
-                      </option>
-                    ))}
-                  </select>
-                  <div
-                    className={mappingStyles.columnSample}
-                    ref={(el) => {
-                      if (el) {
-                        scrollRefs.current.set(key, el);
-                      } else {
-                        scrollRefs.current.delete(key);
-                      }
-                    }}
-                  >
-                    {selectedColumn ? (
-                      sampleValues.length ? (
-                        <ol className={mappingStyles.columnSampleList}>
-                          {sampleValues.map((value, index) => (
-                            <li
-                              key={`${selectedColumn}-sample-${index}`}
-                              className={mappingStyles.columnSampleItem}
-                            >
-                              <span className={modalStyles.modalValueIndex}>
-                                {index + 1}
-                              </span>
-                              {value ? (
-                                <span className={`${modalStyles.modalValueText} ${mappingStyles.columnSampleValue}`}>
-                                  {value}
-                                </span>
-                              ) : (
-                                <span
-                                  className={
-                                    mappingStyles.columnSampleValuePlaceholder
-                                  }
-                                >
-                                  —
-                                </span>
-                              )}
-                            </li>
-                          ))}
-                        </ol>
-                      ) : (
-                        <span className={mappingStyles.columnSamplePlaceholder}>
-                          Aucune donnée disponible pour cette colonne.
-                        </span>
-                      )
-                    ) : (
-                      <span className={mappingStyles.columnSamplePlaceholder}>
-                        Sélectionnez une colonne pour voir toutes les valeurs.
-                      </span>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
+        <ColumnMappingSection
+          sheetColumns={sheetColumns}
+          columnMapping={columnMapping}
+          columnSamples={columnSamples}
+          onColumnMappingChange={handleColumnMappingChange}
+          onPreviewClick={() => setIsPreviewOpen(true)}
+        />
       )}
 
       {readyToGenerate && (
