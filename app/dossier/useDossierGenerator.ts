@@ -288,7 +288,7 @@ export function useDossierGenerator() {
 
       let evaluationWorkbook: ArrayBuffer;
       try {
-        evaluationWorkbook = buildEvaluationWorkbook(
+        evaluationWorkbook = await buildEvaluationWorkbook(
           evaluationBuffer,
           `${parsedName.firstName} ${parsedName.lastName}`,
           profile
@@ -309,7 +309,7 @@ export function useDossierGenerator() {
       const customizedReadme = readmeTemplate
         .replace(/ETUDIANT/g, parsedName.firstName)
         .replace(/SUPERVISEUR/g, supervisor);
-      studentFolder.file("README.txt", customizedReadme);
+      studentFolder.file("README.md", customizedReadme);
       studentFolder.file("Guide_rapport.docx", new Uint8Array(guideBuffer), {
         binary: true,
       });
