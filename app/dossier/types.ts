@@ -1,8 +1,6 @@
-export type ProgramId = "dec" | "aec-devweb" | "aec-ti";
+export type ProgramId = "dec-ti" | "dec-prog" | "aec-devweb" | "aec-ti";
 
-export type ColumnKey = "matricule" | "name" | "profile" | "supervisor";
-
-export type ProfileMode = "column" | "fixed";
+export type ColumnKey = "matricule" | "name" | "supervisor";
 
 export type ProfileCode = "420.BA" | "420.BB" | "LEA.DY" | "LEA.A6";
 
@@ -19,7 +17,7 @@ export interface StatusMessage {
 export interface ProgramOption {
   id: ProgramId;
   label: string;
-  description: string;
+  code: ProfileCode,
   templates: {
     suivi: string;
     evaluation: string;

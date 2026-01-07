@@ -3,14 +3,12 @@ import type { ColumnKey, ProgramOption } from "./types";
 export const COLUMN_LABELS: Record<ColumnKey, string> = {
   matricule: "Matricule étudiant (Ex : 1525462)",
   name: "Nom, prénom (Ex : Monfarlo, Ti-jo)",
-  profile: "Code profil (Ex : 420.BA)",
   supervisor: "Professeur superviseur (Ex : Édouard Montpetit)",
 };
 
 export const REQUIRED_KEYS: ColumnKey[] = [
   "matricule",
   "name",
-  "profile",
   "supervisor",
 ];
 
@@ -34,15 +32,6 @@ export const COLUMN_KEYWORDS: Record<ColumnKey, string[]> = {
     "student name",
     "Étudiant"
   ],
-  profile: [
-    "profil",
-    "profile",
-    "programme",
-    "program",
-    "code programme",
-    "code profil",
-    "track",
-  ],
   supervisor: [
     "superviseur",
     "prof",
@@ -58,10 +47,9 @@ export const COLUMN_KEYWORDS: Record<ColumnKey, string[]> = {
 
 export const PROGRAM_OPTIONS: ProgramOption[] = [
   {
-    id: "dec",
-    label: "DEC Régulier",
-    description:
-      "Dossiers pour les cohortes DEC régulières (Prof. superviseur requis).",
+    id: "dec-ti",
+    label: "DEC - Administration d’infrastructure TI",
+    code: "420.BB",
     templates: {
       suivi: "/assets/templates/Suivi_Hebdo_DEC.xlsx",
       evaluation: "/assets/templates/Evaluation.xlsx",
@@ -70,26 +58,36 @@ export const PROGRAM_OPTIONS: ProgramOption[] = [
     },
   },
   {
-    id: "aec-devweb",
-    label: "AEC Développement Web",
-    description:
-      "Dossiers pour le programme AEC Développement Web (code LEA.DY).",
+    id: "dec-prog",
+    label: "DEC - Développement d’applications",
+    code: "420.BA",
     templates: {
-      suivi: "/assets/templates/Suivi_Hebdo_AEC.xlsx",
+      suivi: "/assets/templates/Suivi_Hebdo_DEC.xlsx",
       evaluation: "/assets/templates/Evaluation.xlsx",
       readme: "/assets/templates/README.md",
-      guide: "/assets/templates/Guide_rapport_LEADY.docx",
+      guide: "/assets/templates/Guide_rapport_DEC.docx",
     },
   },
   {
     id: "aec-ti",
-    label: "AEC Technologies de l'information",
-    description: "Dossiers pour l'AEC TI (code LEA.A6).",
+    label: "AEC - Gestionnaire de réseaux, sécurité et virtualisation",
+    code: "LEA.A6",
     templates: {
       suivi: "/assets/templates/Suivi_Hebdo_AEC.xlsx",
       evaluation: "/assets/templates/Evaluation.xlsx",
       readme: "/assets/templates/README.md",
       guide: "/assets/templates/Guide_rapport_LEAA6.docx",
+    },
+  },
+  {
+    id: "aec-devweb",
+    label: "AEC - Développement d'applications Web",
+    code: "LEA.DY",
+    templates: {
+      suivi: "/assets/templates/Suivi_Hebdo_AEC.xlsx",
+      evaluation: "/assets/templates/Evaluation.xlsx",
+      readme: "/assets/templates/README.md",
+      guide: "/assets/templates/Guide_rapport_LEADY.docx",
     },
   },
 ];

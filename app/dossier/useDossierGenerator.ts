@@ -8,8 +8,6 @@ import type {
   ColumnMapping,
   ColumnSample,
   ProgramId,
-  ProfileCode,
-  ProfileMode,
   StatusMessage,
   StatusTone,
 } from "./types";
@@ -42,8 +40,6 @@ export function useDossierGenerator() {
   const [statusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [sourceFileName, setSourceFileName] = useState("");
-  const [profileMode, setProfileMode] = useState<ProfileMode>("column");
-  const [fixedProfileCode, setFixedProfileCode] = useState<ProfileCode>("420.BA");
 
   const statusIdRef = useRef(0);
   const templateCacheRef = useRef<Map<string, TemplateCacheEntry>>(new Map());
@@ -205,16 +201,13 @@ export function useDossierGenerator() {
   }, [selectedSheet, workbook]);
 
   const ensureColumnMapping = useCallback(() => {
-    const missing = REQUIRED_KEYS.filter((key) => {
-      if (key === "profile" && profileMode === "fixed") return false;
-      return !columnMapping[key];
-    });
+    const missing = REQUIRED_KEYS.filter((key) => !columnMapping[key]);
     if (missing.length) {
       throw new Error(
-        "Veuillez associer toutes les colonnes requises (matricule, nom, profil, superviseur)."
+        "Veuillez associer toutes les colonnes requises (matricule, nom, superviseur)."
       );
     }
-  }, [columnMapping, profileMode]);
+  }, [columnMapping]);
 
   const generate = useCallback(async () => {
     let worksheet: XLSX.WorkSheet;
@@ -255,9 +248,6 @@ export function useDossierGenerator() {
     for (const row of rows) {
       const supervisor = String(row[columnMapping.supervisor] ?? "").trim();
       const name = String(row[columnMapping.name] ?? "").trim();
-      const profile = profileMode === "fixed" 
-        ? fixedProfileCode
-        : String(row[columnMapping.profile] ?? "").trim();
       if (!supervisor || !name) continue;
 
       let parsedName;
@@ -291,7 +281,7 @@ export function useDossierGenerator() {
         evaluationWorkbook = await buildEvaluationWorkbook(
           evaluationBuffer,
           `${parsedName.firstName} ${parsedName.lastName}`,
-          profile
+          selectedProgram.code
         );
       } catch (error) {
         if (error instanceof Error) pushStatus("error", error.message);
@@ -357,12 +347,9 @@ export function useDossierGenerator() {
         workbook &&
           selectedSheet &&
           sheetColumns.length &&
-          REQUIRED_KEYS.every((key) => {
-            if (key === "profile" && profileMode === "fixed") return true;
-            return columnMapping[key];
-          })
+          REQUIRED_KEYS.every((key) => columnMapping[key])
       ),
-    [columnMapping, profileMode, selectedSheet, sheetColumns, workbook]
+    [columnMapping, selectedSheet, sheetColumns, workbook]
   );
 
   return {
@@ -378,10 +365,6 @@ export function useDossierGenerator() {
     isGenerating,
     sourceFileName,
     readyToGenerate,
-    profileMode,
-    setProfileMode,
-    fixedProfileCode,
-    setFixedProfileCode,
     handleFileUpload,
     handleSheetChange,
     handleColumnMappingChange,

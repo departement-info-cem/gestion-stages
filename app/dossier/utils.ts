@@ -13,7 +13,6 @@ export function createEmptyMapping(): ColumnMapping {
   return {
     matricule: "",
     name: "",
-    profile: "",
     supervisor: "",
   };
 }
