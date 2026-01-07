@@ -345,9 +345,9 @@ export function useDossierGenerator() {
     () =>
       Boolean(
         workbook &&
-          selectedSheet &&
-          sheetColumns.length &&
-          REQUIRED_KEYS.every((key) => columnMapping[key])
+        selectedSheet &&
+        sheetColumns.length &&
+        REQUIRED_KEYS.every((key) => columnMapping[key])
       ),
     [columnMapping, selectedSheet, sheetColumns, workbook]
   );
