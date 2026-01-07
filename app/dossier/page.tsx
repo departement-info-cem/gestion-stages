@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 import mappingStyles from "./mapping.module.css";
 import modalStyles from "./modal.module.css";
@@ -12,6 +12,8 @@ import { buildToolNavigationItems } from "../components/tool-navigation/navigati
 
 export default function DossierPage() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const scrollRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const isScrollingRef = useRef(false);
   const {
     program,
     setProgram,
@@ -35,6 +37,44 @@ export default function DossierPage() {
   } = useDossierGenerator();
 
   const navigationItems = buildToolNavigationItems("dossier");
+
+  useEffect(() => {
+    const handleScroll = (sourceKey: string) => {
+      if (isScrollingRef.current) return;
+      
+      const sourceElement = scrollRefs.current.get(sourceKey);
+      if (!sourceElement) return;
+      
+      const scrollTop = sourceElement.scrollTop;
+      
+      isScrollingRef.current = true;
+      scrollRefs.current.forEach((element, key) => {
+        if (key !== sourceKey && element) {
+          element.scrollTop = scrollTop;
+        }
+      });
+      
+      requestAnimationFrame(() => {
+        isScrollingRef.current = false;
+      });
+    };
+
+    const listeners = new Map<string, () => void>();
+    scrollRefs.current.forEach((element, key) => {
+      const listener = () => handleScroll(key);
+      element.addEventListener('scroll', listener, { passive: true });
+      listeners.set(key, listener);
+    });
+
+    return () => {
+      listeners.forEach((listener, key) => {
+        const element = scrollRefs.current.get(key);
+        if (element) {
+          element.removeEventListener('scroll', listener);
+        }
+      });
+    };
+  }, [columnMapping, sheetColumns]);
 
   return (
     <div className={styles.wrapper}>
@@ -194,7 +234,16 @@ export default function DossierPage() {
                             </option>
                           ))}
                         </select>
-                        <div className={mappingStyles.columnSample}>
+                        <div 
+                          className={mappingStyles.columnSample}
+                          ref={(el) => {
+                            if (el) {
+                              scrollRefs.current.set(key, el);
+                            } else {
+                              scrollRefs.current.delete(key);
+                            }
+                          }}
+                        >
                           {selectedColumn ? (
                             sampleValues.length ? (
                               <ol className={mappingStyles.columnSampleList}>
@@ -278,7 +327,16 @@ export default function DossierPage() {
                       </option>
                     ))}
                   </select>
-                  <div className={mappingStyles.columnSample}>
+                  <div 
+                    className={mappingStyles.columnSample}
+                    ref={(el) => {
+                      if (el) {
+                        scrollRefs.current.set(key, el);
+                      } else {
+                        scrollRefs.current.delete(key);
+                      }
+                    }}
+                  >
                     {selectedColumn ? (
                       sampleValues.length ? (
                         <ol className={mappingStyles.columnSampleList}>
