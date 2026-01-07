@@ -32,15 +32,6 @@ const features: FeatureDefinition[] = [
     icon: <OfferIcon />,
   },
   {
-    id: "convention",
-    title: "Convention",
-    description:
-      "Génère automatiquement les conventions de stage personnalisées en formats Word et PDF.",
-    href: "/convention",
-    accent: "convention",
-    icon: <ConventionIcon />,
-  },
-  {
     id: "devoir",
     title: "Devoir Teams",
     description:
@@ -57,6 +48,15 @@ const features: FeatureDefinition[] = [
     href: "/dossier",
     accent: "dossier",
     icon: <DossierIcon />,
+  },
+  {
+    id: "convention",
+    title: "Convention",
+    description:
+      "Génère automatiquement les conventions de stage personnalisées en formats Word et PDF.",
+    href: "/convention",
+    accent: "convention",
+    icon: <ConventionIcon />,
   },
 ];
 

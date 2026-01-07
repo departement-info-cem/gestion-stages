@@ -22,12 +22,6 @@ const BASE_ITEMS: ReadonlyArray<Omit<ToolNavigationItem, "isCurrent">> = [
     icon: <OfferIcon />,
   },
   {
-    key: "convention",
-    href: "/convention",
-    label: "Convention",
-    icon: <ConventionIcon />,
-  },
-  {
     key: "devoir",
     href: "/devoir",
     label: "Devoir Teams",
@@ -38,6 +32,12 @@ const BASE_ITEMS: ReadonlyArray<Omit<ToolNavigationItem, "isCurrent">> = [
     href: "/dossier",
     label: "Dossiers étudiants",
     icon: <DossierIcon />,
+  },
+  {
+    key: "convention",
+    href: "/convention",
+    label: "Convention",
+    icon: <ConventionIcon />,
   },
 ];
 

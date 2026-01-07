@@ -47,11 +47,12 @@ export function toColumnSamples(
 ): ColumnSample[] {
   return headers.map((header) => {
     const columnIndex = headers.indexOf(header);
-    const values = Array.from({ length: 5 }, (_, offset) => {
-      const row = rows[offset + 1];
-      if (!Array.isArray(row)) return "";
-      return String(row[columnIndex] ?? "").trim();
-    });
+    const values = rows.slice(1)
+      .map((row) => {
+        if (!Array.isArray(row)) return "";
+        return String(row[columnIndex] ?? "").trim();
+      })
+      .filter((value) => value !== "");
     return { header, values };
   });
 }

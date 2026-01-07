@@ -207,7 +207,7 @@ export default function DossierPage() {
                                       {index + 1}
                                     </span>
                                     {value ? (
-                                      <span className={modalStyles.modalValueText}>
+                                      <span className={`${modalStyles.modalValueText} ${mappingStyles.columnSampleValue}`}>
                                         {value}
                                       </span>
                                     ) : (
@@ -291,7 +291,7 @@ export default function DossierPage() {
                                 {index + 1}
                               </span>
                               {value ? (
-                                <span className={modalStyles.modalValueText}>
+                                <span className={`${modalStyles.modalValueText} ${mappingStyles.columnSampleValue}`}>
                                   {value}
                                 </span>
                               ) : (
@@ -313,8 +313,7 @@ export default function DossierPage() {
                       )
                     ) : (
                       <span className={mappingStyles.columnSamplePlaceholder}>
-                        Sélectionnez une colonne pour voir les 5 premières
-                        valeurs.
+                        Sélectionnez une colonne pour voir toutes les valeurs.
                       </span>
                     )}
                   </div>
