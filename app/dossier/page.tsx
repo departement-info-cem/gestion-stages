@@ -12,6 +12,7 @@ import { ToolNavigation } from "../components/tool-navigation/ToolNavigation";
 import { buildToolNavigationItems } from "../components/tool-navigation/navigation";
 import { ProgramSelector } from "./program-selector/ProgramSelector";
 import { FilePicker } from "../components/file-picker/FilePicker";
+import { ExcelImportSection } from "./excel-import/ExcelImportSection";
 
 export default function DossierPage() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -90,31 +91,13 @@ export default function DossierPage() {
         />
 
         {program && (
-          <section id="importation" className={sharedStyles.section}>
-            <h2 className={sharedStyles.sectionTitle}>2. Importez la liste Excel</h2>
-            <FilePicker
-              acceptedFileTypes=".xlsx,.xls"
-              placeholderText="Déposez un fichier ou cliquez pour sélectionner un .xlsx"
-              selectedFileName={sourceFileName}
-              onFileChange={handleFilePick}
-            />
-            {sheetNames.length > 0 && (
-              <>
-                <h4>Sélectionnez l'onglet du excel à traiter</h4>
-                <select
-                  className={sharedStyles.select}
-                  value={selectedSheet}
-                  onChange={handleSheetChange}
-                >
-                  {sheetNames.map((sheetName) => (
-                    <option key={sheetName} value={sheetName}>
-                      {sheetName}
-                    </option>
-                  ))}
-                </select>
-              </>
-            )}
-          </section>
+          <ExcelImportSection
+            sourceFileName={sourceFileName}
+            sheetNames={sheetNames}
+            selectedSheet={selectedSheet}
+            onFilePick={handleFilePick}
+            onSheetChange={handleSheetChange}
+          />
         )}
       </div>
 
