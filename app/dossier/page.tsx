@@ -5,10 +5,12 @@ import styles from "./page.module.css";
 import mappingStyles from "./mapping.module.css";
 import modalStyles from "./modal.module.css";
 import statusStyles from "./status.module.css";
-import { COLUMN_LABELS, PROGRAM_OPTIONS, REQUIRED_KEYS } from "./constants";
+import sharedStyles from "./shared.module.css";
+import { COLUMN_LABELS, REQUIRED_KEYS } from "./constants";
 import { useDossierGenerator } from "./useDossierGenerator";
 import { ToolNavigation } from "../components/tool-navigation/ToolNavigation";
 import { buildToolNavigationItems } from "../components/tool-navigation/navigation";
+import { ProgramSelector } from "./ProgramSelector";
 
 export default function DossierPage() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -81,29 +83,14 @@ export default function DossierPage() {
       />
 
       <div className={styles.grid}>
-        <section id="programme" className={styles.section}>
-          <h2 className={styles.sectionTitle}>1. Choisissez le programme</h2>
-          <div className={styles.radioGroup}>
-            {PROGRAM_OPTIONS.map((option) => (
-              <label key={option.id} className={styles.radioOption}>
-                <input
-                  type="radio"
-                  name="program"
-                  value={option.id}
-                  checked={program === option.id}
-                  onChange={() => setProgram(option.id)}
-                />
-                <div className={styles.radioContent}>
-                  <span className={styles.radioLabel}>{option.label}</span>
-                </div>
-              </label>
-            ))}
-          </div>
-        </section>
+        <ProgramSelector
+          selectedProgram={program}
+          onProgramChange={setProgram}
+        />
 
         {program && (
-          <section id="importation" className={styles.section}>
-            <h2 className={styles.sectionTitle}>2. Importez la liste Excel</h2>
+          <section id="importation" className={sharedStyles.section}>
+            <h2 className={sharedStyles.sectionTitle}>2. Importez la liste Excel</h2>
           <label className={styles.fileInput}>
             <span>
               {sourceFileName ||
@@ -120,7 +107,7 @@ export default function DossierPage() {
             <>
               <h4>Sélectionnez l'onglet du excel à traiter</h4>
               <select
-                className={styles.select}
+                className={sharedStyles.select}
                 value={selectedSheet}
                 onChange={handleSheetChange}
               >
@@ -137,9 +124,9 @@ export default function DossierPage() {
       </div>
 
       {sheetColumns.length > 0 && (
-        <section id="colonnes" className={styles.section}>
+        <section id="colonnes" className={sharedStyles.section}>
           <div className={styles.sectionTitleBar}>
-            <h2 className={styles.sectionTitle}>3. Associez les colonnes</h2>
+            <h2 className={sharedStyles.sectionTitle}>3. Associez les colonnes</h2>
             <button
               type="button"
               className={styles.previewIconButton}
@@ -187,7 +174,7 @@ export default function DossierPage() {
                   </label>
                   <select
                     id={`column-${key}`}
-                    className={styles.select}
+                    className={sharedStyles.select}
                     value={selectedColumn}
                     onChange={(event) =>
                       handleColumnMappingChange(key, event.target.value)
@@ -256,8 +243,8 @@ export default function DossierPage() {
       )}
 
       {readyToGenerate && (
-        <section id="generation" className={styles.section}>
-        <h2 className={styles.sectionTitle}>4. Génération</h2>
+        <section id="generation" className={sharedStyles.section}>
+        <h2 className={sharedStyles.sectionTitle}>4. Génération</h2>
         <div className={styles.actions}>
           <button
             type="button"
