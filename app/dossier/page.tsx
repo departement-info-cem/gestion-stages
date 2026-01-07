@@ -3,14 +3,13 @@
 import { useState } from "react";
 import styles from "./page.module.css";
 import modalStyles from "./modal.module.css";
-import statusStyles from "./status.module.css";
-import sharedStyles from "./shared.module.css";
 import { useDossierGenerator } from "./useDossierGenerator";
 import { ToolNavigation } from "../components/tool-navigation/ToolNavigation";
 import { buildToolNavigationItems } from "../components/tool-navigation/navigation";
 import { ProgramSelector } from "./program-selector/ProgramSelector";
 import { ExcelImportSection } from "./excel-import/ExcelImportSection";
 import { ColumnMappingSection } from "./column-mapping/ColumnMappingSection";
+import { GenerationSection } from "./generation/GenerationSection";
 
 export default function DossierPage() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -70,44 +69,11 @@ export default function DossierPage() {
       )}
 
       {readyToGenerate && (
-        <section id="generation" className={sharedStyles.section}>
-          <h2 className={sharedStyles.sectionTitle}>4. Génération</h2>
-          <div className={styles.actions}>
-            <button
-              type="button"
-              className={styles.primaryButton}
-              onClick={generate}
-              disabled={!readyToGenerate || isGenerating}
-            >
-              {isGenerating ? "Génération en cours…" : "Générer les dossiers"}
-            </button>
-            <p className={statusStyles.hint}>
-              Un fichier ZIP « dossiersEtu » contiendra les dossiers individuels
-              et le dossier d&apos;évaluations.
-            </p>
-          </div>
-          {statusMessages.length > 0 && (
-            <div className={statusStyles.statusArea}>
-              {statusMessages.map((status) => {
-                const toneClass =
-                  status.tone === "error"
-                    ? statusStyles.statusMessageError
-                    : status.tone === "success"
-                      ? statusStyles.statusMessageSuccess
-                      : "";
-
-                return (
-                  <div
-                    key={status.id}
-                    className={`${statusStyles.statusMessage} ${toneClass}`.trim()}
-                  >
-                    {status.message}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </section>
+        <GenerationSection
+          isGenerating={isGenerating}
+          statusMessages={statusMessages}
+          onGenerate={generate}
+        />
       )}
 
       {isPreviewOpen && (
