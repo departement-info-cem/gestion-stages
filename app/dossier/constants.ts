@@ -22,6 +22,7 @@ export const COLUMN_KEYWORDS: Record<ColumnKey, string[]> = {
     "identifiant",
     "code permanent",
     "student id",
+    "Numéro Étudiant"
   ],
   name: [
     "nom",
@@ -31,6 +32,7 @@ export const COLUMN_KEYWORDS: Record<ColumnKey, string[]> = {
     "name",
     "fullname",
     "student name",
+    "Étudiant"
   ],
   profile: [
     "profil",
@@ -50,6 +52,7 @@ export const COLUMN_KEYWORDS: Record<ColumnKey, string[]> = {
     "supervisor",
     "responsable",
     "tuteur",
+    "Prof"
   ],
 };
 

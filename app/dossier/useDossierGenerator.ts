@@ -53,8 +53,9 @@ export function useDossierGenerator() {
 
   const pushStatus = useCallback((tone: StatusTone, message: string) => {
     statusIdRef.current += 1;
+    const uniqueId = Date.now() + statusIdRef.current;
     setStatusMessages((previous) => [
-      { id: statusIdRef.current, tone, message },
+      { id: uniqueId, tone, message },
       ...previous.slice(0, 4),
     ]);
   }, []);

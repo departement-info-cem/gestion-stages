@@ -76,17 +76,20 @@ export default function DossierPage() {
             />
           </label>
           {sheetNames.length > 0 && (
-            <select
-              className={styles.select}
-              value={selectedSheet}
-              onChange={handleSheetChange}
-            >
-              {sheetNames.map((sheetName) => (
-                <option key={sheetName} value={sheetName}>
-                  {sheetName}
-                </option>
-              ))}
-            </select>
+            <>
+              <h4>Sélectionnez l'onglet du excel à traiter</h4>
+              <select
+                className={styles.select}
+                value={selectedSheet}
+                onChange={handleSheetChange}
+              >
+                {sheetNames.map((sheetName) => (
+                  <option key={sheetName} value={sheetName}>
+                    {sheetName}
+                  </option>
+                ))}
+              </select>
+            </>
           )}
         </section>
       </div>
@@ -225,8 +228,8 @@ export default function DossierPage() {
                 status.tone === "error"
                   ? statusStyles.statusMessageError
                   : status.tone === "success"
-                  ? statusStyles.statusMessageSuccess
-                  : "";
+                    ? statusStyles.statusMessageSuccess
+                    : "";
 
               return (
                 <div
@@ -280,9 +283,8 @@ export default function DossierPage() {
                     <ol className={modalStyles.modalValueList}>
                       {sample.values.map((value, index) => (
                         <li
-                          key={`${
-                            sample.header || "colonne"
-                          }-${sampleIndex}-${index}`}
+                          key={`${sample.header || "colonne"
+                            }-${sampleIndex}-${index}`}
                           className={modalStyles.modalValueItem}
                         >
                           <span className={modalStyles.modalValueIndex}>

@@ -19,6 +19,8 @@ export function createEmptyMapping(): ColumnMapping {
 
 function normalizeToken(value: string): string {
   return value
+    // Normalize accents and common non-breaking spaces
+    .replace(/\u00A0/g, " ")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, " ")
@@ -131,9 +133,14 @@ export function autoDetectMapping(headers: string[]): ColumnMapping {
 
   (Object.keys(COLUMN_KEYWORDS) as ColumnKey[]).forEach((key) => {
     const keywords = COLUMN_KEYWORDS[key].map(normalizeToken);
-    assignMatch(key, (candidate) =>
-      keywords.some((keyword) => candidate.normalized.includes(keyword))
-    );
+    assignMatch(key, (candidate) => {
+      const tokens = candidate.normalized.split(" ");
+      return keywords.some((keyword) =>
+        keyword.includes(" ")
+          ? candidate.normalized.includes(keyword)
+          : tokens.includes(keyword)
+      );
+    });
   });
 
   return suggestions;
