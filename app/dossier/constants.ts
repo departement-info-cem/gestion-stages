@@ -1,10 +1,10 @@
 import type { ColumnKey, ProgramOption } from "./types";
 
 export const COLUMN_LABELS: Record<ColumnKey, string> = {
-  matricule: "Matricule étudiant",
-  name: "Nom, prénom",
-  profile: "Code profil",
-  supervisor: "Professeur superviseur",
+  matricule: "Matricule étudiant (Ex : 1525462)",
+  name: "Nom, prénom (Ex : Ti-jo, Monfarlo)",
+  profile: "Code profil (Ex : 420.BA)",
+  supervisor: "Professeur superviseur (Ex : Édouard Montpetit)",
 };
 
 export const REQUIRED_KEYS: ColumnKey[] = [
