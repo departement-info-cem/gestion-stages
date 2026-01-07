@@ -1,7 +1,8 @@
-import { PROGRAM_OPTIONS } from "./constants";
-import type { ProgramId } from "./types";
+import { PROGRAM_OPTIONS } from "../constants";
+import { ProgramId } from "../types";
+import sharedStyles from "../shared.module.css";
 import styles from "./ProgramSelector.module.css";
-import sharedStyles from "./shared.module.css";
+
 
 interface ProgramSelectorProps {
   selectedProgram: ProgramId | null;

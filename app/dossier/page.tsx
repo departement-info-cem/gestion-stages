@@ -10,7 +10,7 @@ import { COLUMN_LABELS, REQUIRED_KEYS } from "./constants";
 import { useDossierGenerator } from "./useDossierGenerator";
 import { ToolNavigation } from "../components/tool-navigation/ToolNavigation";
 import { buildToolNavigationItems } from "../components/tool-navigation/navigation";
-import { ProgramSelector } from "./ProgramSelector";
+import { ProgramSelector } from "./program-selector/ProgramSelector";
 
 export default function DossierPage() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -39,19 +39,19 @@ export default function DossierPage() {
   useEffect(() => {
     const handleScroll = (sourceKey: string) => {
       if (isScrollingRef.current) return;
-      
+
       const sourceElement = scrollRefs.current.get(sourceKey);
       if (!sourceElement) return;
-      
+
       const scrollTop = sourceElement.scrollTop;
-      
+
       isScrollingRef.current = true;
       scrollRefs.current.forEach((element, key) => {
         if (key !== sourceKey && element) {
           element.scrollTop = scrollTop;
         }
       });
-      
+
       requestAnimationFrame(() => {
         isScrollingRef.current = false;
       });
@@ -91,35 +91,35 @@ export default function DossierPage() {
         {program && (
           <section id="importation" className={sharedStyles.section}>
             <h2 className={sharedStyles.sectionTitle}>2. Importez la liste Excel</h2>
-          <label className={styles.fileInput}>
-            <span>
-              {sourceFileName ||
-                "Déposez un fichier ou cliquez pour sélectionner un .xlsx"}
-            </span>
-            <input
-              type="file"
-              accept=".xlsx,.xls"
-              onChange={handleFileUpload}
-              hidden
-            />
-          </label>
-          {sheetNames.length > 0 && (
-            <>
-              <h4>Sélectionnez l'onglet du excel à traiter</h4>
-              <select
-                className={sharedStyles.select}
-                value={selectedSheet}
-                onChange={handleSheetChange}
-              >
-                {sheetNames.map((sheetName) => (
-                  <option key={sheetName} value={sheetName}>
-                    {sheetName}
-                  </option>
-                ))}
-              </select>
-            </>
-          )}
-        </section>
+            <label className={styles.fileInput}>
+              <span>
+                {sourceFileName ||
+                  "Déposez un fichier ou cliquez pour sélectionner un .xlsx"}
+              </span>
+              <input
+                type="file"
+                accept=".xlsx,.xls"
+                onChange={handleFileUpload}
+                hidden
+              />
+            </label>
+            {sheetNames.length > 0 && (
+              <>
+                <h4>Sélectionnez l'onglet du excel à traiter</h4>
+                <select
+                  className={sharedStyles.select}
+                  value={selectedSheet}
+                  onChange={handleSheetChange}
+                >
+                  {sheetNames.map((sheetName) => (
+                    <option key={sheetName} value={sheetName}>
+                      {sheetName}
+                    </option>
+                  ))}
+                </select>
+              </>
+            )}
+          </section>
         )}
       </div>
 
@@ -187,7 +187,7 @@ export default function DossierPage() {
                       </option>
                     ))}
                   </select>
-                  <div 
+                  <div
                     className={mappingStyles.columnSample}
                     ref={(el) => {
                       if (el) {
@@ -244,43 +244,43 @@ export default function DossierPage() {
 
       {readyToGenerate && (
         <section id="generation" className={sharedStyles.section}>
-        <h2 className={sharedStyles.sectionTitle}>4. Génération</h2>
-        <div className={styles.actions}>
-          <button
-            type="button"
-            className={styles.primaryButton}
-            onClick={generate}
-            disabled={!readyToGenerate || isGenerating}
-          >
-            {isGenerating ? "Génération en cours…" : "Générer les dossiers"}
-          </button>
-          <p className={statusStyles.hint}>
-            Un fichier ZIP « dossiersEtu » contiendra les dossiers individuels
-            et le dossier d&apos;évaluations.
-          </p>
-        </div>
-        {statusMessages.length > 0 && (
-          <div className={statusStyles.statusArea}>
-            {statusMessages.map((status) => {
-              const toneClass =
-                status.tone === "error"
-                  ? statusStyles.statusMessageError
-                  : status.tone === "success"
-                    ? statusStyles.statusMessageSuccess
-                    : "";
-
-              return (
-                <div
-                  key={status.id}
-                  className={`${statusStyles.statusMessage} ${toneClass}`.trim()}
-                >
-                  {status.message}
-                </div>
-              );
-            })}
+          <h2 className={sharedStyles.sectionTitle}>4. Génération</h2>
+          <div className={styles.actions}>
+            <button
+              type="button"
+              className={styles.primaryButton}
+              onClick={generate}
+              disabled={!readyToGenerate || isGenerating}
+            >
+              {isGenerating ? "Génération en cours…" : "Générer les dossiers"}
+            </button>
+            <p className={statusStyles.hint}>
+              Un fichier ZIP « dossiersEtu » contiendra les dossiers individuels
+              et le dossier d&apos;évaluations.
+            </p>
           </div>
-        )}
-      </section>
+          {statusMessages.length > 0 && (
+            <div className={statusStyles.statusArea}>
+              {statusMessages.map((status) => {
+                const toneClass =
+                  status.tone === "error"
+                    ? statusStyles.statusMessageError
+                    : status.tone === "success"
+                      ? statusStyles.statusMessageSuccess
+                      : "";
+
+                return (
+                  <div
+                    key={status.id}
+                    className={`${statusStyles.statusMessage} ${toneClass}`.trim()}
+                  >
+                    {status.message}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
       )}
 
       {isPreviewOpen && (
