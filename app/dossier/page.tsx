@@ -460,28 +460,30 @@ export default function DossierPage() {
                     <h3 className={modalStyles.modalColumnTitle}>
                       {sample.header || "Colonne sans nom"}
                     </h3>
-                    <ol className={modalStyles.modalValueList}>
-                      {sample.values.map((value, index) => (
-                        <li
-                          key={`${sample.header || "colonne"
-                            }-${sampleIndex}-${index}`}
-                          className={modalStyles.modalValueItem}
-                        >
-                          <span className={modalStyles.modalValueIndex}>
-                            {index + 1}
-                          </span>
-                          {value ? (
-                            <span className={modalStyles.modalValueText}>
-                              {value}
+                    <div className={modalStyles.modalValueList}>
+                      <ol className={modalStyles.modalValueListInner}>
+                        {sample.values.map((value, index) => (
+                          <li
+                            key={`${sample.header || "colonne"
+                              }-${sampleIndex}-${index}`}
+                            className={modalStyles.modalValueItem}
+                          >
+                            <span className={modalStyles.modalValueIndex}>
+                              {index + 1}
                             </span>
-                          ) : (
-                            <span className={modalStyles.modalValuePlaceholder}>
-                              —
-                            </span>
-                          )}
-                        </li>
-                      ))}
-                    </ol>
+                            {value ? (
+                              <span className={modalStyles.modalValueText}>
+                                {value}
+                              </span>
+                            ) : (
+                              <span className={modalStyles.modalValuePlaceholder}>
+                                —
+                              </span>
+                            )}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
                   </div>
                 ))}
               </div>
