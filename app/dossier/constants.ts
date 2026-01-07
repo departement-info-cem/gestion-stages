@@ -96,3 +96,10 @@ export const PROGRAM_OPTIONS: ProgramOption[] = [
 
 export const PROGRAMMATION_CODES = new Set(["420.BA", "LEA.DY"]);
 export const RESEAUTIQUE_CODES = new Set(["420.BB", "LEA.A6"]);
+
+export const PREDEFINED_PROFILE_CODES: Array<{ value: string; label: string }> = [
+  { value: "420.BA", label: "420.BA - DEC - Développement d’applications" },
+  { value: "420.BB", label: "420.BB - DEC - Administration d’infrastructure TI" },
+  { value: "LEA.DY", label: "LEA.DY - AEC - Développement d'applications Web" },
+  { value: "LEA.A6", label: "LEA.A6 - AEC - Gestionnaire de réseaux, sécurité et virtualisation" },
+];

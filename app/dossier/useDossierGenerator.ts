@@ -8,6 +8,8 @@ import type {
   ColumnMapping,
   ColumnSample,
   ProgramId,
+  ProfileCode,
+  ProfileMode,
   StatusMessage,
   StatusTone,
 } from "./types";
@@ -40,6 +42,8 @@ export function useDossierGenerator() {
   const [statusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [sourceFileName, setSourceFileName] = useState("");
+  const [profileMode, setProfileMode] = useState<ProfileMode>("column");
+  const [fixedProfileCode, setFixedProfileCode] = useState<ProfileCode>("420.BA");
 
   const statusIdRef = useRef(0);
   const templateCacheRef = useRef<Map<string, TemplateCacheEntry>>(new Map());
@@ -201,13 +205,16 @@ export function useDossierGenerator() {
   }, [selectedSheet, workbook]);
 
   const ensureColumnMapping = useCallback(() => {
-    const missing = REQUIRED_KEYS.filter((key) => !columnMapping[key]);
+    const missing = REQUIRED_KEYS.filter((key) => {
+      if (key === "profile" && profileMode === "fixed") return false;
+      return !columnMapping[key];
+    });
     if (missing.length) {
       throw new Error(
         "Veuillez associer toutes les colonnes requises (matricule, nom, profil, superviseur)."
       );
     }
-  }, [columnMapping]);
+  }, [columnMapping, profileMode]);
 
   const generate = useCallback(async () => {
     let worksheet: XLSX.WorkSheet;
@@ -248,7 +255,9 @@ export function useDossierGenerator() {
     for (const row of rows) {
       const supervisor = String(row[columnMapping.supervisor] ?? "").trim();
       const name = String(row[columnMapping.name] ?? "").trim();
-      const profile = String(row[columnMapping.profile] ?? "").trim();
+      const profile = profileMode === "fixed" 
+        ? fixedProfileCode
+        : String(row[columnMapping.profile] ?? "").trim();
       if (!supervisor || !name) continue;
 
       let parsedName;
@@ -348,9 +357,12 @@ export function useDossierGenerator() {
         workbook &&
           selectedSheet &&
           sheetColumns.length &&
-          REQUIRED_KEYS.every((key) => columnMapping[key])
+          REQUIRED_KEYS.every((key) => {
+            if (key === "profile" && profileMode === "fixed") return true;
+            return columnMapping[key];
+          })
       ),
-    [columnMapping, selectedSheet, sheetColumns, workbook]
+    [columnMapping, profileMode, selectedSheet, sheetColumns, workbook]
   );
 
   return {
@@ -366,6 +378,10 @@ export function useDossierGenerator() {
     isGenerating,
     sourceFileName,
     readyToGenerate,
+    profileMode,
+    setProfileMode,
+    fixedProfileCode,
+    setFixedProfileCode,
     handleFileUpload,
     handleSheetChange,
     handleColumnMappingChange,

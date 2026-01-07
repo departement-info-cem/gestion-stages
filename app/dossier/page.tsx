@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 import mappingStyles from "./mapping.module.css";
 import modalStyles from "./modal.module.css";
 import statusStyles from "./status.module.css";
-import { COLUMN_LABELS, PROGRAM_OPTIONS, REQUIRED_KEYS } from "./constants";
+import { COLUMN_LABELS, PREDEFINED_PROFILE_CODES, PROGRAM_OPTIONS, REQUIRED_KEYS } from "./constants";
 import { useDossierGenerator } from "./useDossierGenerator";
 import { ToolNavigation } from "../components/tool-navigation/ToolNavigation";
 import { buildToolNavigationItems } from "../components/tool-navigation/navigation";
@@ -24,6 +24,10 @@ export default function DossierPage() {
     isGenerating,
     sourceFileName,
     readyToGenerate,
+    profileMode,
+    setProfileMode,
+    fixedProfileCode,
+    setFixedProfileCode,
     handleFileUpload,
     handleSheetChange,
     handleColumnMappingChange,
@@ -134,6 +138,122 @@ export default function DossierPage() {
                 (entry) => entry.header === selectedColumn
               );
               const sampleValues = sample?.values ?? [];
+
+              // Traitement spécial pour le profil
+              if (key === "profile") {
+                return (
+                  <div key={key} className={mappingStyles.mappingItem}>
+                    <label className={mappingStyles.mappingLabel}>
+                      {COLUMN_LABELS[key]}
+                    </label>
+                    <div className={styles.radioGroup}>
+                      <label className={styles.radioOption}>
+                        <input
+                          type="radio"
+                          name="profileMode"
+                          value="column"
+                          checked={profileMode === "column"}
+                          onChange={() => setProfileMode("column")}
+                        />
+                        <div className={styles.radioContent}>
+                          <span className={styles.radioLabel}>
+                            Depuis le fichier Excel
+                          </span>
+                        </div>
+                      </label>
+                      <label className={styles.radioOption}>
+                        <input
+                          type="radio"
+                          name="profileMode"
+                          value="fixed"
+                          checked={profileMode === "fixed"}
+                          onChange={() => setProfileMode("fixed")}
+                        />
+                        <div className={styles.radioContent}>
+                          <span className={styles.radioLabel}>
+                            Valeur fixe pour tous
+                          </span>
+                        </div>
+                      </label>
+                    </div>
+
+                    {profileMode === "column" ? (
+                      <>
+                        <select
+                          id={`column-${key}`}
+                          className={styles.select}
+                          value={selectedColumn}
+                          onChange={(event) =>
+                            handleColumnMappingChange(key, event.target.value)
+                          }
+                        >
+                          <option value="">Sélectionnez une colonne…</option>
+                          {sheetColumns.map((column) => (
+                            <option key={column} value={column}>
+                              {column}
+                            </option>
+                          ))}
+                        </select>
+                        <div className={mappingStyles.columnSample}>
+                          {selectedColumn ? (
+                            sampleValues.length ? (
+                              <ol className={mappingStyles.columnSampleList}>
+                                {sampleValues.map((value, index) => (
+                                  <li
+                                    key={`${selectedColumn}-sample-${index}`}
+                                    className={mappingStyles.columnSampleItem}
+                                  >
+                                    <span className={modalStyles.modalValueIndex}>
+                                      {index + 1}
+                                    </span>
+                                    {value ? (
+                                      <span className={modalStyles.modalValueText}>
+                                        {value}
+                                      </span>
+                                    ) : (
+                                      <span
+                                        className={
+                                          mappingStyles.columnSampleValuePlaceholder
+                                        }
+                                      >
+                                        —
+                                      </span>
+                                    )}
+                                  </li>
+                                ))}
+                              </ol>
+                            ) : (
+                              <span className={mappingStyles.columnSamplePlaceholder}>
+                                Aucune donnée disponible pour cette colonne.
+                              </span>
+                            )
+                          ) : (
+                            <span className={mappingStyles.columnSamplePlaceholder}>
+                              Sélectionnez une colonne pour voir les 5 premières
+                              valeurs.
+                            </span>
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <select
+                        id="fixed-profile"
+                        className={styles.select}
+                        value={fixedProfileCode}
+                        onChange={(event) =>
+                          setFixedProfileCode(event.target.value as typeof fixedProfileCode)
+                        }
+                      >
+                        {PREDEFINED_PROFILE_CODES.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
+                );
+              }
 
               return (
                 <div key={key} className={mappingStyles.mappingItem}>
