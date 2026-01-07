@@ -108,7 +108,7 @@ export function useDossierGenerator() {
     [pushStatus]
   );
 
-  const handleFileUpload = useCallback(
+  const handleFilePick = useCallback(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       if (!file) return;
@@ -365,7 +365,7 @@ export function useDossierGenerator() {
     isGenerating,
     sourceFileName,
     readyToGenerate,
-    handleFileUpload,
+    handleFilePick,
     handleSheetChange,
     handleColumnMappingChange,
     generate,

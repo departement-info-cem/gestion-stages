@@ -11,6 +11,7 @@ import { useDossierGenerator } from "./useDossierGenerator";
 import { ToolNavigation } from "../components/tool-navigation/ToolNavigation";
 import { buildToolNavigationItems } from "../components/tool-navigation/navigation";
 import { ProgramSelector } from "./program-selector/ProgramSelector";
+import { FilePicker } from "../components/file-picker/FilePicker";
 
 export default function DossierPage() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -28,7 +29,7 @@ export default function DossierPage() {
     isGenerating,
     sourceFileName,
     readyToGenerate,
-    handleFileUpload,
+    handleFilePick,
     handleSheetChange,
     handleColumnMappingChange,
     generate,
@@ -91,18 +92,12 @@ export default function DossierPage() {
         {program && (
           <section id="importation" className={sharedStyles.section}>
             <h2 className={sharedStyles.sectionTitle}>2. Importez la liste Excel</h2>
-            <label className={styles.fileInput}>
-              <span>
-                {sourceFileName ||
-                  "Déposez un fichier ou cliquez pour sélectionner un .xlsx"}
-              </span>
-              <input
-                type="file"
-                accept=".xlsx,.xls"
-                onChange={handleFileUpload}
-                hidden
-              />
-            </label>
+            <FilePicker
+              acceptedFileTypes=".xlsx,.xls"
+              placeholderText="Déposez un fichier ou cliquez pour sélectionner un .xlsx"
+              selectedFileName={sourceFileName}
+              onFileChange={handleFilePick}
+            />
             {sheetNames.length > 0 && (
               <>
                 <h4>Sélectionnez l'onglet du excel à traiter</h4>
