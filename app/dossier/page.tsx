@@ -11,8 +11,8 @@ import { useDossierGenerator } from "./useDossierGenerator";
 import { ToolNavigation } from "../components/tool-navigation/ToolNavigation";
 import { buildToolNavigationItems } from "../components/tool-navigation/navigation";
 import { ProgramSelector } from "./program-selector/ProgramSelector";
-import { FilePicker } from "../components/file-picker/FilePicker";
 import { ExcelImportSection } from "./excel-import/ExcelImportSection";
+import { EyeIcon } from "../components/icons/ToolIcons";
 
 export default function DossierPage() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -116,21 +116,7 @@ export default function DossierPage() {
               <span className={styles.visuallyHidden}>
                 Voir un aperçu des colonnes
               </span>
-              <svg
-                aria-hidden="true"
-                className={styles.previewIcon}
-                viewBox="0 0 24 24"
-                fill="none"
-                strokeWidth="1.8"
-                stroke="currentColor"
-              >
-                <path
-                  d="M12 5c-5.06 0-8.82 3.39-10 7 1.18 3.61 4.94 7 10 7s8.82-3.39 10-7c-1.18-3.61-4.94-7-10-7Z"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <circle cx="12" cy="12" r="3.2" />
-              </svg>
+              <EyeIcon className={styles.previewIcon} />
             </button>
           </div>
 
