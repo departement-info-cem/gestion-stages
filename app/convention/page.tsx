@@ -135,7 +135,7 @@ export default function ConventionPage() {
       {mainColumnsReady && (
         <ColumnMappingSection
           stepNumber="3"
-          title="Association des colonnes (fichier principal)"
+          title="Association des colonnes"
           fields={MAIN_FILE_FIELDS}
           sheetColumns={mainSheetColumns}
           columnMapping={mainColumnMapping}

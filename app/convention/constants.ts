@@ -53,6 +53,7 @@ export const MAIN_FILE_FIELDS = [
 export const ADDITIONAL_FILE_FIELDS = [
   { key: 'matricule', label: 'Matricule' },
   { key: 'superviseurAcademique', label: 'Superviseur académique' },
+  { key: 'profil', label: 'Profil' },
 ];
 
 // Clauses conditionnelles selon la rémunération

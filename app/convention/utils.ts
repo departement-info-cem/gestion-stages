@@ -106,6 +106,7 @@ export function autoMapColumns(
     dateFin: [/date.*fin.*stage/i, /fin.*stage/i],
     matricule: [/^matricule$/i, /^da$/i, /no\.?\s*étu/i, /no\.?\s*etu/i],
     superviseurAcademique: [/superviseur\s*académique/i, /superviseur\s*academique/i, /prof\s*superviseur/i],
+    profil: [/profil/i, /programme/i, /code.*profil/i],
   };
   
   for (const field of requiredFields) {
@@ -142,6 +143,17 @@ export function extractColumnSamples(
   const headers = data[0];
   const rows = data.slice(1, Math.min(data.length, maxRows + 1));
   
+  // Filtrer les lignes complètement vides
+  const nonEmptyRows = rows.filter(row => {
+    // Vérifier si au moins une des colonnes mappées a une valeur
+    return Object.values(columnMapping).some(excelColumn => {
+      const columnIndex = headers.indexOf(excelColumn);
+      if (columnIndex === -1) return false;
+      const val = row[columnIndex];
+      return val !== undefined && val !== null && val !== '';
+    });
+  });
+  
   // Champs qui sont des dates
   const dateFields = ['dateDebut', 'dateFin'];
   const numericFields = ['salaireHoraire'];
@@ -149,7 +161,7 @@ export function extractColumnSamples(
   Object.entries(columnMapping).forEach(([fieldKey, excelColumn]) => {
     const columnIndex = headers.indexOf(excelColumn);
     if (columnIndex !== -1) {
-      samples[fieldKey] = rows.map(row => {
+      samples[fieldKey] = nonEmptyRows.map(row => {
         const val = row[columnIndex];
         
         // Pour les dates et champs numériques, ne rien afficher si vide
@@ -229,6 +241,17 @@ export function generateConventionData(
   for (const row of mainData as any[]) {
     // Extraire les informations de l'étudiant depuis le champ combiné
     const etudiantInfo = String(row[mainColumnMapping.etudiant] || '');
+    
+    // Ignorer les lignes vides - vérifier si toutes les valeurs mappées sont vides
+    const allValuesEmpty = Object.keys(mainColumnMapping).every(key => {
+      const value = row[mainColumnMapping[key]];
+      return value === undefined || value === null || value === '';
+    });
+    
+    if (allValuesEmpty) {
+      continue; // Passer à la ligne suivante
+    }
+    
     const { nom, prenom, matricule } = extractStudentInfo(etudiantInfo);
     
     const additionalRow = additionalIndex[matricule];
@@ -259,12 +282,10 @@ export function generateConventionData(
         );
       }
       
-      // Ajouter le profil s'il existe dans les données additionnelles
-      const profilColumn = Object.keys(additionalRow).find(key => 
-        /profil/i.test(key)
-      );
-      if (profilColumn) {
-        convention.profil = String(additionalRow[profilColumn] || '');
+      if (additionalColumnMapping.profil) {
+        convention.profil = String(
+          additionalRow[additionalColumnMapping.profil] || ''
+        );
       }
     }
     
