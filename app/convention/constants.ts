@@ -4,14 +4,14 @@ export const PROGRAMS: { [key: string]: ProgramConfig } = {
   'DEC_REGULIER': {
     code: '420.B0',
     name: 'DEC - Régulier',
-    sigleCours: '420-6GF-EM Stage',
+    sigleCours: '420-6GE-EM Stage',
     nomDirection: 'Direction des études',
     nbHeuresMinimumStage: 315,
     nbSemaineStage: 10,
     templatePath: '/assets/templates/convention/ConventionDEC.docx',
     profiles: {
-      '420.BA': '420.BA Techniques de l\'informatique, profil Programmation',
-      '420.BB': '420.BB Techniques de l\'informatique, profil Réseautique',
+      '420.BA': '420.BA Techniques de l\'informatique, Développement d’applications',
+      '420.BB': '420.BB Techniques de l\'informatique, Administration d’infrastructure TI',
     }
   },
   'AEC_DEVWEB': {
