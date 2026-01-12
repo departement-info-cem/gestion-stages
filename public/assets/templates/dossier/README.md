@@ -26,3 +26,15 @@ Assure toi également de bien savoir comment se passera le premier jour de ton s
 - est-ce que tu dois apporter du matériel ou ça sera fourni
 - code vestimentaire
 
+---
+
+## Gabarits de conventions de stage
+
+Pour utiliser le module de génération de conventions, vous devez ajouter les fichiers gabarits suivants dans ce répertoire:
+
+- **ConventionDEC.docx** - Gabarit pour les conventions DEC (Techniques de l'informatique)
+- **ConventionAEC.docx** - Gabarit pour les conventions AEC (Dev Web et TI)
+
+Ces gabarits doivent être des documents Word (.docx) contenant les placeholders qui seront remplacés automatiquement.
+
+Consultez le fichier [app/convention/README.md](../../../app/convention/README.md) pour la liste complète des placeholders disponibles.

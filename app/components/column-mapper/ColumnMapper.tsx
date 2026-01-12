@@ -1,0 +1,175 @@
+import type { ChangeEvent } from "react";
+import { useEffect, useRef } from "react";
+import sharedStyles from "../../convention/shared.module.css";
+import styles from "./ColumnMapper.module.css";
+import modalStyles from "../../convention/modal.module.css";
+import type { ColumnSample } from "../../convention/types";
+import { EyeIcon } from "../icons/ToolIcons";
+
+export interface ColumnMapperField<T extends string = string> {
+  key: T;
+  label: string;
+}
+
+interface ColumnMapperProps<T extends string = string> {
+  title: string;
+  fields: readonly ColumnMapperField<T>[];
+  sheetColumns: string[];
+  columnMapping: Record<T, string>;
+  columnSamples: ColumnSample[];
+  onColumnMappingChange: (key: T, value: string) => void;
+  onPreviewClick?: () => void;
+}
+
+export function ColumnMapper<T extends string = string>({
+  title,
+  fields,
+  sheetColumns,
+  columnMapping,
+  columnSamples,
+  onColumnMappingChange,
+  onPreviewClick,
+}: ColumnMapperProps<T>) {
+  const scrollRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const isScrollingRef = useRef(false);
+
+  useEffect(() => {
+    const handleScroll = (sourceKey: string) => {
+      if (isScrollingRef.current) return;
+
+      const sourceElement = scrollRefs.current.get(sourceKey);
+      if (!sourceElement) return;
+
+      const scrollTop = sourceElement.scrollTop;
+
+      isScrollingRef.current = true;
+      scrollRefs.current.forEach((element, key) => {
+        if (key !== sourceKey && element) {
+          element.scrollTop = scrollTop;
+        }
+      });
+
+      requestAnimationFrame(() => {
+        isScrollingRef.current = false;
+      });
+    };
+
+    const listeners = new Map<string, () => void>();
+    scrollRefs.current.forEach((element, key) => {
+      const listener = () => handleScroll(key);
+      element.addEventListener("scroll", listener, { passive: true });
+      listeners.set(key, listener);
+    });
+
+    return () => {
+      listeners.forEach((listener, key) => {
+        const element = scrollRefs.current.get(key);
+        if (element) {
+          element.removeEventListener("scroll", listener);
+        }
+      });
+    };
+  }, [columnMapping, sheetColumns]);
+
+  return (
+    <section className={sharedStyles.section}>
+      <div className={styles.sectionTitleBar}>
+        <h2 className={sharedStyles.sectionTitle}>{title}</h2>
+        {onPreviewClick && (
+          <button
+            type="button"
+            className={styles.previewIconButton}
+            onClick={onPreviewClick}
+            disabled={columnSamples.length === 0}
+            aria-label="Voir un aperçu des colonnes"
+            title="Voir un aperçu des colonnes"
+          >
+            <span className={styles.visuallyHidden}>
+              Voir un aperçu des colonnes
+            </span>
+            <EyeIcon className={styles.previewIcon} />
+          </button>
+        )}
+      </div>
+
+      <div className={styles.mappingGrid}>
+        {fields.map((field) => {
+          const selectedColumn = columnMapping[field.key];
+          const sample = columnSamples.find(
+            (entry) => entry.header === selectedColumn
+          );
+          const sampleValues = sample?.values ?? [];
+
+          return (
+            <div key={field.key} className={styles.mappingItem}>
+              <label className={styles.mappingLabel} htmlFor={`column-${field.key}`}>
+                {field.label}
+              </label>
+              <select
+                id={`column-${field.key}`}
+                className={sharedStyles.select}
+                value={selectedColumn}
+                onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+                  onColumnMappingChange(field.key, event.target.value)
+                }
+              >
+                <option value="">Sélectionnez une colonne…</option>
+                {sheetColumns.map((column) => (
+                  <option key={column} value={column}>
+                    {column}
+                  </option>
+                ))}
+              </select>
+              <div
+                className={styles.columnSample}
+                ref={(el) => {
+                  if (el) {
+                    scrollRefs.current.set(field.key, el);
+                  } else {
+                    scrollRefs.current.delete(field.key);
+                  }
+                }}
+              >
+                {selectedColumn ? (
+                  sampleValues.length ? (
+                    <ol className={styles.columnSampleList}>
+                      {sampleValues.map((value, index) => (
+                        <li
+                          key={`${selectedColumn}-sample-${index}`}
+                          className={styles.columnSampleItem}
+                        >
+                          <span className={modalStyles.modalValueIndex}>
+                            {index + 1}
+                          </span>
+                          {value ? (
+                            <span
+                              className={`${modalStyles.modalValueText} ${styles.columnSampleValue}`}
+                            >
+                              {value}
+                            </span>
+                          ) : (
+                            <span className={styles.columnSampleValuePlaceholder}>
+                              —
+                            </span>
+                          )}
+                        </li>
+                      ))}
+                    </ol>
+                  ) : (
+                    <span className={styles.columnSamplePlaceholder}>
+                      Aucune donnée disponible pour cette colonne.
+                    </span>
+                  )
+                ) : (
+                  <span className={styles.columnSamplePlaceholder}>
+                    Sélectionnez une colonne pour voir un aperçu des valeurs.
+                  </span>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
