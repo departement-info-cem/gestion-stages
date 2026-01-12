@@ -121,7 +121,7 @@ export default function ConventionPage() {
         {selectedProgram && (
           <ExcelImportSection
             stepNumber="2"
-            title="Fichier Excel principal"
+            title="Fichier de réponse des entreprises"
             fileName={mainFile?.name}
             sheetNames={mainSheetNames}
             selectedSheet={selectedMainSheet}
@@ -135,7 +135,7 @@ export default function ConventionPage() {
       {mainColumnsReady && (
         <ColumnMappingSection
           stepNumber="3"
-          title="Association des colonnes"
+          title="Association des colonnes (Réponse des entreprises)"
           fields={MAIN_FILE_FIELDS}
           sheetColumns={mainSheetColumns}
           columnMapping={mainColumnMapping}

@@ -120,8 +120,6 @@ export function useConventionGenerator() {
             setMainColumnSamples(samples);
           }
         }
-
-        addStatusMessage('success', `Fichier principal chargé: ${file.name}`);
       } catch (error) {
         addStatusMessage('error', 'Erreur lors du chargement du fichier principal');
         console.error(error);
@@ -203,8 +201,6 @@ export function useConventionGenerator() {
             setAdditionalColumnSamples(samples);
           }
         }
-
-        addStatusMessage('success', `Fichier additionnel chargé: ${file.name}`);
       } catch (error) {
         addStatusMessage('error', 'Erreur lors du chargement du fichier additionnel');
         console.error(error);
@@ -233,8 +229,6 @@ export function useConventionGenerator() {
         // Extraire les échantillons
         const samples = extractColumnSamples(worksheet, autoMapping);
         setAdditionalColumnSamples(samples);
-
-        addStatusMessage('success', `Onglet additionnel sélectionné: ${sheetName}`);
       }
     },
     [additionalWorkbook, addStatusMessage]
@@ -278,10 +272,8 @@ export function useConventionGenerator() {
 
         if (type === 'directeur') {
           setSignatureDirecteur(signatureData);
-          addStatusMessage('success', 'Signature du directeur ajoutée');
         } else {
           setSignatureCoordonnateur(signatureData);
-          addStatusMessage('success', 'Signature du coordonnateur ajoutée');
         }
       } catch (error) {
         addStatusMessage('error', 'Erreur lors du chargement de la signature');

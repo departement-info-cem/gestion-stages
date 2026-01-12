@@ -20,7 +20,7 @@ export function AdditionalExcelConfig({
 }: AdditionalExcelConfigProps) {
   return (
     <section className={sharedStyles.section}>
-      <h2 className={sharedStyles.sectionTitle}>5. Fichier Excel additionnel</h2>
+      <h2 className={sharedStyles.sectionTitle}>5. Fichier de liste des étudiants</h2>
       <p className={styles.description}>
         Fichier contenant les superviseurs académiques et profils des étudiants
       </p>

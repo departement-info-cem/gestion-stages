@@ -20,7 +20,7 @@ export function AdditionalColumnMapping({
   return (
     <ColumnMappingSection
       stepNumber="6"
-      title="Association des colonnes (fichier additionnel)"
+      title="Association des colonnes (Liste des étudiants)"
       fields={ADDITIONAL_FILE_FIELDS}
       sheetColumns={sheetColumns}
       columnMapping={columnMapping}

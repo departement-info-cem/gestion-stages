@@ -30,7 +30,7 @@ export function ExcelImportSection({
 
       <FilePicker
         acceptedFileTypes=".xlsx,.xls"
-        placeholderText="Déposez un fichier ou cliquez pour sélectionner un .xlsx"
+        placeholderText="Déposez un fichier Excel ou cliquez pour sélectionner un .xlsx"
         selectedFileName={fileName}
         onFileChange={onFileUpload}
       />

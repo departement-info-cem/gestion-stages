@@ -18,7 +18,7 @@ Utilitaires pour faciliter la gestion des stages au DEC technique ou à l'AEC.
 
 Générer les dossiers qui contiennent les documents que les étudiants et leurs superviseurs vont devoir modifier tout au long de leur stage.
 
-Structure des dossier
+Structure des dossier :
 
 - `Evaluation_Entreprise`
   - `NOMS_ETUDIANTS.xlsx` : Évalation de l'étudiant à envoyer à l'entreprise qui reçoit l'étudiant. Identique au fichier `Auto_Evaluation_NOM_ETUDIANT.xlsx`
