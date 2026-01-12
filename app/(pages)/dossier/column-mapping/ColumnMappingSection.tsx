@@ -1,6 +1,6 @@
 import type { ColumnKey, ColumnMapping, ColumnSample } from "../types";
 import { COLUMN_LABELS, REQUIRED_KEYS } from "../constants";
-import { ColumnMapper, type ColumnMapperField } from "../../components/column-mapper/ColumnMapper";
+import { ColumnMapper, type ColumnMapperField } from "../../../components/column-mapper/ColumnMapper";
 
 interface ColumnMappingSectionProps {
   sheetColumns: string[];

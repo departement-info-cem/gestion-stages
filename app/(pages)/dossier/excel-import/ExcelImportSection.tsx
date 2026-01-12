@@ -1,7 +1,7 @@
 import type { ChangeEvent } from "react";
 import sharedStyles from "../shared.module.css";
 import styles from "./ExcelImportSection.module.css";
-import { FilePicker } from "../../components/file-picker/FilePicker";
+import { FilePicker } from "../../../components/file-picker/FilePicker";
 
 interface ExcelImportSectionProps {
   sourceFileName?: string;

@@ -1,4 +1,4 @@
-import { ToolPlaceholderPage } from "../components/tool-page/ToolPlaceholderPage";
+import { ToolPlaceholderPage } from "../../components/tool-page/ToolPlaceholderPage";
 
 export default function OffresPage() {
   return (

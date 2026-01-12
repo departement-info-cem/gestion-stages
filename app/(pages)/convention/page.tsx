@@ -9,8 +9,8 @@ import { AdditionalExcelConfig } from './additional-excel-config/AdditionalExcel
 import { AdditionalColumnMapping } from './additional-column-mapping/AdditionalColumnMapping';
 import { SignatureUpload } from './signature-upload/SignatureUpload';
 import { GenerationSection } from './generation/GenerationSection';
-import { ToolNavigation } from '../components/tool-navigation/ToolNavigation';
-import { buildToolNavigationItems } from '../components/tool-navigation/navigation';
+import { ToolNavigation } from '../../components/tool-navigation/ToolNavigation';
+import { buildToolNavigationItems } from '../../components/tool-navigation/navigation';
 import { ColumnPreviewModal } from './column-preview-modal/ColumnPreviewModal';
 import { useConventionGenerator } from './useConventionGenerator';
 import { MAIN_FILE_FIELDS } from './constants';
