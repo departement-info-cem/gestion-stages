@@ -1,25 +1,10 @@
 import type { ChangeEvent } from "react";
 import { useEffect, useRef } from "react";
-import sharedStyles from "../../convention/shared.module.css";
 import styles from "./ColumnMapper.module.css";
-import modalStyles from "../../convention/modal.module.css";
-import type { ColumnSample } from "../../convention/types";
+import type { ColumnMapperProps, ColumnMapperField, ColumnSample } from "./types";
 import { EyeIcon } from "../icons/ToolIcons";
 
-export interface ColumnMapperField<T extends string = string> {
-  key: T;
-  label: string;
-}
-
-interface ColumnMapperProps<T extends string = string> {
-  title: string;
-  fields: readonly ColumnMapperField<T>[];
-  sheetColumns: string[];
-  columnMapping: Record<T, string>;
-  columnSamples: ColumnSample[];
-  onColumnMappingChange: (key: T, value: string) => void;
-  onPreviewClick?: () => void;
-}
+export type { ColumnMapperField, ColumnSample, ColumnMapperProps };
 
 export function ColumnMapper<T extends string = string>({
   title,
@@ -72,9 +57,9 @@ export function ColumnMapper<T extends string = string>({
   }, [columnMapping, sheetColumns]);
 
   return (
-    <section className={sharedStyles.section}>
+    <section className={styles.section}>
       <div className={styles.sectionTitleBar}>
-        <h2 className={sharedStyles.sectionTitle}>{title}</h2>
+        <h2 className={styles.sectionTitle}>{title}</h2>
         {onPreviewClick && (
           <button
             type="button"
@@ -107,7 +92,7 @@ export function ColumnMapper<T extends string = string>({
               </label>
               <select
                 id={`column-${field.key}`}
-                className={sharedStyles.select}
+                className={styles.select}
                 value={selectedColumn}
                 onChange={(event: ChangeEvent<HTMLSelectElement>) =>
                   onColumnMappingChange(field.key, event.target.value)
@@ -138,12 +123,12 @@ export function ColumnMapper<T extends string = string>({
                           key={`${selectedColumn}-sample-${index}`}
                           className={styles.columnSampleItem}
                         >
-                          <span className={modalStyles.modalValueIndex}>
+                          <span className={styles.valueIndex}>
                             {index + 1}
                           </span>
                           {value ? (
                             <span
-                              className={`${modalStyles.modalValueText} ${styles.columnSampleValue}`}
+                              className={`${styles.valueText} ${styles.columnSampleValue}`}
                             >
                               {value}
                             </span>

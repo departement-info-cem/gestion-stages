@@ -17,6 +17,11 @@ export interface ColumnSamples {
   [columnName: string]: (string | number)[];
 }
 
+export interface ColumnSample {
+  header: string;
+  values: (string | number)[];
+}
+
 export interface SignatureData {
   image: File | null;
   imageUrl: string;

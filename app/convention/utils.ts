@@ -372,13 +372,13 @@ export async function generateConventionDocument(
     SIGNATURE_DIRECTEUR: {
       width: 4,  // en cm
       height: 1.5,  // en cm
-      data: signatureDirecteur.image,
+      data: new Uint8Array(signatureDirecteur.image),
       extension: getExtensionFromMimeType(signatureDirecteur.mimeType),
     },
     SIGNATURE_COORDONNATEUR: {
       width: 4,
       height: 1.5,
-      data: signatureCoordonnateur.image,
+      data: new Uint8Array(signatureCoordonnateur.image),
       extension: getExtensionFromMimeType(signatureCoordonnateur.mimeType),
     },
     NOM_DIRECTEUR: signatureDirecteur.name,
@@ -387,13 +387,13 @@ export async function generateConventionDocument(
   
   // Générer le document avec docx-templates
   const report = await createReport({
-    template: templateBuffer,
+    template: new Uint8Array(templateBuffer),
     data: templateData,
     cmdDelimiter: ['{', '}'],
     processLineBreaks: true,
   });
   
-  return new Blob([report], {
+  return new Blob([new Uint8Array(report)], {
     type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   });
 }

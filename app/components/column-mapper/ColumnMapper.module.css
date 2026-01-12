@@ -1,3 +1,38 @@
+.section {
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 22px 60px -36px rgba(15, 23, 42, 0.55);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  backdrop-filter: blur(12px);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 650;
+  color: rgba(15, 23, 42, 0.92);
+}
+
+.select {
+  padding: 0.75rem 1rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 0.98rem;
+  color: rgba(15, 23, 42, 0.88);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.select:focus-visible {
+  outline: none;
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
 .sectionTitleBar {
   display: flex;
   align-items: center;
@@ -137,7 +172,35 @@
   color: rgba(15, 23, 42, 0.35);
 }
 
+.valueIndex {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: rgba(30, 64, 175, 0.85);
+}
+
+.valueText {
+  display: block;
+  color: inherit;
+  white-space: nowrap;
+}
+
 @media (prefers-color-scheme: dark) {
+  .section {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: rgba(148, 163, 184, 0.2);
+    box-shadow: 0 24px 56px -32px rgba(15, 23, 42, 0.9);
+  }
+
+  .sectionTitle {
+    color: rgba(226, 232, 240, 0.95);
+  }
+
+  .select {
+    border-color: rgba(148, 163, 184, 0.3);
+    background: rgba(15, 23, 42, 0.8);
+    color: rgba(226, 232, 240, 0.9);
+  }
+
   .mappingLabel {
     color: rgba(226, 232, 240, 0.85);
   }
@@ -170,5 +233,15 @@
 
   .columnSampleValuePlaceholder {
     color: rgba(148, 163, 184, 0.65);
+  }
+
+  .valueIndex {
+    color: rgba(191, 219, 254, 0.92);
+  }
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding: 1.5rem;
   }
 }
