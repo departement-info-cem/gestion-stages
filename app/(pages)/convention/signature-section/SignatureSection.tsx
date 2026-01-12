@@ -1,9 +1,9 @@
 import { useState, type ChangeEvent } from 'react';
 import { SignatureData } from '../types';
 import sharedStyles from '../shared.module.css';
-import styles from './SignatureUpload.module.css';
+import styles from './SignatureSection.module.css';
 
-interface SignatureUploadProps {
+interface SignatureSectionProps {
   directeur: SignatureData;
   coordonnateur: SignatureData;
   onSignatureUpload: (
@@ -13,11 +13,11 @@ interface SignatureUploadProps {
   ) => void;
 }
 
-export function SignatureUpload({
+export function SignatureSection({
   directeur,
   coordonnateur,
   onSignatureUpload,
-}: SignatureUploadProps) {
+}: SignatureSectionProps) {
   // États locaux pour les noms des signataires
   const [directeurName, setDirecteurName] = useState(directeur.signataireName || '');
   const [coordonnateurName, setCoordoNateurName] = useState(coordonnateur.signataireName || '');

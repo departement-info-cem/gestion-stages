@@ -3,8 +3,8 @@
 import { useState } from "react";
 import styles from "./page.module.css";
 import { useDossierGenerator } from "./useDossierGenerator";
-import { ToolNavigation } from "../../components/tool-navigation/ToolNavigation";
-import { buildToolNavigationItems } from "../../components/tool-navigation/navigation";
+import { ToolNavigation } from "../../components/navigation/Navbar";
+import { buildToolNavigationItems } from "../../components/navigation/navigation";
 import { ProgramSelector } from "./program-selector/ProgramSelector";
 import { ExcelImportSection } from "./excel-import/ExcelImportSection";
 import { ColumnMappingSection } from "./column-mapping/ColumnMappingSection";

@@ -1,11 +1,9 @@
 import type { ChangeEvent } from 'react';
 import { FilePicker } from '@/app/components/file-picker/FilePicker';
 import sharedStyles from '../shared.module.css';
-import styles from './ExcelImportSection.module.css';
+import styles from './ImportStudentInfosSection.module.css';
 
-interface ExcelImportSectionProps {
-  stepNumber: string;
-  title: string;
+interface ImportStudentInfosSectionProps {
   fileName?: string;
   sheetNames: string[];
   selectedSheet: string;
@@ -13,24 +11,23 @@ interface ExcelImportSectionProps {
   onSheetChange: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export function ExcelImportSection({
-  stepNumber,
-  title,
+export function ImportStudentInfosSection({
   fileName,
   sheetNames,
   selectedSheet,
   onFileUpload,
   onSheetChange,
-}: ExcelImportSectionProps) {
+}: ImportStudentInfosSectionProps) {
   return (
     <section className={sharedStyles.section}>
-      <h2 className={sharedStyles.sectionTitle}>
-        {stepNumber}. {title}
-      </h2>
+      <h2 className={sharedStyles.sectionTitle}>5. Fichier de liste des étudiants</h2>
+      <p className={styles.description}>
+        Fichier contenant les superviseurs académiques et profils des étudiants
+      </p>
 
       <FilePicker
         acceptedFileTypes=".xlsx,.xls"
-        placeholderText="Déposez un fichier Excel ou cliquez pour sélectionner un .xlsx"
+        placeholderText="Déposez un fichier ou cliquez pour sélectionner un .xlsx"
         selectedFileName={fileName}
         onFileChange={onFileUpload}
       />
@@ -38,7 +35,7 @@ export function ExcelImportSection({
       {sheetNames.length > 0 && (
         <>
           <h4 className={styles.sheetSelectLabel}>
-            Sélectionnez l&apos;onglet du fichier Excel à traiter
+            Sélectionnez l&apos;onglet du fichier Excel
           </h4>
           <select
             className={sharedStyles.select}

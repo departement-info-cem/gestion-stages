@@ -1,14 +1,14 @@
 import { PROGRAMS } from '../constants';
 import { ProgramConfig } from '../types';
 import sharedStyles from '../shared.module.css';
-import styles from './ProgramSelector.module.css';
+import styles from './ProgramSelectorSection.module.css';
 
 interface ProgramSelectorProps {
   selectedProgram: string;
   onProgramSelect: (programKey: string, config: ProgramConfig) => void;
 }
 
-export function ProgramSelector({
+export function ProgramSelectorSection({
   selectedProgram,
   onProgramSelect,
 }: ProgramSelectorProps) {

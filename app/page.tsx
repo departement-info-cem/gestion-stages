@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactElement } from "react";
-import { FeatureTile, type FeatureTileAccent } from "./components/FeatureTile";
+import { FeatureTile, type FeatureTileAccent } from "./components/feature-tile/FeatureTile";
 import {
   ConventionIcon,
   DevoirIcon,

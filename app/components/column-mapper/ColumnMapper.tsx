@@ -2,18 +2,15 @@ import type { ChangeEvent } from "react";
 import { useEffect, useRef } from "react";
 import styles from "./ColumnMapper.module.css";
 import type { ColumnMapperProps, ColumnMapperField, ColumnSample } from "./types";
-import { EyeIcon } from "../icons/ToolIcons";
 
 export type { ColumnMapperField, ColumnSample, ColumnMapperProps };
 
 export function ColumnMapper<T extends string = string>({
-  title,
   fields,
   sheetColumns,
   columnMapping,
   columnSamples,
   onColumnMappingChange,
-  onPreviewClick,
 }: ColumnMapperProps<T>) {
   const scrollRefs = useRef<Map<string, HTMLDivElement>>(new Map());
   const isScrollingRef = useRef(false);
@@ -57,28 +54,8 @@ export function ColumnMapper<T extends string = string>({
   }, [columnMapping, sheetColumns]);
 
   return (
-    <section className={styles.section}>
-      <div className={styles.sectionTitleBar}>
-        <h2 className={styles.sectionTitle}>{title}</h2>
-        {onPreviewClick && (
-          <button
-            type="button"
-            className={styles.previewIconButton}
-            onClick={onPreviewClick}
-            disabled={columnSamples.length === 0}
-            aria-label="Voir un aperçu des colonnes"
-            title="Voir un aperçu des colonnes"
-          >
-            <span className={styles.visuallyHidden}>
-              Voir un aperçu des colonnes
-            </span>
-            <EyeIcon className={styles.previewIcon} />
-          </button>
-        )}
-      </div>
-
-      <div className={styles.mappingGrid}>
-        {fields.map((field) => {
+    <div className={styles.mappingGrid}>
+      {fields.map((field) => {
           const selectedColumn = columnMapping[field.key];
           const sample = columnSamples.find(
             (entry) => entry.header === selectedColumn
@@ -154,7 +131,6 @@ export function ColumnMapper<T extends string = string>({
             </div>
           );
         })}
-      </div>
-    </section>
+    </div>
   );
 }

@@ -1,16 +1,16 @@
 'use client';
 
 import { useState, type ChangeEvent } from 'react';
-import { ProgramSelector } from './program-selector/ProgramSelector';
-import { ExcelImportSection } from './excel-import/ExcelImportSection';
-import { ColumnMappingSection } from './column-mapping/ColumnMappingSection';
+import { ProgramSelectorSection } from './program-selector-section/ProgramSelectorSection';
+import { ImportOrganizationInfosSection } from './import-organization-infos-section/ImportOrganizationInfosSection';
+import { OrganizationInfosColumnMapping } from './organization-infos-column-mapping/OrganizationInfosColumnMapping';
 import { DateDefaultsSection } from './date-defaults/DateDefaultsSection';
-import { AdditionalExcelConfig } from './additional-excel-config/AdditionalExcelConfig';
-import { AdditionalColumnMapping } from './additional-column-mapping/AdditionalColumnMapping';
-import { SignatureUpload } from './signature-upload/SignatureUpload';
-import { GenerationSection } from './generation/GenerationSection';
-import { ToolNavigation } from '../../components/tool-navigation/ToolNavigation';
-import { buildToolNavigationItems } from '../../components/tool-navigation/navigation';
+import { ImportStudentInfosSection } from './import-student-infos-section/ImportStudentInfosSection';
+import { StudentInfosColumnMappingSection } from './student-infos-column-mapping-section/StudentInfosColumnMappingSection';
+import { SignatureSection } from './signature-section/SignatureSection';
+import { GenerationSection } from './generation-section/GenerationSection';
+import { ToolNavigation } from '../../components/navigation/Navbar';
+import { buildToolNavigationItems } from '../../components/navigation/navigation';
 import { ColumnPreviewModal } from './column-preview-modal/ColumnPreviewModal';
 import { useConventionGenerator } from './useConventionGenerator';
 import { MAIN_FILE_FIELDS } from './constants';
@@ -22,7 +22,6 @@ export default function ConventionPage() {
 
   const {
     selectedProgram,
-    programConfig,
     mainFile,
     mainSheetNames,
     selectedMainSheet,
@@ -112,16 +111,14 @@ export default function ConventionPage() {
 
       <div className={styles.grid}>
         {/* Étape 1 - Sélection du programme */}
-        <ProgramSelector
+        <ProgramSelectorSection
           selectedProgram={selectedProgram}
           onProgramSelect={handleProgramSelect}
         />
 
         {/* Étape 2 - Fichier Excel principal + Sélection onglet */}
         {selectedProgram && (
-          <ExcelImportSection
-            stepNumber="2"
-            title="Fichier de réponse des entreprises"
+          <ImportOrganizationInfosSection
             fileName={mainFile?.name}
             sheetNames={mainSheetNames}
             selectedSheet={selectedMainSheet}
@@ -133,9 +130,7 @@ export default function ConventionPage() {
 
       {/* Étape 3 - Association des colonnes principales (pleine largeur) */}
       {mainColumnsReady && (
-        <ColumnMappingSection
-          stepNumber="3"
-          title="Association des colonnes (Réponse des entreprises)"
+        <OrganizationInfosColumnMapping
           fields={MAIN_FILE_FIELDS}
           sheetColumns={mainSheetColumns}
           columnMapping={mainColumnMapping}
@@ -157,7 +152,7 @@ export default function ConventionPage() {
           />
 
           {/* Étape 5 - Fichier Excel additionnel */}
-          <AdditionalExcelConfig
+          <ImportStudentInfosSection
             fileName={additionalFile?.name}
             sheetNames={additionalSheetNames}
             selectedSheet={selectedAdditionalSheet}
@@ -169,7 +164,7 @@ export default function ConventionPage() {
 
       {/* Étape 6 - Association des colonnes additionnelles */}
       {allMainColumnsMapped && additionalFile && additionalSheetColumns.length > 0 && (
-        <AdditionalColumnMapping
+        <StudentInfosColumnMappingSection
           sheetColumns={additionalSheetColumns}
           columnMapping={additionalColumnMapping}
           columnSamples={additionalColumnSamples}
@@ -182,7 +177,7 @@ export default function ConventionPage() {
       {allMainColumnsMapped && additionalFile && (
         <div className={styles.grid}>
           {/* Étape 7 - Signatures */}
-          <SignatureUpload
+          <SignatureSection
             directeur={signatureDirecteur}
             coordonnateur={signatureCoordonnateur}
             onSignatureUpload={handleSignatureUpload}
