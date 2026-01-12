@@ -33,7 +33,7 @@ Structure des dossier
 
 Générer les conventions de stage à signer par les différents partis : Direction du CÉGEP, Coordonateur de stage, Étudiant, Représentant de l'entreprise.
 
-Nécessite 2 documents Excel qui contiennent plusieurs informations. Référez vous au document [DOCUMENTS_CONVENTION]() pour mieux comprendre ce qui doit être fourni comme information.
+Nécessite 2 documents Excel qui contiennent plusieurs informations. Référez vous au document [DOCUMENTS_CONVENTION](https://github.com/departement-info-cem/gestion-stages/blob/main/DOCUMENTS_CONVENTION.md) pour mieux comprendre ce qui doit être fourni comme information.
 
 ## Modifier les templates
 
