@@ -1,0 +1,12 @@
+.sheetSelectLabel {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(15, 23, 42, 0.86);
+}
+
+@media (prefers-color-scheme: dark) {
+  .sheetSelectLabel {
+    color: rgba(226, 232, 240, 0.85);
+  }
+}

@@ -1,0 +1,22 @@
+.description {
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  color: rgba(15, 23, 42, 0.6);
+}
+
+.sheetSelectLabel {
+  margin: 1rem 0 0.5rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(15, 23, 42, 0.86);
+}
+
+@media (prefers-color-scheme: dark) {
+  .description {
+    color: rgba(226, 232, 240, 0.6);
+  }
+
+  .sheetSelectLabel {
+    color: rgba(226, 232, 240, 0.85);
+  }
+}

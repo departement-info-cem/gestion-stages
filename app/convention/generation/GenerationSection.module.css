@@ -1,0 +1,105 @@
+.generateButton {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #3b82f6;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.generateButton:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.generateButton:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.statusContainer {
+  margin-top: 1rem;
+}
+
+.statusTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  color: rgba(15, 23, 42, 0.86);
+}
+
+.messagesList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  border: 1px solid;
+}
+
+.message.success {
+  background-color: #f0fdf4;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.message.error {
+  background-color: #fef2f2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+
+.message.warning {
+  background-color: #fffbeb;
+  border-color: #fcd34d;
+  color: #92400e;
+}
+
+.messageType {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.messageText {
+  flex: 1;
+}
+
+.messageTime {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
+@media (prefers-color-scheme: dark) {  .statusTitle {
+    color: rgba(226, 232, 240, 0.85);
+  }
+  .message.success {
+    background-color: #064e3b;
+    border-color: #10b981;
+    color: #d1fae5;
+  }
+
+  .message.error {
+    background-color: #7f1d1d;
+    border-color: #ef4444;
+    color: #fecaca;
+  }
+
+  .message.warning {
+    background-color: #713f12;
+    border-color: #f59e0b;
+    color: #fef3c7;
+  }
+}

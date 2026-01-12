@@ -1,0 +1,130 @@
+.description {
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  color: rgba(15, 23, 42, 0.6);
+}
+
+.signaturesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .signaturesGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.signatureBlock {
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 1rem;
+  background-color: #f8fafc;
+}
+
+.signatureTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: rgba(15, 23, 42, 0.86);
+}
+
+.inputGroup {
+  margin-bottom: 1rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(15, 23, 42, 0.86);
+}
+
+.fileInput {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.textInput {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background-color: #ffffff;
+  color: rgba(15, 23, 42, 0.86);
+}
+
+.textInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.preview {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background-color: #ffffff;
+}
+
+.previewLabel {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(15, 23, 42, 0.7);
+}
+
+.previewImage {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .description {
+    color: rgba(226, 232, 240, 0.6);
+  }
+
+  .signatureBlock {
+    background-color: #0f172a;
+    border-color: #334155;
+  }
+
+  .signatureTitle {
+    color: rgba(226, 232, 240, 0.85);
+  }
+
+  .label {
+    color: rgba(226, 232, 240, 0.85);
+  }
+
+  .fileInput,
+  .textInput {
+    background-color: #334155;
+    border-color: #475569;
+    color: rgba(226, 232, 240, 0.85);
+  }
+
+  .preview {
+    background-color: #334155;
+    border-color: #475569;
+  }
+
+  .previewLabel {
+    color: rgba(226, 232, 240, 0.7);
+  }
+
+  .previewImage {
+    border-color: #475569;
+  }
+}

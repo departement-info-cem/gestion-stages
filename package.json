@@ -9,11 +9,18 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@types/react-datepicker": "^6.2.0",
+    "date-fns": "^4.1.0",
+    "docx-templates": "^4.15.0",
+    "docxtemplater": "^3.67.6",
+    "docxtemplater-image-module": "^3.1.0",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "jszip": "3.10.1",
     "next": "16.0.1",
+    "pizzip": "^3.2.0",
     "react": "19.2.0",
+    "react-datepicker": "^9.1.0",
     "react-dom": "19.2.0",
     "xlsx": "^0.18.5"
   },
@@ -23,7 +30,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "baseline-browser-mapping": "^2.9.12",
+    "baseline-browser-mapping": "^2.9.14",
     "dotenv": "^16.6.1",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
