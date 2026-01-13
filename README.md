@@ -37,7 +37,7 @@ Nécessite 2 documents Excel qui contiennent plusieurs informations. Référez v
 
 ## Modifier les templates
 
-Certains documents sont générés en se basant sur un *template*. Les template peuvent être modifié dans le répertoire [`public/assets/templates`](https://github.com/departement-info-cem/gestion-stages/tree/main/public/assets/templates).
+Certains documents sont générés en se basant sur un *template*. Les template peuvent être modifié dans le répertoire [`public/templates`](https://github.com/departement-info-cem/gestion-stages/tree/main/public/templates).
 
 > Attention, le nom des fichiers ne doit absolument pas changer.
 
