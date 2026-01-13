@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type ChangeEvent } from 'react';
+import { type ChangeEvent } from 'react';
 import { ProgramSelectorSection } from './program-selector-section/ProgramSelectorSection';
 import { ImportOrganizationInfosSection } from './import-organization-infos-section/ImportOrganizationInfosSection';
 import { MappingOrganizationInfosSection } from './mapping-organization-infos-section/MappingOrganizationInfosSection';
@@ -11,14 +11,11 @@ import { SignatureSection } from './signature-section/SignatureSection';
 import { GenerationSection } from './generation-section/GenerationSection';
 import { ToolNavigation } from '../../components/navbar/Navbar';
 import { buildToolNavigationItems } from '../../components/navbar/navigation';
-import { ColumnPreviewModal } from './column-preview-modal/ColumnPreviewModal';
 import { useConventionGenerator } from './useConventionGenerator';
 import { MAIN_FILE_FIELDS } from './constants';
 import styles from './page.module.css';
 
 export default function ConventionPage() {
-  const [isPreviewMainOpen, setIsPreviewMainOpen] = useState(false);
-  const [isPreviewAdditionalOpen, setIsPreviewAdditionalOpen] = useState(false);
 
   const {
     selectedProgram,
@@ -77,25 +74,9 @@ export default function ConventionPage() {
     handleAdditionalSheetSelect(event.target.value);
   };
 
-  // Convertir les échantillons pour la modal principale
-  const mainColumnSamplesForModal = Object.entries(mainColumnMapping)
-    .filter(([_, excelColumn]) => excelColumn)
-    .map(([fieldKey, excelColumn]) => ({
-      header: excelColumn,
-      values: (mainColumnSamples[fieldKey] || []).map(String),
-    }));
-
-  // Convertir les échantillons pour la modal additionnelle
-  const additionalColumnSamplesForModal = Object.entries(additionalColumnMapping)
-    .filter(([_, excelColumn]) => excelColumn)
-    .map(([fieldKey, excelColumn]) => ({
-      header: excelColumn,
-      values: (additionalColumnSamples[fieldKey] || []).map(String),
-    }));
-
   // Vérifier si les colonnes principales sont mappées
   const mainColumnsReady = mainSheetColumns.length > 0;
-  
+
   // Vérifier si toutes les colonnes principales requises sont mappées
   const allMainColumnsMapped = MAIN_FILE_FIELDS.every(
     field => mainColumnMapping[field.key]
@@ -136,7 +117,6 @@ export default function ConventionPage() {
           columnMapping={mainColumnMapping}
           columnSamples={mainColumnSamples}
           onColumnMappingChange={handleMainColumnMappingChange}
-          onPreviewClick={() => setIsPreviewMainOpen(true)}
         />
       )}
 
@@ -169,7 +149,6 @@ export default function ConventionPage() {
           columnMapping={additionalColumnMapping}
           columnSamples={additionalColumnSamples}
           onColumnMappingChange={handleAdditionalColumnMappingChange}
-          onPreviewClick={() => setIsPreviewAdditionalOpen(true)}
         />
       )}
 
@@ -191,19 +170,6 @@ export default function ConventionPage() {
           />
         </div>
       )}
-
-      {/* Modals de preview */}
-      <ColumnPreviewModal
-        isOpen={isPreviewMainOpen}
-        columnSamples={mainColumnSamplesForModal}
-        onClose={() => setIsPreviewMainOpen(false)}
-      />
-
-      <ColumnPreviewModal
-        isOpen={isPreviewAdditionalOpen}
-        columnSamples={additionalColumnSamplesForModal}
-        onClose={() => setIsPreviewAdditionalOpen(false)}
-      />
     </div>
   );
 }

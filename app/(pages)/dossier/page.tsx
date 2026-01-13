@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import styles from "./page.module.css";
 import { useDossierGenerator } from "./useDossierGenerator";
 import { ToolNavigation } from "../../components/navbar/Navbar";
@@ -9,10 +8,8 @@ import { ProgramSelectorSection } from "./program-selector-section/ProgramSelect
 import { ExcelImportSection } from "./excel-import-section/ExcelImportSection";
 import { ColumnMappingSection } from "./column-mapping-section/ColumnMappingSection";
 import { GenerationSection } from "./generation-section/GenerationSection";
-import { ColumnPreviewModal } from "./column-preview-modal/ColumnPreviewModal";
 
 export default function DossierPage() {
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const {
     program,
     setProgram,
@@ -64,7 +61,6 @@ export default function DossierPage() {
           columnMapping={columnMapping}
           columnSamples={columnSamples}
           onColumnMappingChange={handleColumnMappingChange}
-          onPreviewClick={() => setIsPreviewOpen(true)}
         />
       )}
 
@@ -75,12 +71,6 @@ export default function DossierPage() {
           onGenerate={generate}
         />
       )}
-
-      <ColumnPreviewModal
-        isOpen={isPreviewOpen}
-        columnSamples={columnSamples}
-        onClose={() => setIsPreviewOpen(false)}
-      />
     </div>
   );
 }
