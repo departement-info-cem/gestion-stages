@@ -1,9 +1,9 @@
-import { ColumnMapper, ColumnMapperField } from '@/app/components/column-mapper/ColumnMapper';
 import { ColumnMapping, ColumnSamples } from '../types';
+import { ADDITIONAL_FILE_FIELDS } from '../constants';
+import { ColumnMapper } from '@/app/components/column-mapper/ColumnMapper';
 import { SectionTile } from '@/app/components/section-tile/SectionTile';
 
-interface OrganizationInfosColumnMappingSectionProps {
-  fields: readonly ColumnMapperField[];
+interface MappingStudentInfosSectionProps {
   sheetColumns: string[];
   columnMapping: ColumnMapping;
   columnSamples: ColumnSamples;
@@ -11,14 +11,13 @@ interface OrganizationInfosColumnMappingSectionProps {
   onPreviewClick: () => void;
 }
 
-export function OrganizationInfosColumnMappingSection({
-  fields,
+export function MappingStudentInfosSection({
   sheetColumns,
   columnMapping,
   columnSamples,
   onColumnMappingChange,
   onPreviewClick,
-}: OrganizationInfosColumnMappingSectionProps) {
+}: MappingStudentInfosSectionProps) {
   // Convertir le format de columnSamples pour le ColumnMapper
   const columnSamplesArray = Object.entries(columnMapping)
     .filter(([_, excelColumn]) => excelColumn)
@@ -27,15 +26,17 @@ export function OrganizationInfosColumnMappingSection({
       values: (columnSamples[fieldKey] || []).map(String),
     }));
 
+
   return (
-    <SectionTile title="3. Mapping des informations des entreprises" onPreviewClick={onPreviewClick} previewDisabled={columnSamplesArray.length === 0}>
+    <SectionTile title="6. Mapping des informations des étudiants" onPreviewClick={onPreviewClick} previewDisabled={columnSamplesArray.length === 0}>
       <ColumnMapper
-        fields={fields}
+        fields={ADDITIONAL_FILE_FIELDS}
         sheetColumns={sheetColumns}
         columnMapping={columnMapping}
         columnSamples={columnSamplesArray}
         onColumnMappingChange={onColumnMappingChange}
       />
     </SectionTile>
+
   );
 }

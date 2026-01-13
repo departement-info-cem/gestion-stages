@@ -3,10 +3,10 @@
 import { useState, type ChangeEvent } from 'react';
 import { ProgramSelectorSection } from './program-selector-section/ProgramSelectorSection';
 import { ImportOrganizationInfosSection } from './import-organization-infos-section/ImportOrganizationInfosSection';
-import { OrganizationInfosColumnMappingSection } from './organization-infos-column-mapping-section/OrganizationInfosColumnMappingSection';
+import { MappingOrganizationInfosSection } from './mapping-organization-infos-section/MappingOrganizationInfosSection';
 import { DateDefaultsSection } from './date-defaults/DateDefaultsSection';
 import { ImportStudentInfosSection } from './import-student-infos-section/ImportStudentInfosSection';
-import { StudentInfosColumnMappingSection } from './student-infos-column-mapping-section/StudentInfosColumnMappingSection';
+import { MappingStudentInfosSection } from './mapping-student-infos-section/MappingStudentInfosSection';
 import { SignatureSection } from './signature-section/SignatureSection';
 import { GenerationSection } from './generation-section/GenerationSection';
 import { ToolNavigation } from '../../components/navbar/Navbar';
@@ -130,7 +130,7 @@ export default function ConventionPage() {
 
       {/* Étape 3 - Association des colonnes principales (pleine largeur) */}
       {mainColumnsReady && (
-        <OrganizationInfosColumnMappingSection
+        <MappingOrganizationInfosSection
           fields={MAIN_FILE_FIELDS}
           sheetColumns={mainSheetColumns}
           columnMapping={mainColumnMapping}
@@ -164,7 +164,7 @@ export default function ConventionPage() {
 
       {/* Étape 6 - Association des colonnes additionnelles */}
       {allMainColumnsMapped && additionalFile && additionalSheetColumns.length > 0 && (
-        <StudentInfosColumnMappingSection
+        <MappingStudentInfosSection
           sheetColumns={additionalSheetColumns}
           columnMapping={additionalColumnMapping}
           columnSamples={additionalColumnSamples}
