@@ -8,7 +8,7 @@ export const PROGRAMS: { [key: string]: ProgramConfig } = {
     nomDirection: 'Direction des études',
     nbHeuresMinimumStage: 315,
     nbSemaineStage: 10,
-    templatePath: '/assets/convention/ConventionDEC.docx',
+    templatePath: '/templates/convention/ConventionDEC.docx',
     profiles: {
       '420.BA': '420.BA Techniques de l\'informatique, Développement d’applications',
       '420.BB': '420.BB Techniques de l\'informatique, Administration d’infrastructure TI',
@@ -21,7 +21,7 @@ export const PROGRAMS: { [key: string]: ProgramConfig } = {
     nomDirection: 'Direction de la formation continue',
     nbHeuresMinimumStage: 225,
     nbSemaineStage: 10,
-    templatePath: '/assets/convention/ConventionAEC.docx',
+    templatePath: '/templates/convention/ConventionAEC.docx',
   },
   'AEC_TI': {
     code: 'LEA.A6',
@@ -30,7 +30,7 @@ export const PROGRAMS: { [key: string]: ProgramConfig } = {
     nomDirection: 'Direction de la formation continue',
     nbHeuresMinimumStage: 255,
     nbSemaineStage: 10,
-    templatePath: '/assets/convention/ConventionAEC.docx',
+    templatePath: '/templates/convention/ConventionAEC.docx',
   },
 };
 

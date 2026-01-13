@@ -51,10 +51,10 @@ export const PROGRAM_OPTIONS: ProgramOption[] = [
     label: "DEC - Administration d’infrastructure TI",
     code: "420.BB",
     templates: {
-      suivi: "/assets/dossier/Suivi_Hebdo_DEC.xlsx",
-      evaluation: "/assets/dossier/Evaluation.xlsx",
-      readme: "/assets/dossier/README.md",
-      guide: "/assets/dossier/Guide_rapport_DEC.docx",
+      suivi: "/templates/dossier/Suivi_Hebdo_DEC.xlsx",
+      evaluation: "/templates/dossier/Evaluation.xlsx",
+      readme: "/templates/dossier/README.md",
+      guide: "/templates/dossier/Guide_rapport_DEC.docx",
     },
   },
   {
@@ -62,10 +62,10 @@ export const PROGRAM_OPTIONS: ProgramOption[] = [
     label: "DEC - Développement d’applications",
     code: "420.BA",
     templates: {
-      suivi: "/assets/dossier/Suivi_Hebdo_DEC.xlsx",
-      evaluation: "/assets/dossier/Evaluation.xlsx",
-      readme: "/assets/dossier/README.md",
-      guide: "/assets/dossier/Guide_rapport_DEC.docx",
+      suivi: "/templates/dossier/Suivi_Hebdo_DEC.xlsx",
+      evaluation: "/templates/dossier/Evaluation.xlsx",
+      readme: "/templates/dossier/README.md",
+      guide: "/templates/dossier/Guide_rapport_DEC.docx",
     },
   },
   {
@@ -73,10 +73,10 @@ export const PROGRAM_OPTIONS: ProgramOption[] = [
     label: "AEC - Gestionnaire de réseaux, sécurité et virtualisation",
     code: "LEA.A6",
     templates: {
-      suivi: "/assets/dossier/Suivi_Hebdo_AEC.xlsx",
-      evaluation: "/assets/dossier/Evaluation.xlsx",
-      readme: "/assets/dossier/README.md",
-      guide: "/assets/dossier/Guide_rapport_LEAA6.docx",
+      suivi: "/templates/dossier/Suivi_Hebdo_AEC.xlsx",
+      evaluation: "/templates/dossier/Evaluation.xlsx",
+      readme: "/templates/dossier/README.md",
+      guide: "/templates/dossier/Guide_rapport_LEAA6.docx",
     },
   },
   {
@@ -84,10 +84,10 @@ export const PROGRAM_OPTIONS: ProgramOption[] = [
     label: "AEC - Développement d'applications Web",
     code: "LEA.DY",
     templates: {
-      suivi: "/assets/dossier/Suivi_Hebdo_AEC.xlsx",
-      evaluation: "/assets/dossier/Evaluation.xlsx",
-      readme: "/assets/dossier/README.md",
-      guide: "/assets/dossier/Guide_rapport_LEADY.docx",
+      suivi: "/templates/dossier/Suivi_Hebdo_AEC.xlsx",
+      evaluation: "/templates/dossier/Evaluation.xlsx",
+      readme: "/templates/dossier/README.md",
+      guide: "/templates/dossier/Guide_rapport_LEADY.docx",
     },
   },
 ];
