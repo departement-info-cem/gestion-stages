@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Offres de stages {{Titre}} {{session}}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+
+<body class="has-background-primary">
+  <section class="section">
+    <div class="container ">
+      <h3 class="title has-text-light">
+        Offres de stages {{Titre}} {{session}}
+      </h3>
+      {% for index,row in offres.iterrows() %}
+      <a class="button is-small" href="#offre{{index}}">{{row["Nom de l'entreprise qui offre le stage"]}}</a>
+      {% endfor %}
+
+      {% for index,row in offres.iterrows() %}
+      <br>
+      <div class="card" id="offre{{index}}">
+        <div class="card-content">
+
+          <div class="content">
+            <h4 class="title">
+              {{row["IDTechTI"]}} - {{row["Nom de l'entreprise qui offre le stage"]}}
+              <br>{{row['Combien de stagiaires souhaitez-vous prendre pour cette offre ?']}} stagiaire(s) --
+              {{row["Site web de l'entreprise"]}}
+              <!-- -- {{row["Personne contact pour cette offre de stage"]}} -- {{row['Courriel de la personne contact pour cette offre de stage']}} -->
+            </h4>
+            <div class="columns">
+              <div class="column has-background-light box">
+                <h5>Mandat</h5>
+                {% autoescape false %}
+                <p class="">{{row['Description du mandat ou des tâches prévues pour le stage'] | replace("\n", "<br />")
+                  }}</p>
+                {% endautoescape %}
+              </div>
+              <div class="column has-background-link-light box">
+                <h5>Contexte technologique</h5>
+                {% autoescape false %}
+                {{ row['Description du contexte technologique (plateformes utilisées, équipements utilisés, technologies
+                ...)'] | replace("\n", "<br />") }}
+                {% endautoescape %}
+              </div>
+            </div>
+
+            <div class="columns">
+              <div class="column ">
+                <div class="box has-background-info">
+                  <strong>Type de rémunération</strong> {{row['Quel type de rémunération est proposée?']}}
+                  <br> <strong>$ </strong> {{row['Si le stage est rémunéré, quel sera le salaire ou la compensation
+                  financière ?']}}
+                  <br> <strong>Véhicule requis</strong> {{row["Est-ce que le stagiaire doit posséder un véhicule pour se
+                  déplacer ? (ex. chez des clients, entre les succursales du bureau, etc.)"]}}
+                </div>
+              </div>
+              <div class="column ">
+                <div class="box has-background-warning">
+                  <strong>horaire</strong> {{row["Quel est l'horaire hebdomadaire de l'entreprise? (ex. 35
+                  heures/semaine, etc.) ?"]}}
+                  <br> <strong>Modalité télétravail</strong> : {{row["Quelles sont les modalités concernant le
+                  télétravail ?"]}}
+                  <br> <strong>Lieu si présentiel</strong> : {{row["Si le stage comprend du présentiel, quelle sera
+                  l’adresse où le stage sera effectué ? "]}}
+                  <br> <strong>Taille de l'équipe</strong> {{row["Quelle est la taille de l'équipe avec laquelle
+                  travaillera le stagiaire?"]}}
+                </div>
+              </div>
+              <div class="column">
+                <div class="box has-background-primary">
+                  <strong>Suites possibles : </strong>
+                  <br>
+                  {{
+                  row["Suite au stage, quelles sont les possibilités (ex. emploi temps plein, été, partiel, aucune) ?"]
+                  | replace(";", " <br /> ")
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+
+  </section>
+  Page générée le {{now}}
+</body>
+
+</html>
