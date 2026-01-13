@@ -18,6 +18,9 @@ export function createEmptyMapping(): ColumnMapping {
     followUp: '',
     numberOfInterns: '',
     website: '',
+    contactPerson: '',
+    contactEmail: '',
+    contactPhone: '',
   };
 }
 

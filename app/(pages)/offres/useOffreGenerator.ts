@@ -205,7 +205,8 @@ export function useOffreGenerator() {
               if (!(columnName in offer)) {
                 return '';
               }
-              return offer[columnName];
+              const value = offer[columnName];
+              return value ?? '';
             };
             
             // Mapper les colonnes personnalisées aux noms attendus par le template

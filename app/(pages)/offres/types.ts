@@ -10,7 +10,7 @@ export interface ProgramProfile {
 }
 
 export interface OfferRow {
-  [key: string]: string | number | null;
+  [key: string]: string | number | null | undefined;
 }
 
 export interface ProcessedOffer extends OfferRow {
@@ -45,7 +45,10 @@ export type RequiredColumnKey =
   | 'teamSize'
   | 'followUp'
   | 'numberOfInterns'
-  | 'website';
+  | 'website'
+  | 'contactPerson'
+  | 'contactEmail'
+  | 'contactPhone';
 
 export type ColumnMapping = Record<RequiredColumnKey, string>;
 
