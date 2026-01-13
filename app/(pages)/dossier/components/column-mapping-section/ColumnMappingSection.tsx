@@ -1,8 +1,8 @@
-import type { ColumnKey, ColumnMapping, ColumnSample } from "../types";
-import { COLUMN_LABELS, REQUIRED_KEYS } from "../constants";
-import { ColumnMapper, type ColumnMapperField } from "../../../components/column-mapper/ColumnMapper";
+import type { ColumnKey, ColumnMapping, ColumnSample } from "../../types";
+import { COLUMN_LABELS, REQUIRED_KEYS } from "../../constants";
+import { ColumnMapper, type ColumnMapperField } from "../../../../components/column-mapper/ColumnMapper";
 import { SectionTile } from "@/app/components/section-tile/SectionTile";
-import { ColumnPreviewModal } from "../column-preview-modal/ColumnPreviewModal";
+import { ColumnPreviewModal } from "../../modals/column-preview-modal/ColumnPreviewModal";
 import { useState } from "react";
 
 interface ColumnMappingSectionProps {

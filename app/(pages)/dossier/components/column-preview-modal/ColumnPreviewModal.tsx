@@ -1,5 +1,5 @@
 import { Modal } from '@/app/components/modal/Modal';
-import type { ColumnSample } from '../types';
+import type { ColumnSample } from '../../types';
 import styles from './ColumnPreviewModal.module.css';
 
 interface ColumnPreviewModalProps {

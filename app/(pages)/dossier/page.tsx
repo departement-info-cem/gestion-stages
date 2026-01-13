@@ -2,10 +2,10 @@
 
 import styles from "./page.module.css";
 import { useDossierGenerator } from "./useDossierGenerator";
-import { ProgramSelectorSection } from "./program-selector-section/ProgramSelectorSection";
-import { ExcelImportSection } from "./excel-import-section/ExcelImportSection";
-import { ColumnMappingSection } from "./column-mapping-section/ColumnMappingSection";
-import { GenerationSection } from "./generation-section/GenerationSection";
+import { ProgramSelectorSection } from "./components/program-selector-section/ProgramSelectorSection";
+import { ExcelImportSection } from "./components/excel-import-section/ExcelImportSection";
+import { ColumnMappingSection } from "./components/column-mapping-section/ColumnMappingSection";
+import { GenerationSection } from "./components/generation-section/GenerationSection";
 
 export default function DossierPage() {
   const {

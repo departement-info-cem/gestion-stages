@@ -1,5 +1,5 @@
 import styles from "./GenerationSection.module.css";
-import type { StatusMessage } from "../types";
+import type { StatusMessage } from "../../types";
 import { SectionTile } from "@/app/components/section-tile/SectionTile";
 
 interface GenerationSectionProps {
