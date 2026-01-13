@@ -6,9 +6,9 @@ import { useDossierGenerator } from "./useDossierGenerator";
 import { ToolNavigation } from "../../components/navbar/Navbar";
 import { buildToolNavigationItems } from "../../components/navbar/navigation";
 import { ProgramSelectorSection } from "./program-selector-section/ProgramSelectorSection";
-import { ExcelImportSection } from "./excel-import/ExcelImportSection";
-import { ColumnMappingSection } from "./column-mapping/ColumnMappingSection";
-import { GenerationSection } from "./generation/GenerationSection";
+import { ExcelImportSection } from "./excel-import-section/ExcelImportSection";
+import { ColumnMappingSection } from "./column-mapping-section/ColumnMappingSection";
+import { GenerationSection } from "./generation-section/GenerationSection";
 import { ColumnPreviewModal } from "./column-preview-modal/ColumnPreviewModal";
 
 export default function DossierPage() {

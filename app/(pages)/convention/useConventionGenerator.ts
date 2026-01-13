@@ -9,7 +9,6 @@ import {
   ColumnSamples,
   SignatureData,
   StatusMessage,
-  ConventionData,
   ProgramConfig,
 } from './types';
 import {
