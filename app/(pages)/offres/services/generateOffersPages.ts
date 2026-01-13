@@ -36,9 +36,9 @@ export async function generateOfferPage(
     const quickLinks = generateQuickLinks(offers);
     const offerCards = generateOfferCards(offers, profile);
     
-    // Remplacer les boucles Jinja par le HTML généré
-    html = replaceJinjaLoop(html, 'quick-links', quickLinks);
-    html = replaceJinjaLoop(html, 'offer-cards', offerCards);
+    // Remplacer les placeholders par le HTML généré
+    html = html.replace(/\{\{QUICK_LINKS\}\}/g, quickLinks);
+    html = html.replace(/\{\{OFFER_CARDS\}\}/g, offerCards);
     
     return html;
   } catch (error) {
@@ -132,24 +132,6 @@ function generateOfferCards(offers: ProcessedOffer[], profile: ProgramProfile): 
     })
     .join('\n        ');
 }
-
-/**
- * Remplace une boucle Jinja dans le template
- */
-function replaceJinjaLoop(html: string, loopType: string, content: string): string {
-  if (loopType === 'quick-links') {
-    // Remplacer la première boucle (liens rapides)
-    const quickLinksRegex = /{% for index,row in offres\.iterrows\(\) %}[\s\S]*?<a class="button is-small"[\s\S]*?{% endfor %}/;
-    html = html.replace(quickLinksRegex, content);
-  } else if (loopType === 'offer-cards') {
-    // Remplacer la deuxième boucle (cartes d'offres)
-    const offerCardsRegex = /{% for index,row in offres\.iterrows\(\) %}[\s\S]*?<div class="card"[\s\S]*?{% endfor %}/;
-    html = html.replace(offerCardsRegex, content);
-  }
-  
-  return html;
-}
-
 /**
  * Obtient le nom de la colonne ID pour un profil
  */
