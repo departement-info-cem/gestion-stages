@@ -57,9 +57,9 @@ function generateQuickLinks(offers: ProcessedOffer[]): string {
   return offers
     .map((offer, index) => {
       const companyName = offer['Nom de l\'entreprise qui offre le stage'] || 'Entreprise inconnue';
-      return `<a class="button is-small" href="#offre${index}">${escapeHtml(String(companyName))}</a>`;
+      return `<a class="button is-small is-light" href="#offre${index}">${escapeHtml(String(companyName))}</a>`;
     })
-    .join('\n    ');
+    .join('\n      ');
 }
 
 /**
@@ -85,49 +85,46 @@ function generateOfferCards(offers: ProcessedOffer[], profile: ProgramProfile): 
       const suites = offer['Suite au stage, quelles sont les possibilités (ex. emploi temps plein, été, partiel, aucune) ?'] || '';
 
       return `
-        <br>
-        <div class="card" id="offre${index}">
-          <div class="card-content">
-            <div class="content">
-              <h4 class="title">
-                  ${escapeHtml(String(offerId))} - ${escapeHtml(String(companyName))}
-				  <br>${escapeHtml(String(numStagiaires))} stagiaire(s) -- 
-				  ${escapeHtml(String(website))}
-              </h4>
-              <div class="columns">
-                <div class="column has-background-light box">
-                  <h5>Mandat</h5>
-                  <p class="">${formatText(String(mandat))}</p>
-                </div>
-                <div class="column has-background-link-light box">
-                  <h5>Contexte technologique</h5>
-                  ${formatText(String(contexte))}
-                </div>
-              </div>
+        <div class="offer-card" id="offre${index}">
+          <div class="offer-header">
+            <span class="offer-id">${escapeHtml(String(offerId))}</span>
+            <h2 class="offer-company">${escapeHtml(String(companyName))}</h2>
+            <div class="offer-meta">
+              <span>👥 ${escapeHtml(String(numStagiaires))} stagiaire(s)</span>
+              ${website ? ` • <a href="${escapeHtml(String(website))}" target="_blank" style="color: white;">🌐 Site web</a>` : ''}
+            </div>
+          </div>
+          
+          <div class="content-grid">
+            <div class="info-box mandate">
+              <h5>🎯 Mandat</h5>
+              <p>${formatText(String(mandat))}</p>
+            </div>
+            
+            <div class="info-box tech">
+              <h5>💻 Contexte technologique</h5>
+              <p>${formatText(String(contexte))}</p>
+            </div>
 
-              <div class="columns">
-                <div class="column ">
-                  <div class="box has-background-info">
-                    <strong>Type de rémunération</strong> ${escapeHtml(String(remuneration))}
-                    <br> <strong>$ </strong> ${escapeHtml(String(salaire))}
-					<br> <strong>Véhicule requis</strong> ${escapeHtml(String(vehicule))}
-                  </div>
-                </div>
-                <div class="column ">
-                  <div class="box has-background-warning">
-     				<strong>horaire</strong>  ${escapeHtml(String(horaire))}
-					<br> <strong>Modalité télétravail</strong> : ${escapeHtml(String(teletravail))}               
-					<br> <strong>Lieu si présentiel</strong> : ${escapeHtml(String(lieu))}
-                    <br> <strong>Taille de l'équipe</strong> ${escapeHtml(String(equipe))}
-                  </div>
-                </div>
-                <div class="column">
-                  <div class="box has-background-${profile.color}">
-                    <strong>Suites possibles : </strong>
-                    <br>
-                    ${formatList(String(suites))}
-                  </div>
-                </div>
+            <div class="details-row">
+              <div class="detail-box remuneration">
+                <strong>💵 Rémunération</strong>
+                <div>${escapeHtml(String(remuneration))}</div>
+                ${salaire ? `<div style="margin-top: 0.5rem;">💰 ${escapeHtml(String(salaire))}</div>` : ''}
+                ${vehicule ? `<div style="margin-top: 0.5rem;">🚗 Véhicule : ${escapeHtml(String(vehicule))}</div>` : ''}
+              </div>
+              
+              <div class="detail-box workplace">
+                <strong>🏢 Modalités de travail</strong>
+                <div>⏰ ${escapeHtml(String(horaire))}</div>
+                ${teletravail ? `<div style="margin-top: 0.5rem;">🏠 ${escapeHtml(String(teletravail))}</div>` : ''}
+                ${lieu ? `<div style="margin-top: 0.5rem;">📍 ${escapeHtml(String(lieu))}</div>` : ''}
+                ${equipe ? `<div style="margin-top: 0.5rem;">👥 Équipe : ${escapeHtml(String(equipe))}</div>` : ''}
+              </div>
+              
+              <div class="detail-box future">
+                <strong>🚀 Après le stage</strong>
+                <div>${formatList(String(suites))}</div>
               </div>
             </div>
           </div>

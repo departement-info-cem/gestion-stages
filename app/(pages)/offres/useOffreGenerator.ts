@@ -143,10 +143,8 @@ export function useOffreGenerator() {
         
         // Ajouter le champ avec le nom de colonne standard attendu par processOffers
         const targetProfilesColumn = keyToColumnName.targetProfiles;
-        console.log('🔍 Processing offer - targetProfilesColumn:', targetProfilesColumn);
         if (targetProfilesColumn && targetProfilesColumn in offer) {
           const profileValue = offer[targetProfilesColumn] as string;
-          console.log('✅ Found profile value:', profileValue);
           transformed['À quel profil s\'adresse l\'offre de stage ?'] = profileValue;
         } else {
           console.warn('⚠️ targetProfilesColumn not found in offer. Available keys:', Object.keys(offer));
@@ -155,13 +153,10 @@ export function useOffreGenerator() {
         return transformed;
       });
 
-      console.log('📊 Transformed offers sample:', transformedOffers[0]);
       const processed = processOffers(transformedOffers, session);
-      console.log('🎯 Processed offers sample:', processed[0]);
       setProcessedOffers(processed);
 
       const counts = countOffersByProfile(processed);
-      console.log('📈 Counts by profile:', counts);
       const summary = Object.entries(counts)
         .filter(([, count]) => count > 0)
         .map(([profileId, count]) => {
@@ -201,20 +196,16 @@ export function useOffreGenerator() {
       });
 
       for (const profile of PROGRAM_PROFILES) {
-        console.log(`🔄 Processing profile: ${profile.id} - ${profile.name}`);
         const filteredOffers = filterOffersByProfile(
           processedOffers,
           profile.id
         );
-        console.log(`📋 Filtered offers for ${profile.id}:`, filteredOffers.length);
 
         if (filteredOffers.length === 0) {
-          console.log(`⏭️ Skipping ${profile.id} - no offers`);
           continue;
         }
 
         try {
-          console.log(`🚀 Generating page for ${profile.id}...`);
           // Transformer les offres pour utiliser les noms de colonnes standards attendus par le template
           const normalizedOffers = filteredOffers.map((offer) => {
             const normalized: ProcessedOffer = { ...offer };

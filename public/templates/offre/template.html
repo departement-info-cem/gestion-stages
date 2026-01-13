@@ -6,21 +6,188 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Offres de stages {{Titre}} {{session}}</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <style>
+    body {
+      min-height: 100vh;
+      padding-bottom: 3rem;
+    }
+    
+    .hero {
+      background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 100%);
+      margin-bottom: 1.5rem;
+    }
+    
+    .hero .hero-body {
+      padding: 1.5rem 1.5rem;
+    }
+    
+    .nav-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 1.5rem 0;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    
+    .nav-buttons a {
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    
+    .nav-buttons a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    
+    .offer-card {
+      margin-bottom: 2rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      background: white;
+    }
+    
+    .offer-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 1.5rem;
+    }
+    
+    .offer-id {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .offer-company {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.2;
+    }
+    
+    .offer-meta {
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+      opacity: 0.95;
+    }
+    
+    .content-grid {
+      display: grid;
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+    
+    .info-box {
+      padding: 1.25rem;
+      border-radius: 8px;
+      border-left: 4px solid;
+    }
+    
+    .info-box h5 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 0.75rem 0;
+      color: #363636;
+    }
+    
+    .info-box.mandate {
+      background: #f8f9fa;
+      border-color: #667eea;
+    }
+    
+    .info-box.tech {
+      background: #e8f4f8;
+      border-color: #3298dc;
+    }
+    
+    .details-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .detail-box {
+      padding: 1rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+    
+    .detail-box strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: #363636;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .detail-box.remuneration {
+      background: #e3f2fd;
+      border: 1px solid #90caf9;
+    }
+    
+    .detail-box.workplace {
+      background: #fff3e0;
+      border: 1px solid #ffb74d;
+    }
+    
+    .detail-box.future {
+      background: #f3e5f5;
+      border: 1px solid #ba68c8;
+    }
+    
+    .footer-note {
+      text-align: center;
+      padding: 2rem 0 1rem;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    @media (max-width: 768px) {
+      .offer-company {
+        font-size: 1.35rem;
+      }
+      
+      .details-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body class="{{bodyClass}}">
-  <section class="section">
-    <div class="container ">
-      <h3 class="title has-text-light">
-        Offres de stages {{Titre}} {{session}}
-      </h3>
-      {{QUICK_LINKS}}
-
-      {{OFFER_CARDS}}
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title is-4 has-text-light has-text-centered" style="margin-bottom: 0.25rem;">
+          Offres de stages {{Titre}}
+        </h1>
+        <h2 class="subtitle is-6 has-text-light has-text-centered" style="margin-bottom: 0;">
+          Session {{session}}
+        </h2>
+      </div>
     </div>
-
   </section>
-  Page générée le {{now}}
+  
+  <div class="container">
+    <nav class="nav-buttons">
+      {{QUICK_LINKS}}
+    </nav>
+
+    {{OFFER_CARDS}}
+    
+    <div class="footer-note has-text-light">
+      Page générée le {{now}}
+    </div>
+  </div>
 </body>
 
 </html>
