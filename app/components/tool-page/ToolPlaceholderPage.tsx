@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { ToolNavigation } from "../navbar/Navbar";
+import { Navbar } from "../navbar/Navbar";
 import { buildToolNavigationItems } from "../navbar/navigation";
 import type { ToolNavigationKey } from "../navbar/types";
 import styles from "./ToolPlaceholderPage.module.css";
@@ -21,7 +21,7 @@ export function ToolPlaceholderPage({
 
   return (
     <div className={styles.wrapper}>
-      <ToolNavigation
+      <Navbar
         ariaLabel="Navigation des outils"
         className={styles.navigation}
         items={navigationItems}

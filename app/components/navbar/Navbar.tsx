@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import type { ToolNavigationKey, ToolNavigationProps } from "./types";
-import styles from "./ToolNavigation.module.css";
+import styles from "./Navbar.module.css";
 
 const STORAGE_KEY = "tool-navigation:last";
 
-export function ToolNavigation({
+export function Navbar({
   items,
   ariaLabel = "Navigation",
   className,

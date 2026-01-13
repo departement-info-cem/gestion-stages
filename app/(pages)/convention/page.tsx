@@ -9,7 +9,7 @@ import { ImportStudentInfosSection } from './import-student-infos-section/Import
 import { MappingStudentInfosSection } from './mapping-student-infos-section/MappingStudentInfosSection';
 import { SignatureSection } from './signature-section/SignatureSection';
 import { GenerationSection } from './generation-section/GenerationSection';
-import { ToolNavigation } from '../../components/navbar/Navbar';
+import { Navbar } from '../../components/navbar/Navbar';
 import { buildToolNavigationItems } from '../../components/navbar/navigation';
 import { useConventionGenerator } from './useConventionGenerator';
 import { MAIN_FILE_FIELDS } from './constants';
@@ -84,7 +84,7 @@ export default function ConventionPage() {
 
   return (
     <div className={styles.wrapper}>
-      <ToolNavigation
+      <Navbar
         ariaLabel="Navigation des outils"
         className={styles.toolNavigation}
         items={navigationItems}

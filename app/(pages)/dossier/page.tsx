@@ -2,7 +2,7 @@
 
 import styles from "./page.module.css";
 import { useDossierGenerator } from "./useDossierGenerator";
-import { ToolNavigation } from "../../components/navbar/Navbar";
+import { Navbar } from "../../components/navbar/Navbar";
 import { buildToolNavigationItems } from "../../components/navbar/navigation";
 import { ProgramSelectorSection } from "./program-selector-section/ProgramSelectorSection";
 import { ExcelImportSection } from "./excel-import-section/ExcelImportSection";
@@ -32,7 +32,7 @@ export default function DossierPage() {
 
   return (
     <div className={styles.wrapper}>
-      <ToolNavigation
+      <Navbar
         ariaLabel="Navigation des outils"
         className={styles.toolNavigation}
         items={navigationItems}
