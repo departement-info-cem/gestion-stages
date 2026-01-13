@@ -2,6 +2,7 @@ import { PROGRAMS } from '../constants';
 import { ProgramConfig } from '../types';
 import sharedStyles from '../shared.module.css';
 import styles from './ProgramSelectorSection.module.css';
+import { SectionTile } from '@/app/components/section-tile/SectionTile';
 
 interface ProgramSelectorProps {
   selectedProgram: string;
@@ -15,10 +16,9 @@ export function ProgramSelectorSection({
   const programEntries = Object.entries(PROGRAMS);
 
   return (
-    <section className={sharedStyles.section}>
-      <h2 className={sharedStyles.sectionTitle}>1. Choisissez le programme</h2>
+    <SectionTile title={'1. Choisissez le programme'}>
       <div className={styles.radioGroup}>
-        {programEntries.map(([key, config]) => (
+         {programEntries.map(([key, config]) => (
           <label key={key} className={styles.radioOption}>
             <input
               type="radio"
@@ -33,6 +33,6 @@ export function ProgramSelectorSection({
           </label>
         ))}
       </div>
-    </section>
+    </SectionTile>
   );
 }

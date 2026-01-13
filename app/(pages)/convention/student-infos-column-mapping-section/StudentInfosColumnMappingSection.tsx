@@ -1,8 +1,7 @@
 import { ColumnMapping, ColumnSamples } from '../types';
 import { ADDITIONAL_FILE_FIELDS } from '../constants';
-import styles from '../shared.module.css';
-import { EyeIcon } from '@/app/assets/icons/EyeIcon';
 import { ColumnMapper } from '@/app/components/column-mapper/ColumnMapper';
+import { SectionTile } from '@/app/components/section-tile/SectionTile';
 
 interface StudentInfosColumnMappingSectionProps {
   sheetColumns: string[];
@@ -29,23 +28,7 @@ export function StudentInfosColumnMappingSection({
 
 
   return (
-    <section className={styles.section}>
-      <div className={styles.sectionTitleBar}>
-        <h2 className={styles.sectionTitle}>{`2. Fichier de réponse des entreprises`}</h2>
-        <button
-          type="button"
-          className={styles.previewIconButton}
-          onClick={onPreviewClick}
-          disabled={columnSamplesArray.length === 0}
-          aria-label="Voir un aperçu des colonnes"
-          title="Voir un aperçu des colonnes"
-        >
-          <span className={styles.visuallyHidden}>
-            Voir un aperçu des colonnes
-          </span>
-          <EyeIcon className={styles.previewIcon} />
-        </button>
-      </div>
+    <SectionTile title="6. Mapping des informations des étudiants" onPreviewClick={onPreviewClick} previewDisabled={columnSamplesArray.length === 0}>
       <ColumnMapper
         fields={ADDITIONAL_FILE_FIELDS}
         sheetColumns={sheetColumns}
@@ -53,7 +36,7 @@ export function StudentInfosColumnMappingSection({
         columnSamples={columnSamplesArray}
         onColumnMappingChange={onColumnMappingChange}
       />
-    </section>
+    </SectionTile>
 
   );
 }

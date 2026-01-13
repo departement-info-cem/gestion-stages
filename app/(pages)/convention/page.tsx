@@ -9,8 +9,8 @@ import { ImportStudentInfosSection } from './import-student-infos-section/Import
 import { StudentInfosColumnMappingSection } from './student-infos-column-mapping-section/StudentInfosColumnMappingSection';
 import { SignatureSection } from './signature-section/SignatureSection';
 import { GenerationSection } from './generation-section/GenerationSection';
-import { ToolNavigation } from '../../components/navigation/Navbar';
-import { buildToolNavigationItems } from '../../components/navigation/navigation';
+import { ToolNavigation } from '../../components/navbar/Navbar';
+import { buildToolNavigationItems } from '../../components/navbar/navigation';
 import { ColumnPreviewModal } from './column-preview-modal/ColumnPreviewModal';
 import { useConventionGenerator } from './useConventionGenerator';
 import { MAIN_FILE_FIELDS } from './constants';

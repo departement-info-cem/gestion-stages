@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
-import { ToolNavigation } from "../navigation/Navbar";
-import { buildToolNavigationItems } from "../navigation/navigation";
-import type { ToolNavigationKey } from "../navigation/types";
+import { ToolNavigation } from "../navbar/Navbar";
+import { buildToolNavigationItems } from "../navbar/navigation";
+import type { ToolNavigationKey } from "../navbar/types";
 import styles from "./ToolPlaceholderPage.module.css";
 
 interface ToolPlaceholderPageProps {

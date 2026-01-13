@@ -2,6 +2,7 @@ import type { ChangeEvent } from 'react';
 import { FilePicker } from '@/app/components/file-picker/FilePicker';
 import sharedStyles from '../shared.module.css';
 import styles from './ImportStudentInfosSection.module.css';
+import { SectionTile } from '@/app/components/section-tile/SectionTile';
 
 interface ImportStudentInfosSectionProps {
   fileName?: string;
@@ -19,8 +20,7 @@ export function ImportStudentInfosSection({
   onSheetChange,
 }: ImportStudentInfosSectionProps) {
   return (
-    <section className={sharedStyles.section}>
-      <h2 className={sharedStyles.sectionTitle}>5. Fichier de liste des étudiants</h2>
+    <SectionTile title="5. Fichier de liste des étudiants">
       <p className={styles.description}>
         Fichier contenant les superviseurs académiques et profils des étudiants
       </p>
@@ -50,6 +50,6 @@ export function ImportStudentInfosSection({
           </select>
         </>
       )}
-    </section>
+    </SectionTile>
   );
 }

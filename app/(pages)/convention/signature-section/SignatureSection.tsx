@@ -2,6 +2,7 @@ import { useState, type ChangeEvent } from 'react';
 import { SignatureData } from '../types';
 import sharedStyles from '../shared.module.css';
 import styles from './SignatureSection.module.css';
+import { SectionTile } from '@/app/components/section-tile/SectionTile';
 
 interface SignatureSectionProps {
   directeur: SignatureData;
@@ -58,8 +59,7 @@ export function SignatureSection({
   };
 
   return (
-    <section className={sharedStyles.section}>
-      <h2 className={sharedStyles.sectionTitle}>7. Téléversement des signatures</h2>
+    <SectionTile title="7. Téléversement des signatures">
       <p className={styles.description}>
         Formats acceptés: PNG ou JPEG
       </p>
@@ -153,6 +153,6 @@ export function SignatureSection({
           )}
         </div>
       </div>
-    </section>
+    </SectionTile>
   );
 }

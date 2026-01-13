@@ -6,6 +6,7 @@ import { fr } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import sharedStyles from '../shared.module.css';
 import styles from './DateDefaultsSection.module.css';
+import { SectionTile } from '@/app/components/section-tile/SectionTile';
 
 // Enregistrer la locale française
 registerLocale('fr', fr);
@@ -58,12 +59,7 @@ export function DateDefaultsSection({
   };
 
   return (
-    <section className={sharedStyles.section}>
-      <h2 className={sharedStyles.sectionTitle}>
-        <span className={sharedStyles.stepNumber}>4. </span>
-         Dates par défaut
-      </h2>
-      
+    <SectionTile title="4. Dates par défaut">
       <p className={sharedStyles.description}>
         Ces dates seront utilisées lorsque les dates ne sont pas spécifiées dans le fichier Excel.
       </p>
@@ -101,6 +97,6 @@ export function DateDefaultsSection({
           </div>
         </div>
       </div>
-    </section>
+    </SectionTile>
   );
 }

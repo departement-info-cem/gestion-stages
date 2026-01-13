@@ -1,7 +1,6 @@
 import { ColumnMapper, ColumnMapperField } from '@/app/components/column-mapper/ColumnMapper';
 import { ColumnMapping, ColumnSamples } from '../types';
-import styles from '../shared.module.css';
-import { EyeIcon } from '@/app/assets/icons/EyeIcon';
+import { SectionTile } from '@/app/components/section-tile/SectionTile';
 
 interface ColumnMappingSectionProps {
   fields: readonly ColumnMapperField[];
@@ -29,24 +28,7 @@ export function OrganizationInfosColumnMapping({
     }));
 
   return (
-    <section className={styles.section}>
-      <div className={styles.sectionTitleBar}>
-        <h2 className={styles.sectionTitle}>{`2. Fichier de réponse des entreprises`}</h2>
-        <button
-          type="button"
-          className={styles.previewIconButton}
-          onClick={onPreviewClick}
-          disabled={columnSamplesArray.length === 0}
-          aria-label="Voir un aperçu des colonnes"
-          title="Voir un aperçu des colonnes"
-        >
-          <span className={styles.visuallyHidden}>
-            Voir un aperçu des colonnes
-          </span>
-          <EyeIcon className={styles.previewIcon} />
-        </button>
-      </div>
-
+    <SectionTile title="3. Mapping des informations des entreprises" onPreviewClick={onPreviewClick} previewDisabled={columnSamplesArray.length === 0}>
       <ColumnMapper
         fields={fields}
         sheetColumns={sheetColumns}
@@ -54,6 +36,6 @@ export function OrganizationInfosColumnMapping({
         columnSamples={columnSamplesArray}
         onColumnMappingChange={onColumnMappingChange}
       />
-    </section>
+    </SectionTile>
   );
 }

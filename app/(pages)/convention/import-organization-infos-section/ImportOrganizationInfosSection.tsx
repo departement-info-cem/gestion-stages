@@ -2,6 +2,7 @@ import type { ChangeEvent } from 'react';
 import { FilePicker } from '@/app/components/file-picker/FilePicker';
 import sharedStyles from '../shared.module.css';
 import styles from './ImportOrganizationInfosSection.module.css';
+import { SectionTile } from '@/app/components/section-tile/SectionTile';
 
 interface ImportOrganizationInfosSectionProps {
   fileName?: string;
@@ -19,11 +20,7 @@ export function ImportOrganizationInfosSection({
   onSheetChange,
 }: ImportOrganizationInfosSectionProps) {
   return (
-    <section className={sharedStyles.section}>
-      <h2 className={sharedStyles.sectionTitle}>
-        2. Fichier de réponse des entreprises
-      </h2>
-
+    <SectionTile title="2. Fichier de réponse des entreprises">
       <FilePicker
         acceptedFileTypes=".xlsx,.xls"
         placeholderText="Déposez un fichier Excel ou cliquez pour sélectionner un .xlsx"
@@ -49,6 +46,6 @@ export function ImportOrganizationInfosSection({
           </select>
         </>
       )}
-    </section>
+    </SectionTile>
   );
 }

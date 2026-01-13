@@ -1,6 +1,7 @@
 import { StatusMessage } from '../types';
 import sharedStyles from '../shared.module.css';
 import styles from './GenerationSection.module.css';
+import { SectionTile } from '@/app/components/section-tile/SectionTile';
 
 interface GenerationSectionProps {
   isGenerating: boolean;
@@ -14,9 +15,7 @@ export function GenerationSection({
   onGenerate,
 }: GenerationSectionProps) {
   return (
-    <section className={sharedStyles.section}>
-      <h2 className={sharedStyles.sectionTitle}>8. Génération des conventions</h2>
-
+    <SectionTile title="8. Génération des conventions">
       <button
         type="button"
         onClick={onGenerate}
@@ -53,6 +52,6 @@ export function GenerationSection({
           </div>
         </div>
       )}
-    </section>
+    </SectionTile>
   );
 }
