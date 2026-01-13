@@ -1,8 +1,7 @@
 import { PROGRAM_OPTIONS } from "../constants";
-import { ProgramId } from "../types";
+import type { ProgramId } from "../types";
 import styles from "./ProgramSelectorSection.module.css";
 import { SectionTile } from "@/app/components/section-tile/SectionTile";
-
 
 interface ProgramSelectorSectionProps {
   selectedProgram: ProgramId | null;
