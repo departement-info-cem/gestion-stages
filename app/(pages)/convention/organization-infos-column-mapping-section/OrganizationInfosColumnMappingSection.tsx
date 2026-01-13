@@ -2,7 +2,7 @@ import { ColumnMapper, ColumnMapperField } from '@/app/components/column-mapper/
 import { ColumnMapping, ColumnSamples } from '../types';
 import { SectionTile } from '@/app/components/section-tile/SectionTile';
 
-interface ColumnMappingSectionProps {
+interface OrganizationInfosColumnMappingSectionProps {
   fields: readonly ColumnMapperField[];
   sheetColumns: string[];
   columnMapping: ColumnMapping;
@@ -11,14 +11,14 @@ interface ColumnMappingSectionProps {
   onPreviewClick: () => void;
 }
 
-export function OrganizationInfosColumnMapping({
+export function OrganizationInfosColumnMappingSection({
   fields,
   sheetColumns,
   columnMapping,
   columnSamples,
   onColumnMappingChange,
   onPreviewClick,
-}: ColumnMappingSectionProps) {
+}: OrganizationInfosColumnMappingSectionProps) {
   // Convertir le format de columnSamples pour le ColumnMapper
   const columnSamplesArray = Object.entries(columnMapping)
     .filter(([_, excelColumn]) => excelColumn)

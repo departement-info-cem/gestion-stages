@@ -1,5 +1,5 @@
 import type { ChangeEvent } from "react";
-import sharedStyles from "../shared.module.css";
+import sharedStyles from "../../../shared.module.css";
 import styles from "./ExcelImportSection.module.css";
 import { FilePicker } from "../../../components/file-picker/FilePicker";
 import { SectionTile } from "@/app/components/section-tile/SectionTile";

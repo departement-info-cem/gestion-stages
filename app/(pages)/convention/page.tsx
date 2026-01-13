@@ -3,7 +3,7 @@
 import { useState, type ChangeEvent } from 'react';
 import { ProgramSelectorSection } from './program-selector-section/ProgramSelectorSection';
 import { ImportOrganizationInfosSection } from './import-organization-infos-section/ImportOrganizationInfosSection';
-import { OrganizationInfosColumnMapping } from './organization-infos-column-mapping/OrganizationInfosColumnMapping';
+import { OrganizationInfosColumnMappingSection } from './organization-infos-column-mapping-section/OrganizationInfosColumnMappingSection';
 import { DateDefaultsSection } from './date-defaults/DateDefaultsSection';
 import { ImportStudentInfosSection } from './import-student-infos-section/ImportStudentInfosSection';
 import { StudentInfosColumnMappingSection } from './student-infos-column-mapping-section/StudentInfosColumnMappingSection';
@@ -130,7 +130,7 @@ export default function ConventionPage() {
 
       {/* Étape 3 - Association des colonnes principales (pleine largeur) */}
       {mainColumnsReady && (
-        <OrganizationInfosColumnMapping
+        <OrganizationInfosColumnMappingSection
           fields={MAIN_FILE_FIELDS}
           sheetColumns={mainSheetColumns}
           columnMapping={mainColumnMapping}

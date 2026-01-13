@@ -1,6 +1,8 @@
 import type { ChangeEvent } from "react";
 import { useEffect, useRef } from "react";
 import styles from "./ColumnMapper.module.css";
+import sharedStyles from '../../shared.module.css';
+
 import type { ColumnMapperProps, ColumnMapperField, ColumnSample } from "./types";
 
 export type { ColumnMapperField, ColumnSample, ColumnMapperProps };
@@ -69,7 +71,7 @@ export function ColumnMapper<T extends string = string>({
               </label>
               <select
                 id={`column-${field.key}`}
-                className={styles.select}
+                className={sharedStyles.select}
                 value={selectedColumn}
                 onChange={(event: ChangeEvent<HTMLSelectElement>) =>
                   onColumnMappingChange(field.key, event.target.value)
