@@ -19,12 +19,12 @@ import {
   generateConventionDocument,
   sanitizeFileName,
 } from './utils';
-import { MAIN_FILE_FIELDS, ADDITIONAL_FILE_FIELDS } from './constants';
+import { MAIN_FILE_FIELDS, ADDITIONAL_FILE_FIELDS, PROGRAMS } from './constants';
 
 export function useConventionGenerator() {
   // État du programme sélectionné
-  const [selectedProgram, setSelectedProgram] = useState<string>('');
-  const [programConfig, setProgramConfig] = useState<ProgramConfig | null>(null);
+  const [selectedProgram, setSelectedProgram] = useState<string>('DEC_REGULIER');
+  const [programConfig, setProgramConfig] = useState<ProgramConfig | null>(PROGRAMS['DEC_REGULIER']);
 
   // État du fichier Excel principal
   const [mainFile, setMainFile] = useState<File | null>(null);
