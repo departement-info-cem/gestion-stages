@@ -1,4 +1,4 @@
-import { StatusMessage } from '../types';
+import { StatusMessage } from '../../types';
 import sharedStyles from '../shared.module.css';
 import styles from './GenerationSection.module.css';
 import { SectionTile } from '@/app/components/section-tile/SectionTile';

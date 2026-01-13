@@ -1,5 +1,5 @@
-import { PROGRAMS } from '../constants';
-import { ProgramConfig } from '../types';
+import { PROGRAMS } from '../../constants';
+import { ProgramConfig } from '../../types';
 import sharedStyles from '../shared.module.css';
 import styles from './ProgramSelectorSection.module.css';
 import { SectionTile } from '@/app/components/section-tile/SectionTile';

@@ -1,14 +1,14 @@
 'use client';
 
 import { type ChangeEvent } from 'react';
-import { ProgramSelectorSection } from './program-selector-section/ProgramSelectorSection';
-import { ImportOrganizationInfosSection } from './import-organization-infos-section/ImportOrganizationInfosSection';
-import { MappingOrganizationInfosSection } from './mapping-organization-infos-section/MappingOrganizationInfosSection';
-import { DateDefaultsSection } from './date-defaults/DateDefaultsSection';
-import { ImportStudentInfosSection } from './import-student-infos-section/ImportStudentInfosSection';
-import { MappingStudentInfosSection } from './mapping-student-infos-section/MappingStudentInfosSection';
-import { SignatureSection } from './signature-section/SignatureSection';
-import { GenerationSection } from './generation-section/GenerationSection';
+import { ProgramSelectorSection } from './components/program-selector-section/ProgramSelectorSection';
+import { ImportOrganizationInfosSection } from './components/import-organization-infos-section/ImportOrganizationInfosSection';
+import { MappingOrganizationInfosSection } from './components/mapping-organization-infos-section/MappingOrganizationInfosSection';
+import { DateDefaultsSection } from './components/date-defaults-section/DateDefaultsSection';
+import { ImportStudentInfosSection } from './components/import-student-infos-section/ImportStudentInfosSection';
+import { MappingStudentInfosSection } from './components/mapping-student-infos-section/MappingStudentInfosSection';
+import { SignatureSection } from './components/signature-section/SignatureSection';
+import { GenerationSection } from './components/generation-section/GenerationSection';
 import { useConventionGenerator } from './useConventionGenerator';
 import { MAIN_FILE_FIELDS } from './constants';
 import styles from './page.module.css';

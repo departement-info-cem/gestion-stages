@@ -1,8 +1,8 @@
-import { ColumnMapping, ColumnSamples } from '../types';
-import { ADDITIONAL_FILE_FIELDS } from '../constants';
+import { ColumnMapping, ColumnSamples } from '../../types';
+import { ADDITIONAL_FILE_FIELDS } from '../../constants';
 import { ColumnMapper } from '@/app/components/column-mapper/ColumnMapper';
 import { SectionTile } from '@/app/components/section-tile/SectionTile';
-import { ColumnPreviewModal } from '../column-preview-modal/ColumnPreviewModal';
+import { ColumnPreviewModal } from '../../modals/column-preview-modal/ColumnPreviewModal';
 import { useState } from 'react';
 
 interface MappingStudentInfosSectionProps {

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { fr } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
-import sharedStyles from '../../../shared.module.css';
+import sharedStyles from '../../../../shared.module.css';
 import styles from './DateDefaultsSection.module.css';
 import { SectionTile } from '@/app/components/section-tile/SectionTile';
 

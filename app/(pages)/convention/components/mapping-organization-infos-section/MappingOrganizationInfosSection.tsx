@@ -1,7 +1,7 @@
 import { ColumnMapper, ColumnMapperField } from '@/app/components/column-mapper/ColumnMapper';
-import { ColumnMapping, ColumnSamples } from '../types';
+import { ColumnMapping, ColumnSamples } from '../../types';
 import { SectionTile } from '@/app/components/section-tile/SectionTile';
-import { ColumnPreviewModal } from '../column-preview-modal/ColumnPreviewModal';
+import { ColumnPreviewModal } from '../../modals/column-preview-modal/ColumnPreviewModal';
 import { useState } from 'react';
 
 interface MappingOrganizationInfosSectionProps {

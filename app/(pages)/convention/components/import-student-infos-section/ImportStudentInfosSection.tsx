@@ -1,6 +1,6 @@
 import type { ChangeEvent } from 'react';
 import { FilePicker } from '@/app/components/file-picker/FilePicker';
-import sharedStyles from '../../../shared.module.css';
+import sharedStyles from '../../../../shared.module.css';
 import styles from './ImportStudentInfosSection.module.css';
 import { SectionTile } from '@/app/components/section-tile/SectionTile';
 

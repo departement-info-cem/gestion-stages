@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from 'react';
-import { SignatureData } from '../types';
+import { SignatureData } from '../../types';
 import sharedStyles from '../shared.module.css';
 import styles from './SignatureSection.module.css';
 import { SectionTile } from '@/app/components/section-tile/SectionTile';
