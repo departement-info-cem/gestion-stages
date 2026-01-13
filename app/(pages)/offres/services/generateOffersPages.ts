@@ -9,8 +9,8 @@ export async function generateOfferPage(
   session: string
 ): Promise<string> {
   try {
-    // Charger le template HTML
-    const templatePath = `/templates/offre/${profile.templateName}`;
+    // Charger le template HTML unique
+    const templatePath = `/templates/offre/template.html`;
     const response = await fetch(templatePath);
     
     if (!response.ok) {
@@ -28,9 +28,12 @@ export async function generateOfferPage(
       minute: '2-digit',
     });
     
+    const bodyClass = `has-background-${profile.color}`;
+    
     html = html.replace(/\{\{Titre\}\}/g, profile.name);
     html = html.replace(/\{\{session\}\}/g, session);
     html = html.replace(/\{\{now\}\}/g, now);
+    html = html.replace(/\{\{bodyClass\}\}/g, bodyClass);
     
     // Générer le HTML des liens rapides et des cartes d'offres
     const quickLinks = generateQuickLinks(offers);

@@ -10,7 +10,12 @@ export function assignOfferId(
   session: string,
   currentId: number
 ): { id: string | null; nextId: number } {
-  if (profileName.includes(profile.name)) {
+  // Vérifier si le profileName contient l'un des mots-clés du profil
+  const matches = profile.keywords.some(keyword => 
+    profileName.toLowerCase().includes(keyword.toLowerCase())
+  );
+  
+  if (matches) {
     const id = `${profile.prefix}${session}-${String(currentId).padStart(2, '0')}`;
     return { id, nextId: currentId + 1 };
   }

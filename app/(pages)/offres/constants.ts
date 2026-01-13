@@ -3,35 +3,35 @@ import type { ProgramProfile, RequiredColumnKey } from './types';
 export const PROGRAM_PROFILES: ProgramProfile[] = [
   {
     id: 'dec-ti',
-    name: 'DEC technique informatique profil TI / réseautique / cybersécurité',
+    name: 'DEC - Administration d’infrastructure TI',
     prefix: 'R-',
-    templateName: 'modOffresTI.html',
     fileName: 'TI.html',
-    color: 'info'
+    color: 'info',
+    keywords: ['TI', 'réseautique', 'cybersécurité', 'infrastructure']
   },
   {
     id: 'dec-prog',
-    name: 'DEC technique informatique profil programmation / développement',
+    name: 'DEC - Développement d’applications',
     prefix: 'P-',
-    templateName: 'modOffresProg.html',
     fileName: 'Prog.html',
-    color: 'primary'
+    color: 'primary',
+    keywords: ['programmation', 'développement']
   },
   {
     id: 'aec-devweb',
-    name: 'AEC Développement d\'applications Web',
+    name: 'AEC - Développement d\'applications Web',
     prefix: 'DW-',
-    templateName: 'modOffresAecDevWeb.html',
     fileName: 'AecDevWeb.html',
-    color: 'primary'
+    color: 'primary',
+    keywords: ['Développement d\'applications Web', 'AEC']
   },
   {
     id: 'aec-ti',
-    name: 'AEC Gestionnaire de réseaux, sécurité et virtualisation',
+    name: 'AEC - Gestionnaire de réseaux, sécurité et virtualisation',
     prefix: 'L-',
-    templateName: 'modOffreAecTi.html',
     fileName: 'AecTi.html',
-    color: 'info'
+    color: 'info',
+    keywords: ['Gestionnaire de réseaux', 'AEC']
   },
 ];
 

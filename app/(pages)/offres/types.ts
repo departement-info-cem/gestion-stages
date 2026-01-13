@@ -4,9 +4,9 @@ export interface ProgramProfile {
   id: string;
   name: string;
   prefix: string;
-  templateName: string;
   fileName: string;
   color: 'info' | 'primary';
+  keywords: string[];
 }
 
 export interface OfferRow {

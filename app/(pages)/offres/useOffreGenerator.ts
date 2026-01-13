@@ -7,8 +7,17 @@ import { createEmptyMapping, autoDetectMapping, toColumnSamples } from './utils/
 import { generateOfferPage, downloadHtmlFile } from './services/generateOffersPages';
 import { PROGRAM_PROFILES, MANDATORY_COLUMN_KEYS } from './constants';
 
+function getDefaultSession(): string {
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const year = now.getFullYear();
+  const winterYear = month >= 5 ? year + 1 : year;
+  const shortYear = String(winterYear).slice(-2);
+  return `H${shortYear}`;
+}
+
 export function useOffreGenerator() {
-  const [session, setSession] = useState<string>('H25');
+  const [session, setSession] = useState<string>(getDefaultSession());
   const [file, setFile] = useState<File | null>(null);
   const [sheetColumns, setSheetColumns] = useState<string[]>([]);
   const [columnMapping, setColumnMapping] = useState<ColumnMapping>(createEmptyMapping());
@@ -132,17 +141,27 @@ export function useOffreGenerator() {
       const transformedOffers = offers.map((offer) => {
         const transformed: ProcessedOffer = { ...offer };
         
-        // Ajouter les champs avec les noms de colonnes standards
-        transformed['À quel profil s\'adresse l\'offre de stage ?'] = 
-          offer[keyToColumnName.targetProfiles] as string;
+        // Ajouter le champ avec le nom de colonne standard attendu par processOffers
+        const targetProfilesColumn = keyToColumnName.targetProfiles;
+        console.log('🔍 Processing offer - targetProfilesColumn:', targetProfilesColumn);
+        if (targetProfilesColumn && targetProfilesColumn in offer) {
+          const profileValue = offer[targetProfilesColumn] as string;
+          console.log('✅ Found profile value:', profileValue);
+          transformed['À quel profil s\'adresse l\'offre de stage ?'] = profileValue;
+        } else {
+          console.warn('⚠️ targetProfilesColumn not found in offer. Available keys:', Object.keys(offer));
+        }
         
         return transformed;
       });
 
+      console.log('📊 Transformed offers sample:', transformedOffers[0]);
       const processed = processOffers(transformedOffers, session);
+      console.log('🎯 Processed offers sample:', processed[0]);
       setProcessedOffers(processed);
 
       const counts = countOffersByProfile(processed);
+      console.log('📈 Counts by profile:', counts);
       const summary = Object.entries(counts)
         .filter(([, count]) => count > 0)
         .map(([profileId, count]) => {
@@ -182,16 +201,20 @@ export function useOffreGenerator() {
       });
 
       for (const profile of PROGRAM_PROFILES) {
+        console.log(`🔄 Processing profile: ${profile.id} - ${profile.name}`);
         const filteredOffers = filterOffersByProfile(
           processedOffers,
           profile.id
         );
+        console.log(`📋 Filtered offers for ${profile.id}:`, filteredOffers.length);
 
         if (filteredOffers.length === 0) {
+          console.log(`⏭️ Skipping ${profile.id} - no offers`);
           continue;
         }
 
         try {
+          console.log(`🚀 Generating page for ${profile.id}...`);
           // Transformer les offres pour utiliser les noms de colonnes standards attendus par le template
           const normalizedOffers = filteredOffers.map((offer) => {
             const normalized: ProcessedOffer = { ...offer };
