@@ -2,8 +2,6 @@
 
 import styles from "./page.module.css";
 import { useDossierGenerator } from "./useDossierGenerator";
-import { Navbar } from "../../components/navbar/Navbar";
-import { buildToolNavigationItems } from "../../components/navbar/navigation";
 import { ProgramSelectorSection } from "./program-selector-section/ProgramSelectorSection";
 import { ExcelImportSection } from "./excel-import-section/ExcelImportSection";
 import { ColumnMappingSection } from "./column-mapping-section/ColumnMappingSection";
@@ -28,15 +26,8 @@ export default function DossierPage() {
     generate,
   } = useDossierGenerator();
 
-  const navigationItems = buildToolNavigationItems("dossier");
-
   return (
-    <div className={styles.wrapper}>
-      <Navbar
-        ariaLabel="Navigation des outils"
-        className={styles.toolNavigation}
-        items={navigationItems}
-      />
+    <div className={styles.container}>
 
       <div className={styles.grid}>
         <ProgramSelectorSection

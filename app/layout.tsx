@@ -2,8 +2,12 @@
 
 import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { Navbar } from "./components/navbar/Navbar";
+import { buildToolNavigationItems } from "./components/navbar/navigation";
 import "./globals.css";
+import styles from "./shared.module.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,6 +24,24 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
+  // Détermine la clé de navigation active
+  const currentNavKey = pathname.includes("/convention")
+    ? "convention"
+    : pathname.includes("/dossier")
+    ? "dossier"
+    : pathname.includes("/offres")
+    ? "offres"
+    : pathname.includes("/devoir")
+    ? "devoir"
+    : null;
+
+  const navigationItems = currentNavKey
+    ? buildToolNavigationItems(currentNavKey)
+    : [];
+
   return (
     <html lang="fr">
       <Head>
@@ -32,7 +54,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className={styles.pageContainer}>
+          {!isHomePage && navigationItems.length > 0 && (
+            <Navbar
+              ariaLabel="Navigation des outils"
+              className={styles.globalNavigation}
+              items={navigationItems}
+            />
+          )}
+          {children}
+        </div>
       </body>
     </html>
   );

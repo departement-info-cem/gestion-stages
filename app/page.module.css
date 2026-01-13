@@ -1,17 +1,7 @@
 .wrapper {
   min-height: 100vh;
-  padding: clamp(3rem, 5vw, 6rem) clamp(1.5rem, 4vw, 4rem);
-  background: radial-gradient(
-      circle at top left,
-      rgba(79, 70, 229, 0.1),
-      transparent 55%
-    ),
-    radial-gradient(
-      circle at bottom right,
-      rgba(14, 165, 233, 0.12),
-      transparent 45%
-    ),
-    var(--background);
+  max-height: 100vh;
+  padding: clamp(3rem, 5vw, 6rem) clamp(1.5rem, 4vw, 0);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,19 +47,5 @@
 @media (prefers-color-scheme: dark) {
   .tagline {
     color: rgba(226, 232, 240, 0.82);
-  }
-
-  .wrapper {
-    background: radial-gradient(
-        circle at top left,
-        rgba(129, 140, 248, 0.18),
-        transparent 55%
-      ),
-      radial-gradient(
-        circle at bottom right,
-        rgba(56, 189, 248, 0.2),
-        transparent 45%
-      ),
-      var(--background);
   }
 }

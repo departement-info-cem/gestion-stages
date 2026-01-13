@@ -9,8 +9,6 @@ import { ImportStudentInfosSection } from './import-student-infos-section/Import
 import { MappingStudentInfosSection } from './mapping-student-infos-section/MappingStudentInfosSection';
 import { SignatureSection } from './signature-section/SignatureSection';
 import { GenerationSection } from './generation-section/GenerationSection';
-import { Navbar } from '../../components/navbar/Navbar';
-import { buildToolNavigationItems } from '../../components/navbar/navigation';
 import { useConventionGenerator } from './useConventionGenerator';
 import { MAIN_FILE_FIELDS } from './constants';
 import styles from './page.module.css';
@@ -50,8 +48,6 @@ export default function ConventionPage() {
     handleGenerate,
   } = useConventionGenerator();
 
-  const navigationItems = buildToolNavigationItems('convention');
-
   const handleMainFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -83,12 +79,7 @@ export default function ConventionPage() {
   );
 
   return (
-    <div className={styles.wrapper}>
-      <Navbar
-        ariaLabel="Navigation des outils"
-        className={styles.toolNavigation}
-        items={navigationItems}
-      />
+    <div className={styles.container}>
 
       <div className={styles.grid}>
         {/* Étape 1 - Sélection du programme */}
