@@ -4,6 +4,7 @@ import type { ColumnMapping, ColumnSample, RequiredColumnKey } from '../../types
 import type { ColumnMapperField } from '@/app/components/column-mapper/types';
 import { COLUMN_LABELS, REQUIRED_COLUMN_KEYS, MANDATORY_COLUMN_KEYS } from '../../constants';
 import { useMemo } from 'react';
+import styles from './ColumnMappingSection.module.css';
 
 export interface ColumnMappingSectionProps {
   sheetColumns: string[];
@@ -38,11 +39,7 @@ export function ColumnMappingSection({
 
   return (
     <SectionTile title="3. Association des colonnes">
-      <p style={{ 
-        margin: '0 0 1rem 0', 
-        fontSize: '0.9rem', 
-        color: 'rgba(15, 23, 42, 0.7)' 
-      }}>
+      <p className={styles.helperText}>
         Les champs marqués d'un astérisque (*) sont obligatoires.
       </p>
       <ColumnMapper<RequiredColumnKey>
