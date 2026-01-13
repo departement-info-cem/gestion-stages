@@ -2,6 +2,7 @@ import type { ChangeEvent } from "react";
 import sharedStyles from "../shared.module.css";
 import styles from "./ExcelImportSection.module.css";
 import { FilePicker } from "../../../components/file-picker/FilePicker";
+import { SectionTile } from "@/app/components/section-tile/SectionTile";
 
 interface ExcelImportSectionProps {
   sourceFileName?: string;
@@ -19,8 +20,7 @@ export function ExcelImportSection({
   onSheetChange,
 }: ExcelImportSectionProps) {
   return (
-    <section id="importation" className={sharedStyles.section}>
-      <h2 className={sharedStyles.sectionTitle}>2. Importez la liste Excel</h2>
+    <SectionTile title="2. Importez la liste Excel">
       <FilePicker
         acceptedFileTypes=".xlsx,.xls"
         placeholderText="Déposez un fichier ou cliquez pour sélectionner un .xlsx"
@@ -45,6 +45,6 @@ export function ExcelImportSection({
           </select>
         </>
       )}
-    </section>
+    </SectionTile>
   );
 }

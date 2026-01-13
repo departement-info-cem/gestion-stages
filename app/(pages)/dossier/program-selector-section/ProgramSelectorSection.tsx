@@ -1,21 +1,21 @@
 import { PROGRAM_OPTIONS } from "../constants";
 import { ProgramId } from "../types";
-import sharedStyles from "../shared.module.css";
-import styles from "./ProgramSelector.module.css";
+import styles from "./ProgramSelectorSection.module.css";
+import { SectionTile } from "@/app/components/section-tile/SectionTile";
 
 
-interface ProgramSelectorProps {
+interface ProgramSelectorSectionProps {
   selectedProgram: ProgramId | null;
   onProgramChange: (programId: ProgramId) => void;
 }
 
-export function ProgramSelector({
+export function ProgramSelectorSection({
   selectedProgram,
   onProgramChange,
-}: ProgramSelectorProps) {
+}: ProgramSelectorSectionProps) {
+
   return (
-    <section id="programme" className={sharedStyles.section}>
-      <h2 className={sharedStyles.sectionTitle}>1. Choisissez le programme</h2>
+    <SectionTile title="1. Choisissez le programme">
       <div className={styles.radioGroup}>
         {PROGRAM_OPTIONS.map((option) => (
           <label key={option.id} className={styles.radioOption}>
@@ -32,6 +32,6 @@ export function ProgramSelector({
           </label>
         ))}
       </div>
-    </section>
+    </SectionTile>
   );
 }

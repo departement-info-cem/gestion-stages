@@ -7,14 +7,12 @@ export interface SectionTileProps {
   children: ReactNode;
   onPreviewClick?: () => void;
   previewDisabled?: boolean;
-  className?: string;
 }
 export function SectionTile({
   title,
   children,
   onPreviewClick,
-  previewDisabled = false,
-  className,
+  previewDisabled = false
 }: SectionTileProps) {
   return (
     <section className={styles.section}>

@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 import { useDossierGenerator } from "./useDossierGenerator";
 import { ToolNavigation } from "../../components/navbar/Navbar";
 import { buildToolNavigationItems } from "../../components/navbar/navigation";
-import { ProgramSelector } from "./program-selector/ProgramSelector";
+import { ProgramSelectorSection } from "./program-selector-section/ProgramSelectorSection";
 import { ExcelImportSection } from "./excel-import/ExcelImportSection";
 import { ColumnMappingSection } from "./column-mapping/ColumnMappingSection";
 import { GenerationSection } from "./generation/GenerationSection";
@@ -42,7 +42,7 @@ export default function DossierPage() {
       />
 
       <div className={styles.grid}>
-        <ProgramSelector
+        <ProgramSelectorSection
           selectedProgram={program}
           onProgramChange={setProgram}
         />
