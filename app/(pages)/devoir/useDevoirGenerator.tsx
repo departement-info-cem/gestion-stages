@@ -52,7 +52,8 @@ export function useDevoirGenerator() {
       if (entry.kind === "directory") {
         const cleanName = cleanStudentName(name);
         studentNames.push(cleanName);
-        for await (const [subname, subentry] of entry.entries()) {
+        const dirEntry = entry as FileSystemDirectoryHandle;
+        for await (const [subname, subentry] of dirEntry.entries()) {
           if (subentry.kind === "directory") assignmentSet.add(subname);
         }
       }
