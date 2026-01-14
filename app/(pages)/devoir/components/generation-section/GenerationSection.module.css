@@ -1,0 +1,195 @@
+.controlsRow {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.selectGroup {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(15, 23, 42, 0.82);
+}
+
+.select {
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+  border: 1px solid rgba(15, 23, 42, 0.18);
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: rgba(15, 23, 42, 0.92);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.select:hover:not(:disabled) {
+  border-color: rgba(37, 99, 235, 0.38);
+}
+
+.select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #f1f5f9;
+}
+
+.processButton {
+  padding: 0.65rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #3b82f6;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.processButton:hover:not(:disabled) {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.processButton:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.downloadButton {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #10b981;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.downloadButton:hover:not(:disabled) {
+  background-color: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.downloadButton:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.logsContainer {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.logsTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  color: rgba(15, 23, 42, 0.86);
+}
+
+.logsList {
+  max-height: 240px;
+  overflow-y: auto;
+  background-color: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.logItem {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgba(15, 23, 42, 0.78);
+}
+
+.logBullet {
+  color: #3b82f6;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.logText {
+  flex: 1;
+  word-break: break-word;
+}
+
+@media (prefers-color-scheme: dark) {
+  .label {
+    color: rgba(226, 232, 240, 0.88);
+  }
+
+  .select {
+    background-color: rgba(15, 23, 42, 0.4);
+    border-color: rgba(148, 163, 184, 0.25);
+    color: rgba(226, 232, 240, 0.95);
+  }
+
+  .select:hover:not(:disabled) {
+    border-color: rgba(59, 130, 246, 0.5);
+  }
+
+  .select:disabled {
+    background-color: rgba(15, 23, 42, 0.6);
+  }
+
+  .logsContainer {
+    border-top-color: rgba(148, 163, 184, 0.2);
+  }
+
+  .logsTitle {
+    color: rgba(226, 232, 240, 0.85);
+  }
+
+  .logsList {
+    background-color: rgba(15, 23, 42, 0.4);
+    border-color: rgba(148, 163, 184, 0.2);
+  }
+
+  .logItem {
+    color: rgba(226, 232, 240, 0.75);
+  }
+
+  .logBullet {
+    color: #60a5fa;
+  }
+}
+
+@media (max-width: 720px) {
+  .controlsRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .selectGroup {
+    width: 100%;
+  }
+
+  .processButton {
+    width: 100%;
+  }
+}
