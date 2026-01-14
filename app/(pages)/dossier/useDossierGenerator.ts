@@ -8,6 +8,7 @@ import { generateDossiers } from "./services/generateDossiers";
 export function useDossierGenerator() {
   const [program, setProgram] = useState<ProgramId>(PROGRAM_OPTIONS[0].id);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [reportUrl, setReportUrl] = useState("");
 
   const { statusMessages, pushStatus } = useStatusMessages();
 
@@ -52,12 +53,19 @@ export function useDossierGenerator() {
       const worksheet = getWorksheet();
       ensureColumnMapping();
 
+      if (!reportUrl.trim()) {
+        throw new Error(
+          "Veuillez entrer un lien vers le rapport en ligne."
+        );
+      }
+
       setIsGenerating(true);
 
       const processed = await generateDossiers({
         worksheet,
         columnMapping,
         selectedProgram,
+        reportUrl,
         onStatus: pushStatus,
       });
 
@@ -77,6 +85,7 @@ export function useDossierGenerator() {
     ensureColumnMapping,
     getWorksheet,
     pushStatus,
+    reportUrl,
     selectedProgram,
   ]);
 
@@ -84,9 +93,10 @@ export function useDossierGenerator() {
     () =>
       Boolean(
         sheetColumns.length &&
-        REQUIRED_KEYS.every((key) => columnMapping[key])
+        REQUIRED_KEYS.every((key) => columnMapping[key]) &&
+        reportUrl.trim()
       ),
-    [columnMapping, sheetColumns]
+    [columnMapping, sheetColumns, reportUrl]
   );
 
   return {
@@ -102,6 +112,8 @@ export function useDossierGenerator() {
     isGenerating,
     sourceFileName,
     readyToGenerate,
+    reportUrl,
+    setReportUrl,
     handleFilePick,
     handleSheetChange,
     handleColumnMappingChange,

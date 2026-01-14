@@ -5,6 +5,7 @@ import { useDossierGenerator } from "./useDossierGenerator";
 import { ProgramSelectorSection } from "./components/program-selector-section/ProgramSelectorSection";
 import { ExcelImportSection } from "./components/excel-import-section/ExcelImportSection";
 import { ColumnMappingSection } from "./components/column-mapping-section/ColumnMappingSection";
+import { ReportLinkSection } from "./components/report-link-section/ReportLinkSection";
 import { GenerationSection } from "./components/generation-section/GenerationSection";
 
 export default function DossierPage() {
@@ -20,6 +21,8 @@ export default function DossierPage() {
     isGenerating,
     sourceFileName,
     readyToGenerate,
+    reportUrl,
+    setReportUrl,
     handleFilePick,
     handleSheetChange,
     handleColumnMappingChange,
@@ -52,6 +55,13 @@ export default function DossierPage() {
           columnMapping={columnMapping}
           columnSamples={columnSamples}
           onColumnMappingChange={handleColumnMappingChange}
+        />
+      )}
+
+      {sheetColumns.length > 0 && (
+        <ReportLinkSection
+          reportUrl={reportUrl}
+          onReportUrlChange={setReportUrl}
         />
       )}
 

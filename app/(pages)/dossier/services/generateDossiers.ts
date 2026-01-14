@@ -9,6 +9,7 @@ export interface GenerateDossiersParams {
   worksheet: XLSX.WorkSheet;
   columnMapping: ColumnMapping;
   selectedProgram: ProgramOption;
+  reportUrl: string;
   onStatus: (tone: "error" | "success" | "info", message: string) => void;
 }
 
@@ -16,6 +17,7 @@ export async function generateDossiers({
   worksheet,
   columnMapping,
   selectedProgram,
+  reportUrl,
   onStatus,
 }: GenerateDossiersParams): Promise<number> {
   const XLSX = await import("xlsx");
@@ -25,7 +27,7 @@ export async function generateDossiers({
     raw: false,
   });
 
-  const [suiviBuffer, evaluationBuffer, readmeTemplate, guideBuffer] =
+  const [suiviBuffer, evaluationBuffer, readmeTemplate] =
     await Promise.all([
       templateCache.getBinary(
         resolveAssetPath(selectedProgram.templates.suivi)
@@ -35,9 +37,6 @@ export async function generateDossiers({
       ),
       templateCache.getText(
         resolveAssetPath(selectedProgram.templates.readme)
-      ),
-      templateCache.getBinary(
-        resolveAssetPath(selectedProgram.templates.guide)
       ),
     ]);
 
@@ -109,9 +108,10 @@ export async function generateDossiers({
       .replace(/SUPERVISEUR/g, supervisor);
     
     studentFolder.file("README.md", customizedReadme);
-    studentFolder.file("Guide_rapport.docx", new Uint8Array(guideBuffer), {
-      binary: true,
-    });
+
+    // Créer le fichier .url pour le rapport en ligne
+    const urlFileContent = `[InternetShortcut]\nURL=${reportUrl}\n`;
+    studentFolder.file("Rapport_Stage.url", urlFileContent);
     
     processed += 1;
   }

@@ -22,7 +22,6 @@ export interface ProgramOption {
     suivi: string;
     evaluation: string;
     readme: string;
-    guide: string;
   };
 }
 

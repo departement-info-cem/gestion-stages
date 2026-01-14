@@ -54,7 +54,6 @@ export const PROGRAM_OPTIONS: ProgramOption[] = [
       suivi: "/templates/dossier/Suivi_Hebdo_DEC.xlsx",
       evaluation: "/templates/dossier/Evaluation.xlsx",
       readme: "/templates/dossier/README.md",
-      guide: "/templates/dossier/Guide_rapport_DEC.docx",
     },
   },
   {
@@ -65,7 +64,6 @@ export const PROGRAM_OPTIONS: ProgramOption[] = [
       suivi: "/templates/dossier/Suivi_Hebdo_DEC.xlsx",
       evaluation: "/templates/dossier/Evaluation.xlsx",
       readme: "/templates/dossier/README.md",
-      guide: "/templates/dossier/Guide_rapport_DEC.docx",
     },
   },
   {
@@ -76,7 +74,6 @@ export const PROGRAM_OPTIONS: ProgramOption[] = [
       suivi: "/templates/dossier/Suivi_Hebdo_AEC.xlsx",
       evaluation: "/templates/dossier/Evaluation.xlsx",
       readme: "/templates/dossier/README.md",
-      guide: "/templates/dossier/Guide_rapport_LEAA6.docx",
     },
   },
   {
@@ -87,7 +84,6 @@ export const PROGRAM_OPTIONS: ProgramOption[] = [
       suivi: "/templates/dossier/Suivi_Hebdo_AEC.xlsx",
       evaluation: "/templates/dossier/Evaluation.xlsx",
       readme: "/templates/dossier/README.md",
-      guide: "/templates/dossier/Guide_rapport_LEADY.docx",
     },
   },
 ];

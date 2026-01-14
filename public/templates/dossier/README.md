@@ -7,7 +7,7 @@ Ce dossier va servir à communiquer avec ton superviseur de stage: SUPERVISEUR
 Tu y trouveras les documents suivants:
 
 - EXISTANT Le fichier de suivi de stage à compléter à chaque semaines
-- EXISTANT Le guide pour la rédaction de ton rapport de stage
+- EXISTANT Le lien vers la formulaire pour la rédaction de ton rapport de stage
 - EXISTANT Un fichier d'auto évaluation que tu devras compléter au moment opportun
 - Ta convention de stage (dès qu'on a toutes les signatures elle sera déposée dans ton dossier)
 - PLUS TARD Ton support visuel pour la visite de stage
