@@ -64,6 +64,7 @@ export async function generateConventionDocument(
     NOMPROGRAMME: nomProgramme,
     SIGLECOURS: programConfig.sigleCours,
     NOMDIRECTION: programConfig.nomDirection,
+    nomDirection: programConfig.nomDirection,
 
     // Étudiant
     ETUDIANTNOM: `${convention.prenom} ${convention.nom}`,
