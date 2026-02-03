@@ -1,18 +1,23 @@
 import { ProgramConfig } from './types';
 
 export const PROGRAMS: { [key: string]: ProgramConfig } = {
-  'DEC_REGULIER': {
-    code: '420.B0',
-    name: 'DEC - Régulier',
+  'DEC_PROGRAMMATION': {
+    code: '420.BA',
+    name: 'DEC - Techniques de l\'informatique, Développement d’applications',
     sigleCours: '420-6GE-EM Stage',
     nomDirection: 'Direction des études',
     nbHeuresMinimumStage: 315,
     nbSemaineStage: 10,
     templatePath: '/templates/convention/ConventionDEC.docx',
-    profiles: {
-      '420.BA': '420.BA Techniques de l\'informatique, Développement d’applications',
-      '420.BB': '420.BB Techniques de l\'informatique, Administration d’infrastructure TI',
-    }
+  },
+  'DEC_RESEAU': {
+    code: '420.BB',
+    name: 'DEC - Techniques de l\'informatique, Administration d’infrastructure TI',
+    sigleCours: '420-6GE-EM Stage',
+    nomDirection: 'Direction des études',
+    nbHeuresMinimumStage: 315,
+    nbSemaineStage: 10,
+    templatePath: '/templates/convention/ConventionDEC.docx',
   },
   'AEC_DEVWEB': {
     code: 'LEA.DY',
@@ -53,7 +58,6 @@ export const MAIN_FILE_FIELDS = [
 export const ADDITIONAL_FILE_FIELDS = [
   { key: 'matricule', label: 'Matricule' },
   { key: 'superviseurAcademique', label: 'Superviseur académique' },
-  { key: 'profil', label: 'Profil' },
 ];
 
 // Clauses conditionnelles selon la rémunération

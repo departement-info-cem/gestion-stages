@@ -24,7 +24,9 @@ export function generateConventionData(
       const rowData = row as Record<string, unknown>;
       const matricule = rowData[additionalColumnMapping.matricule];
       if (matricule) {
-        additionalIndex[String(matricule).trim()] = rowData;
+        // Enlever les tirets du matricule pour l'indexation
+        const cleanMatricule = String(matricule).trim().replace(/-/g, "");
+        additionalIndex[cleanMatricule] = rowData;
       }
     });
   }

@@ -71,13 +71,13 @@ export function autoMapColumns(
       /debut.*stage/i,
     ],
     dateFin: [/date.*fin.*stage/i, /fin.*stage/i],
-    matricule: [/^matricule$/i, /^da$/i, /no\.?\s*étu/i, /no\.?\s*etu/i],
+    matricule: [/^matricule$/i, /^da$/i, /no\.?\s*étu/i, /no\.?\s*etu/i, /numéro/i, /numero/i],
     superviseurAcademique: [
       /superviseur\s*académique/i,
       /superviseur\s*academique/i,
       /prof\s*superviseur/i,
+      /^prof$/i,
     ],
-    profil: [/profil/i, /programme/i, /code.*profil/i],
   };
 
   for (const field of requiredFields) {

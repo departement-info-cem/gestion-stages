@@ -7,7 +7,7 @@ export function extractStudentInfo(info: string): {
   matricule: string;
 } {
   const parts = info.trim().split(" ");
-  const matricule = parts[0];
+  const matricule = parts[0].replace(/-/g, ""); // Enlever les tirets du matricule
   const nomPrenom = parts.slice(1).join(" ");
   const [nom, prenom] = nomPrenom.split(",").map((s) => s.trim());
 
