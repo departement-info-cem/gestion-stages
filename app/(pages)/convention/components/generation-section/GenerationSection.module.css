@@ -20,6 +20,30 @@
   cursor: not-allowed;
 }
 
+.infoBox {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: #f0f9ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: #1e3a8a;
+}
+
+.infoBox p {
+  margin: 0;
+}
+
+.link {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: #1d4ed8;
+}
+
 .statusContainer {
   margin-top: 1rem;
 }
@@ -101,5 +125,19 @@
     background-color: #713f12;
     border-color: #f59e0b;
     color: #fef3c7;
+  }
+
+  .infoBox {
+    background-color: #1e3a8a;
+    border-color: #3b82f6;
+    color: #dbeafe;
+  }
+
+  .link {
+    color: #93c5fd;
+  }
+
+  .link:hover {
+    color: #bfdbfe;
   }
 }

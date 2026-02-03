@@ -25,6 +25,20 @@ export function GenerationSection({
         {isGenerating ? 'Génération en cours...' : 'Générer les conventions'}
       </button>
 
+      <div className={styles.infoBox}>
+        <p>
+          💡 Après la génération, vous pouvez convertir les documents Word en PDF à l'aide de{' '}
+          <a
+            href="https://acrobat.adobe.com/link/acrobat/word-to-pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.link}
+          >
+            l'outil d'Adobe
+          </a>
+        </p>
+      </div>
+
       {statusMessages.length > 0 && (
         <div className={styles.statusContainer}>
           <h3 className={styles.statusTitle}>Messages de statut</h3>
