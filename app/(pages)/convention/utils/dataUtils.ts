@@ -52,6 +52,11 @@ export function generateConventionData(
 
     const additionalRow = additionalIndex[matricule];
 
+    // Ignorer les étudiants qui n'ont pas de match dans le fichier additionnel
+    if (!additionalRow) {
+      continue;
+    }
+
     const convention: ConventionData = {
       nom,
       prenom,
@@ -71,18 +76,21 @@ export function generateConventionData(
     };
 
     // Ajouter les données du fichier additionnel
-    if (additionalRow) {
-      if (additionalColumnMapping.superviseurAcademique) {
-        convention.superviseurAcademique = String(
-          additionalRow[additionalColumnMapping.superviseurAcademique] || ""
-        );
-      }
+    if (additionalColumnMapping.superviseurAcademique) {
+      convention.superviseurAcademique = String(
+        additionalRow[additionalColumnMapping.superviseurAcademique] || ""
+      );
+    }
 
-      if (additionalColumnMapping.profil) {
-        convention.profil = String(
-          additionalRow[additionalColumnMapping.profil] || ""
-        );
-      }
+    if (additionalColumnMapping.profil) {
+      convention.profil = String(
+        additionalRow[additionalColumnMapping.profil] || ""
+      );
+    }
+
+    // Ignorer les étudiants qui n'ont pas de superviseur académique assigné
+    if (!convention.superviseurAcademique || convention.superviseurAcademique.trim() === "") {
+      continue;
     }
 
     conventions.push(convention);
