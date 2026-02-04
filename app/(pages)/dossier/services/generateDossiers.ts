@@ -9,7 +9,6 @@ export interface GenerateDossiersParams {
   worksheet: XLSX.WorkSheet;
   columnMapping: ColumnMapping;
   selectedProgram: ProgramOption;
-  reportUrl: string;
   onStatus: (tone: "error" | "success" | "info", message: string) => void;
 }
 
@@ -17,7 +16,6 @@ export async function generateDossiers({
   worksheet,
   columnMapping,
   selectedProgram,
-  reportUrl,
   onStatus,
 }: GenerateDossiersParams): Promise<number> {
   const XLSX = await import("xlsx");
@@ -109,10 +107,6 @@ export async function generateDossiers({
     
     studentFolder.file("README.md", customizedReadme);
 
-    // Créer le fichier .url pour le rapport en ligne
-    const urlFileContent = `[InternetShortcut]\nURL=${reportUrl}\n`;
-    studentFolder.file("Rapport_Stage.url", urlFileContent);
-    
     processed += 1;
   }
 

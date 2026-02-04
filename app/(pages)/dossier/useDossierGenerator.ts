@@ -53,19 +53,12 @@ export function useDossierGenerator() {
       const worksheet = getWorksheet();
       ensureColumnMapping();
 
-      if (!reportUrl.trim()) {
-        throw new Error(
-          "Veuillez entrer un lien vers le rapport en ligne."
-        );
-      }
-
       setIsGenerating(true);
 
       const processed = await generateDossiers({
         worksheet,
         columnMapping,
         selectedProgram,
-        reportUrl,
         onStatus: pushStatus,
       });
 
@@ -85,7 +78,6 @@ export function useDossierGenerator() {
     ensureColumnMapping,
     getWorksheet,
     pushStatus,
-    reportUrl,
     selectedProgram,
   ]);
 
@@ -93,10 +85,9 @@ export function useDossierGenerator() {
     () =>
       Boolean(
         sheetColumns.length &&
-        REQUIRED_KEYS.every((key) => columnMapping[key]) &&
-        reportUrl.trim()
+        REQUIRED_KEYS.every((key) => columnMapping[key])
       ),
-    [columnMapping, sheetColumns, reportUrl]
+    [columnMapping, sheetColumns]
   );
 
   return {
