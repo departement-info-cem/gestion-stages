@@ -62,7 +62,11 @@ export async function generateConventions(
   }
 
   // Charger le template
-  const templateResponse = await fetch(programConfig.templatePath);
+  const rawBase = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+  const base = rawBase ? (rawBase.startsWith('/') ? rawBase : `/${rawBase}`) : '';
+  const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
+  const templateUrl = `${normalizedBase}${programConfig.templatePath}`;
+  const templateResponse = await fetch(templateUrl);
   if (!templateResponse.ok) {
     throw new Error("Erreur lors du chargement du template");
   }
