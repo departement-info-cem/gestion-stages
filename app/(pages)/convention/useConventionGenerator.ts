@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import type { ProgramConfig } from './types';
-import { PROGRAMS, MAIN_FILE_FIELDS, ADDITIONAL_FILE_FIELDS } from './constants';
+import { MAIN_FILE_FIELDS, ADDITIONAL_FILE_FIELDS } from './constants';
 import { useStatusMessages } from './hooks/useStatusMessages';
 import { useExcelFile } from './hooks/useExcelFile';
 import { useSignatures } from './hooks/useSignatures';
@@ -10,10 +10,8 @@ import { generateConventions } from './services/generateConventions';
 
 export function useConventionGenerator() {
   // État du programme sélectionné
-  const [selectedProgram, setSelectedProgram] = useState<string>('DEC_REGULIER');
-  const [programConfig, setProgramConfig] = useState<ProgramConfig | null>(
-    PROGRAMS['DEC_REGULIER']
-  );
+  const [selectedProgram, setSelectedProgram] = useState<string>('');
+  const [programConfig, setProgramConfig] = useState<ProgramConfig | null>(null);
 
   // État des dates par défaut
   const [defaultStartDate, setDefaultStartDate] = useState<string>('');

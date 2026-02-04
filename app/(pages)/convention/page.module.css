@@ -7,7 +7,8 @@
 .grid {
   display: grid;
   gap: 1.75rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* Toujours réserver deux colonnes minimum sur écran large afin que l'étape 1 prenne la moitié de la largeur */
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
 }
 
 @media (max-width: 720px) {
