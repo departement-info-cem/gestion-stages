@@ -33,10 +33,12 @@ export async function generateConventionDocument(
 
   // Utiliser les dates par défaut si les dates de la convention sont vides
   if (!dateDebut && defaultDates?.startDate) {
-    dateDebut = new Date(defaultDates.startDate);
+    const [y, m, d] = defaultDates.startDate.split('-').map(Number);
+    dateDebut = new Date(y, m - 1, d);
   }
   if (!dateFin && defaultDates?.endDate) {
-    dateFin = new Date(defaultDates.endDate);
+    const [y, m, d] = defaultDates.endDate.split('-').map(Number);
+    dateFin = new Date(y, m - 1, d);
   }
 
   // Calculer les jours ouvrables
