@@ -51,6 +51,7 @@ export const MAIN_FILE_FIELDS = [
   { key: 'mandat', label: 'Description du mandat' },
   { key: 'salaireHoraire', label: 'Salaire horaire du stagiaire' },
   { key: 'modaliteTeletravail', label: 'Modalités concernant le télétravail' },
+  { key: 'questionDates', label: 'En dehors des dates régulières' },
   { key: 'dateDebut', label: 'Date de début du stage' },
   { key: 'dateFin', label: 'Date de fin du stage' },
 ];

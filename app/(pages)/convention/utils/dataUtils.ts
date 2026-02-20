@@ -57,6 +57,24 @@ export function generateConventionData(
       continue;
     }
 
+    // Gestion de la logique de dates selon la question
+    let dateDebutRaw = row[mainColumnMapping.dateDebut];
+    let dateFinRaw = row[mainColumnMapping.dateFin];
+    let dateDebut = "";
+    let dateFin = "";
+    // Si la valeur est un nombre (Excel), convertir en AAAA-MM-JJ
+    if (typeof dateDebutRaw === "number") {
+      const jsDate = require("./dateUtils").excelDateToJSDate(dateDebutRaw);
+      dateDebut = jsDate.toISOString().slice(0, 10);
+    } else if (typeof dateDebutRaw === "string") {
+      dateDebut = dateDebutRaw;
+    }
+    if (typeof dateFinRaw === "number") {
+      const jsDate = require("./dateUtils").excelDateToJSDate(dateFinRaw);
+      dateFin = jsDate.toISOString().slice(0, 10);
+    } else if (typeof dateFinRaw === "string") {
+      dateFin = dateFinRaw;
+    }
     const convention: ConventionData = {
       nom,
       prenom,
@@ -71,8 +89,8 @@ export function generateConventionData(
       mandat: String(row[mainColumnMapping.mandat] || ""),
       salaireHoraire: Number(row[mainColumnMapping.salaireHoraire] || 0),
       modaliteTeletravail: String(row[mainColumnMapping.modaliteTeletravail] || ""),
-      dateDebut: String(row[mainColumnMapping.dateDebut] || ""),
-      dateFin: String(row[mainColumnMapping.dateFin] || ""),
+      dateDebut,
+      dateFin,
     };
 
     // Ajouter les données du fichier additionnel

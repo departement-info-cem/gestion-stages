@@ -67,6 +67,12 @@ export function parseDate(value: unknown): Date | null {
 
   // Si c'est une chaîne
   if (typeof value === "string") {
+    // Gérer explicitement le format AAAA-MM-JJ
+    const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (isoDateRegex.test(value)) {
+      const [y, m, d] = value.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
     const parsed = new Date(value);
     if (!isNaN(parsed.getTime())) return parsed;
   }

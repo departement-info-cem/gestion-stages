@@ -71,6 +71,11 @@ export function autoMapColumns(
       /debut.*stage/i,
     ],
     dateFin: [/date.*fin.*stage/i, /fin.*stage/i],
+    questionDates: [
+      /le stage se déroule.*est-ce que le stage se fera dans ces dates/i,
+      /stage.*se.*déroule.*normalement.*est-ce que.*dans ces dates/i,
+      /est-ce que le stage.*dans ces dates/i
+    ],
     matricule: [/^matricule$/i, /^da$/i, /no\.?\s*étu/i, /no\.?\s*etu/i, /numéro/i, /numero/i],
     superviseurAcademique: [
       /superviseur\s*académique/i,
