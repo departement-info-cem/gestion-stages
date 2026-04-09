@@ -1,0 +1,78 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.generateButton {
+  padding: 0.75rem 1.5rem;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s;
+  max-width: 250px;
+}
+
+.generateButton:hover:not(:disabled) {
+  background-color: #0052a3;
+}
+
+.generateButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.statusContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.statusMessage {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.icon {
+  flex-shrink: 0;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 2px;
+}
+
+.text {
+  flex: 1;
+}
+
+.statusMessage.success {
+  background-color: #e6f4ea;
+  color: #137333;
+  border: 1px solid #34a853;
+}
+
+.statusMessage.error {
+  background-color: #fce8e6;
+  color: #c5221f;
+  border: 1px solid #ea4335;
+}
+
+.statusMessage.warning {
+  background-color: #fef7e0;
+  color: #f57f17;
+  border: 1px solid #fbbc04;
+}
+
+.statusMessage.info {
+  background-color: #e8f0fe;
+  color: #1e40af;
+  border: 1px solid #1f2937;
+}
