@@ -5,7 +5,8 @@ export interface ProgramProfile {
   name: string;
   prefix: string;
   fileName: string;
-  color: 'info' | 'primary';
+  /** Teinte de la page générée : profil TI ou développement */
+  accent: 'ti' | 'dev';
   keywords: string[];
 }
 
@@ -45,10 +46,7 @@ export type RequiredColumnKey =
   | 'teamSize'
   | 'followUp'
   | 'numberOfInterns'
-  | 'website'
-  | 'contactPerson'
-  | 'contactEmail'
-  | 'contactPhone';
+  | 'website';
 
 export type ColumnMapping = Record<RequiredColumnKey, string>;
 
@@ -56,3 +54,11 @@ export interface ColumnSample {
   header: string;
   values: string[];
 }
+
+/** Champs d'une offre prêts à être rendus, indépendants des libellés du formulaire */
+export type OfferContentKey = Exclude<RequiredColumnKey, 'targetProfiles'>;
+
+export type OfferContent = Record<OfferContentKey, string> & {
+  /** Identifiant publié de l'offre, ex. « R-H27-01 » */
+  reference: string;
+};

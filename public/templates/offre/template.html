@@ -1,193 +1,433 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Offres de stages {{Titre}} {{session}}</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <title>Offres de stage — {{Titre}} — {{session}}</title>
   <style>
+    :root {
+      --fond: #f6f5f2;
+      --surface: #ffffff;
+      --texte: #1c1c1a;
+      --texte-doux: #5c5a55;
+      --bord: #dedbd4;
+      --bord-fort: #c6c2b9;
+      --accent: #1b4965;
+      --accent-clair: #eaf0f4;
+      --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body[data-accent="dev"] {
+      --accent: #2a5c46;
+      --accent-clair: #e8f0eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    /* Une règle « display » d'auteur l'emporte sinon sur l'attribut hidden,
+       dont dépendent le filtre et l'affichage conditionnel de la recherche. */
+    [hidden] { display: none !important; }
+
     body {
-      min-height: 100vh;
-      padding-bottom: 3rem;
+      margin: 0;
+      background: var(--fond);
+      color: var(--texte);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
     }
-    
-    .hero {
-      background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 100%);
-      margin-bottom: 1.5rem;
+
+    .contenu {
+      max-width: 60rem;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
     }
-    
-    .hero .hero-body {
-      padding: 1.5rem 1.5rem;
+
+    .lien-evitement {
+      position: absolute;
+      left: -9999px;
     }
-    
-    .nav-buttons {
+
+    .lien-evitement:focus {
+      left: 1rem;
+      top: 1rem;
+      z-index: 10;
+      background: var(--surface);
+      padding: 0.6rem 1rem;
+      border: 2px solid var(--accent);
+      border-radius: 4px;
+    }
+
+    a { color: var(--accent); }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* ---------- En-tête ---------- */
+
+    .entete {
+      border-top: 4px solid var(--accent);
+      background: var(--surface);
+      border-bottom: 1px solid var(--bord);
+      margin-bottom: 2.5rem;
+    }
+
+    .entete .contenu {
+      padding-top: 2.25rem;
+      padding-bottom: 2rem;
+    }
+
+    .entete h1 {
+      font-family: var(--serif);
+      font-size: 1.9rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    .entete .programme {
+      font-size: 1.05rem;
+      color: var(--accent);
+      margin: 0.35rem 0 0;
+    }
+
+    .entete .meta {
+      font-size: 0.9rem;
+      color: var(--texte-doux);
+      margin: 0.75rem 0 0;
+    }
+
+    /* ---------- Recherche et sommaire ---------- */
+
+    .outils {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      padding: 1.5rem 0;
-      border-radius: 8px;
-      margin-bottom: 2rem;
+      align-items: baseline;
+      gap: 0.75rem 1.25rem;
+      margin-bottom: 1.75rem;
     }
-    
-    .nav-buttons a {
-      font-weight: 500;
-      transition: all 0.2s ease;
-    }
-    
-    .nav-buttons a:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    }
-    
-    .offer-card {
-      margin-bottom: 2rem;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      transition: all 0.3s ease;
-      background: white;
-    }
-    
-    .offer-header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 1.5rem;
-    }
-    
-    .offer-id {
-      display: inline-block;
-      background: rgba(255,255,255,0.2);
-      padding: 0.25rem 0.75rem;
+
+    .champ-recherche {
+      flex: 1 1 22rem;
+      padding: 0.6rem 0.85rem;
+      font: inherit;
+      font-size: 0.95rem;
+      color: inherit;
+      background: var(--surface);
+      border: 1px solid var(--bord-fort);
       border-radius: 4px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
     }
-    
-    .offer-company {
-      font-size: 1.75rem;
-      font-weight: 700;
+
+    .compteur {
+      font-size: 0.9rem;
+      color: var(--texte-doux);
       margin: 0;
-      line-height: 1.2;
     }
-    
-    .offer-meta {
-      margin-top: 0.75rem;
-      font-size: 0.95rem;
-      opacity: 0.95;
+
+    .sommaire {
+      margin-bottom: 2.5rem;
     }
-    
-    .content-grid {
-      display: grid;
-      gap: 1rem;
-      padding: 1.5rem;
-    }
-    
-    .info-box {
-      padding: 1.25rem;
-      border-radius: 8px;
-      border-left: 4px solid;
-    }
-    
-    .info-box h5 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin: 0 0 0.75rem 0;
-      color: #363636;
-    }
-    
-    .info-box.mandate {
-      background: #f8f9fa;
-      border-color: #667eea;
-    }
-    
-    .info-box.tech {
-      background: #e8f4f8;
-      border-color: #3298dc;
-    }
-    
-    .details-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    
-    .detail-box {
-      padding: 1rem;
-      border-radius: 6px;
-      font-size: 0.95rem;
-    }
-    
-    .detail-box strong {
-      display: block;
-      margin-bottom: 0.35rem;
-      color: #363636;
-      font-size: 0.85rem;
+
+    .sommaire h2 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      color: var(--texte-doux);
+      margin: 0 0 0.75rem;
     }
-    
-    .detail-box.remuneration {
-      background: #e3f2fd;
-      border: 1px solid #90caf9;
+
+    .sommaire ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+      gap: 0.6rem;
     }
-    
-    .detail-box.workplace {
-      background: #fff3e0;
-      border: 1px solid #ffb74d;
+
+    .sommaire li {
+      display: flex;
     }
-    
-    .detail-box.future {
-      background: #f3e5f5;
-      border: 1px solid #ba68c8;
+
+    .sommaire a {
+      flex: 1;
+      padding: 0.6rem 0.85rem;
+      background: var(--surface);
+      border: 1px solid var(--bord);
+      border-left: 3px solid var(--bord-fort);
+      border-radius: 4px;
+      color: inherit;
+      text-decoration: none;
     }
-    
-    .footer-note {
+
+    .sommaire a:hover {
+      border-color: var(--accent);
+      background: var(--accent-clair);
+    }
+
+    .sommaire .reference {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      font-variant-numeric: tabular-nums;
+      color: var(--accent);
+      margin-bottom: 0.1rem;
+    }
+
+    .sommaire .entreprise {
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    /* ---------- Offres ---------- */
+
+    .offre {
+      background: var(--surface);
+      border: 1px solid var(--bord);
+      border-radius: 6px;
+      margin-bottom: 1.25rem;
+      scroll-margin-top: 1.5rem;
+    }
+
+    .offre:target {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-clair);
+    }
+
+    .offre-entete {
+      padding: 1.4rem 1.75rem 1.1rem;
+      border-bottom: 1px solid var(--bord);
+    }
+
+    .offre-reference {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin: 0 0 0.3rem;
+    }
+
+    .offre-entreprise {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .offre-faits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.1rem;
+      margin: 0.7rem 0 0;
+      padding: 0;
+      list-style: none;
+      font-size: 0.88rem;
+      color: var(--texte-doux);
+    }
+
+    .offre-corps {
+      padding: 1.5rem 1.75rem 1.75rem;
+    }
+
+    .offre-corps section + section,
+    .offre-corps section + .details {
+      margin-top: 1.5rem;
+    }
+
+    .offre-corps h3 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--texte-doux);
+      margin: 0 0 0.45rem;
+    }
+
+    .offre-corps p {
+      margin: 0;
+    }
+
+    .details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      gap: 1rem 2rem;
+      margin: 0;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--bord);
+    }
+
+    .details div {
+      min-width: 0;
+    }
+
+    .details dt {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--texte-doux);
+      margin-bottom: 0.15rem;
+    }
+
+    .details dd {
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .aucun-resultat {
+      padding: 2.5rem 0;
       text-align: center;
-      padding: 2rem 0 1rem;
-      font-size: 0.9rem;
-      opacity: 0.8;
+      color: var(--texte-doux);
     }
-    
-    @media (max-width: 768px) {
-      .offer-company {
-        font-size: 1.35rem;
+
+    .pied {
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--bord);
+      font-size: 0.85rem;
+      color: var(--texte-doux);
+    }
+
+    .haut-de-page {
+      position: fixed;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      padding: 0.55rem 0.9rem;
+      font: inherit;
+      font-size: 0.85rem;
+      color: var(--texte);
+      background: var(--surface);
+      border: 1px solid var(--bord-fort);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 40rem) {
+      .offre-entete,
+      .offre-corps { padding-left: 1.15rem; padding-right: 1.15rem; }
+      .entete h1 { font-size: 1.55rem; }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --fond: #16181a;
+        --surface: #1e2124;
+        --texte: #e8e6e1;
+        --texte-doux: #a9a49b;
+        --bord: #32363a;
+        --bord-fort: #464b50;
+        --accent: #8fc0dd;
+        --accent-clair: #22303a;
       }
-      
-      .details-row {
-        grid-template-columns: 1fr;
+
+      body[data-accent="dev"] {
+        --accent: #9ecfb5;
+        --accent-clair: #23332b;
       }
+    }
+
+    @media print {
+      body { background: #fff; font-size: 11pt; }
+      .outils, .haut-de-page, .sommaire { display: none; }
+      .offre { break-inside: avoid; border-color: #999; }
+      a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.85em; word-break: break-all; }
     }
   </style>
 </head>
 
-<body class="{{bodyClass}}">
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container">
-        <h1 class="title is-4 has-text-light has-text-centered" style="margin-bottom: 0.25rem;">
-          Offres de stages {{Titre}}
-        </h1>
-        <h2 class="subtitle is-6 has-text-light has-text-centered" style="margin-bottom: 0;">
-          Session {{session}}
-        </h2>
-      </div>
+<body data-accent="{{accent}}">
+  <a class="lien-evitement" href="#offres">Aller à la liste des offres</a>
+
+  <header class="entete">
+    <div class="contenu">
+      <h1>Offres de stage</h1>
+      <p class="programme">{{Titre}}</p>
+      <p class="meta">Session {{session}} &middot; {{COUNT}} &middot; Mise à jour le {{now}}</p>
     </div>
-  </section>
-  
-  <div class="container">
-    <nav class="nav-buttons">
-      {{QUICK_LINKS}}
+  </header>
+
+  <main class="contenu">
+    <div class="outils" hidden>
+      <input type="search" id="recherche" class="champ-recherche"
+        placeholder="Filtrer par entreprise, technologie, ville…" aria-label="Filtrer les offres">
+      <p class="compteur" id="compteur" role="status" aria-live="polite"></p>
+    </div>
+
+    <nav class="sommaire" aria-labelledby="titre-sommaire">
+      <h2 id="titre-sommaire">Entreprises</h2>
+      <ul>
+        {{QUICK_LINKS}}
+      </ul>
     </nav>
 
-    {{OFFER_CARDS}}
-    
-    <div class="footer-note has-text-light">
-      Page générée le {{now}}
+    <div id="offres">
+      {{OFFER_CARDS}}
     </div>
-  </div>
+
+    <p class="aucun-resultat" id="aucun-resultat" hidden>Aucune offre ne correspond à votre recherche.</p>
+
+    <p class="pied">Page générée le {{now}}.</p>
+  </main>
+
+  <button type="button" class="haut-de-page" id="haut-de-page" hidden>Haut de page</button>
+
+  <script>
+    (function () {
+      var offres = Array.prototype.slice.call(document.querySelectorAll('.offre'));
+      var liens = Array.prototype.slice.call(document.querySelectorAll('.sommaire a'));
+      var champ = document.getElementById('recherche');
+      var compteur = document.getElementById('compteur');
+      var aucunResultat = document.getElementById('aucun-resultat');
+      var bouton = document.getElementById('haut-de-page');
+
+      document.querySelector('.outils').hidden = false;
+
+      function normaliser(valeur) {
+        return valeur.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      }
+
+      function filtrer() {
+        var requete = normaliser(champ.value.trim());
+        var visibles = 0;
+
+        offres.forEach(function (offre) {
+          var correspond = !requete || normaliser(offre.dataset.recherche || '').indexOf(requete) !== -1;
+          offre.hidden = !correspond;
+          if (correspond) visibles++;
+        });
+
+        liens.forEach(function (lien) {
+          var cible = document.getElementById(lien.hash.slice(1));
+          lien.parentElement.hidden = cible ? cible.hidden : false;
+        });
+
+        aucunResultat.hidden = visibles > 0;
+        compteur.textContent = requete
+          ? visibles + (visibles > 1 ? ' offres affichées' : ' offre affichée')
+          : '';
+      }
+
+      champ.addEventListener('input', filtrer);
+
+      window.addEventListener('scroll', function () {
+        bouton.hidden = window.scrollY < 600;
+      }, { passive: true });
+
+      bouton.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        champ.focus();
+      });
+    })();
+  </script>
 </body>
 
 </html>

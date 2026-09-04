@@ -6,7 +6,7 @@ export const PROGRAM_PROFILES: ProgramProfile[] = [
     name: 'DEC - Administration d’infrastructure TI',
     prefix: 'R-',
     fileName: 'TI.html',
-    color: 'info',
+    accent: 'ti',
     keywords: ['TI', 'réseautique', 'cybersécurité', 'infrastructure']
   },
   {
@@ -14,7 +14,7 @@ export const PROGRAM_PROFILES: ProgramProfile[] = [
     name: 'DEC - Développement d’applications',
     prefix: 'P-',
     fileName: 'Prog.html',
-    color: 'primary',
+    accent: 'dev',
     keywords: ['programmation', 'développement']
   },
   {
@@ -22,7 +22,7 @@ export const PROGRAM_PROFILES: ProgramProfile[] = [
     name: 'AEC - Développement d\'applications Web',
     prefix: 'DW-',
     fileName: 'AecDevWeb.html',
-    color: 'primary',
+    accent: 'dev',
     keywords: ['Développement d\'applications Web', 'AEC']
   },
   {
@@ -30,7 +30,7 @@ export const PROGRAM_PROFILES: ProgramProfile[] = [
     name: 'AEC - Gestionnaire de réseaux, sécurité et virtualisation',
     prefix: 'L-',
     fileName: 'AecTi.html',
-    color: 'info',
+    accent: 'ti',
     keywords: ['Gestionnaire de réseaux', 'AEC']
   },
 ];
@@ -42,9 +42,6 @@ export const REQUIRED_COLUMN_KEYS: RequiredColumnKey[] = [
   'techContext',
   'numberOfInterns',
   'website',
-  'contactPerson',
-  'contactEmail',
-  'contactPhone',
   'remunerationType',
   'salary',
   'vehicleRequired',
@@ -78,9 +75,6 @@ export const COLUMN_LABELS: Record<RequiredColumnKey, string> = {
   followUp: 'Suites possibles',
   numberOfInterns: 'Nombre de stagiaires',
   website: 'Site web',
-  contactPerson: 'Personne contact',
-  contactEmail: 'Courriel de la personne contact',
-  contactPhone: 'Téléphone de la personne contact',
 };
 
 export const COLUMN_KEYWORDS: Record<RequiredColumnKey, string[]> = {
@@ -183,30 +177,5 @@ export const COLUMN_KEYWORDS: Record<RequiredColumnKey, string[]> = {
     'website',
     'url',
     'site internet',
-  ],
-  contactPerson: [
-    'personne contact',
-    'contact person',
-    'nom du contact',
-    'responsable',
-    'contact',
-    'personne ressource',
-  ],
-  contactEmail: [
-    'courriel',
-    'email',
-    'e-mail',
-    'courriel contact',
-    'email contact',
-    'adresse courriel',
-  ],
-  contactPhone: [
-    'téléphone',
-    'telephone',
-    'phone',
-    'numéro',
-    'numero',
-    'téléphone contact',
-    'phone number',
   ],
 };

@@ -3,6 +3,7 @@ import * as XLSX from 'xlsx';
 import type { ColumnMapping, ColumnSamples } from '../types';
 import { autoMapColumns, extractColumnSamples } from '../utils';
 import type { ColumnMapperField } from '@/app/components/column-mapper/ColumnMapper';
+import { readWorkbookFromFile } from '@/app/utils/spreadsheetUtils';
 
 export interface UseExcelFileResult {
   file: File | null;
@@ -34,8 +35,7 @@ export function useExcelFile(
     async (file: File) => {
       try {
         setFile(file);
-        const buffer = await file.arrayBuffer();
-        const wb = XLSX.read(buffer);
+        const wb = await readWorkbookFromFile(file);
         setWorkbook(wb);
         setSheetNames(wb.SheetNames);
 

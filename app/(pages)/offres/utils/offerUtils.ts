@@ -1,5 +1,6 @@
 import type { ProcessedOffer, ProgramProfile } from '../types';
 import { PROGRAM_PROFILES } from '../constants';
+import { containsKeyword } from '@/app/utils/stringUtils';
 
 /**
  * Assigne un ID à une offre pour un profil donné
@@ -10,9 +11,10 @@ export function assignOfferId(
   session: string,
   currentId: number
 ): { id: string | null; nextId: number } {
-  // Vérifier si le profileName contient l'un des mots-clés du profil
-  const matches = profile.keywords.some(keyword => 
-    profileName.toLowerCase().includes(keyword.toLowerCase())
+  // Le mot-clé doit apparaître comme mot entier : « informatique » ne doit
+  // pas déclencher le profil « TI ».
+  const matches = profile.keywords.some((keyword) =>
+    containsKeyword(profileName, keyword)
   );
   
   if (matches) {
@@ -86,7 +88,7 @@ export function filterOffersByProfile(
 /**
  * Obtient le nom de la colonne ID pour un profil donné
  */
-function getIdColumnForProfile(profileId: string): keyof ProcessedOffer {
+export function getIdColumnForProfile(profileId: string): string {
   switch (profileId) {
     case 'dec-ti':
       return 'IDTechTI';

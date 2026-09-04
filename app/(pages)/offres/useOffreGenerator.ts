@@ -2,9 +2,10 @@ import { useState, useCallback, useMemo } from 'react';
 import * as XLSX from 'xlsx';
 import type { ProcessedOffer, ColumnMapping, ColumnSample, RequiredColumnKey } from './types';
 import { useStatusMessages } from './hooks/useStatusMessages';
-import { processOffers, filterOffersByProfile, countOffersByProfile } from './utils';
+import { processOffers, countOffersByProfile } from './utils';
 import { createEmptyMapping, autoDetectMapping, toColumnSamples } from './utils/columnUtils';
-import { generateOfferPage, downloadHtmlFile } from './services/generateOffersPages';
+import { generateAllPages } from './services/generateAllPages';
+import { readWorkbookFromFile } from '@/app/utils/spreadsheetUtils';
 import { PROGRAM_PROFILES, MANDATORY_COLUMN_KEYS } from './constants';
 
 function getDefaultSession(): string {
@@ -35,8 +36,7 @@ export function useOffreGenerator() {
         clearStatus();
         pushStatus('info', 'Lecture du fichier Excel...');
 
-        const buffer = await uploadedFile.arrayBuffer();
-        const workbook = XLSX.read(buffer, { type: 'array' });
+        const workbook = await readWorkbookFromFile(uploadedFile);
 
         if (!workbook.SheetNames.length) {
           pushStatus('error', 'Le fichier Excel ne contient aucun onglet.');
@@ -184,92 +184,18 @@ export function useOffreGenerator() {
     pushStatus('info', 'Génération des pages HTML...');
 
     try {
-      let generatedCount = 0;
-
-      // Créer le mapping des clés vers les noms de colonnes
-      const keyToColumnName: Record<string, string> = {};
-      (Object.keys(columnMapping) as RequiredColumnKey[]).forEach((key) => {
-        const columnName = columnMapping[key];
-        if (columnName) {
-          keyToColumnName[key] = columnName;
-        }
+      const generatedCount = await generateAllPages({
+        processedOffers,
+        columnMapping,
+        session,
+        onStatus: pushStatus,
       });
 
-      for (const profile of PROGRAM_PROFILES) {
-        const filteredOffers = filterOffersByProfile(
-          processedOffers,
-          profile.id
-        );
-
-        if (filteredOffers.length === 0) {
-          continue;
-        }
-
-        try {
-          // Transformer les offres pour utiliser les noms de colonnes standards attendus par le template
-          const normalizedOffers = filteredOffers.map((offer) => {
-            const normalized: ProcessedOffer = { ...offer };
-            
-            // Helper pour obtenir la valeur d'une colonne mappée ou vide
-            const getValue = (key: string): string | number | null => {
-              const columnName = keyToColumnName[key];
-              if (!columnName) {
-                return '';
-              }
-              if (!(columnName in offer)) {
-                return '';
-              }
-              const value = offer[columnName];
-              return value ?? '';
-            };
-            
-            // Mapper les colonnes personnalisées aux noms attendus par le template
-            normalized['Nom de l\'entreprise qui offre le stage'] = getValue('companyName');
-            normalized['Combien de stagiaires souhaitez-vous prendre pour cette offre ?'] = getValue('numberOfInterns');
-            normalized['Site web de l\'entreprise'] = getValue('website');
-            normalized['Personne contact pour cette offre de stage'] = getValue('contactPerson');
-            normalized['Courriel de la personne contact pour cette offre de stage'] = getValue('contactEmail');
-            normalized['Numéro de téléphone de la personne contact pour cette offre de stage'] = getValue('contactPhone');
-            normalized['Description du mandat ou des tâches prévues pour le stage'] = getValue('mandate');
-            normalized['Description du contexte technologique (plateformes utilisées, équipements utilisés, technologies ...)'] = getValue('techContext');
-            normalized['Quel type de rémunération est proposée?'] = getValue('remunerationType');
-            normalized['Si le stage est rémunéré, quel sera le salaire ou la compensation financière ?'] = getValue('salary');
-            normalized['Est-ce que le stagiaire doit posséder un véhicule pour se déplacer ? (ex. chez des clients, entre les succursales du bureau, etc.)'] = getValue('vehicleRequired');
-            normalized['Quel est l\'horaire hebdomadaire de l\'entreprise? (ex. 35 heures/semaine, etc.) ?'] = getValue('schedule');
-            normalized['Quelles sont les modalités concernant le télétravail ?'] = getValue('remoteModes');
-            normalized['Si le stage comprend du présentiel, quelle sera l\'adresse où le stage sera effectué ? '] = getValue('location');
-            normalized['Quelle est la taille de l\'équipe avec laquelle travaillera le stagiaire?'] = getValue('teamSize');
-            normalized['Suite au stage, quelles sont les possibilités (ex. emploi temps plein, été, partiel, aucune) ?'] = getValue('followUp');
-            
-            return normalized;
-          });
-
-          const html = await generateOfferPage(
-            profile,
-            normalizedOffers,
-            session
-          );
-
-          downloadHtmlFile(html, profile.fileName);
-          generatedCount++;
-
-          pushStatus(
-            'success',
-            `${profile.name}: ${filteredOffers.length} offre(s) générée(s).`
-          );
-        } catch (error) {
-          console.error(`Error generating page for ${profile.id}:`, error);
-          pushStatus(
-            'error',
-            `Erreur lors de la génération pour ${profile.name}.`
-          );
-        }
-      }
-
       if (generatedCount > 0) {
-        pushStatus('success', `${generatedCount} fichier(s) HTML généré(s).`);
+        const pluriel = generatedCount > 1 ? 'fichiers' : 'fichier';
+        pushStatus('success', `${generatedCount} ${pluriel} HTML généré(s).`);
       } else {
-        pushStatus('error', 'Aucun fichier HTML n\'a pu être généré.');
+        pushStatus('error', "Aucun fichier HTML n'a pu être généré.");
       }
     } catch (error) {
       console.error('Error generating offers:', error);
@@ -286,8 +212,11 @@ export function useOffreGenerator() {
     }
 
     const counts = countOffersByProfile(processedOffers);
+    // Une offre qui vise plusieurs profils est publiée dans chaque page :
+    // le total reflète le nombre de publications, pas le nombre de lignes.
+    const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
     return {
-      total: processedOffers.length,
+      total,
       byProfile: counts,
     };
   }, [processedOffers]);

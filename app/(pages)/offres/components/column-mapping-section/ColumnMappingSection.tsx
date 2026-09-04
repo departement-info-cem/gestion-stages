@@ -40,7 +40,7 @@ export function ColumnMappingSection({
   return (
     <SectionTile title="3. Association des colonnes">
       <p className={styles.helperText}>
-        Les champs marqués d'un astérisque (*) sont obligatoires.
+        Les champs marqués d&apos;un astérisque (*) sont obligatoires.
       </p>
       <ColumnMapper<RequiredColumnKey>
         fields={fields}

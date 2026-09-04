@@ -1,7 +1,7 @@
-import type { ChangeEvent } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import styles from "./ColumnMapper.module.css";
-import sharedStyles from '../../shared.module.css';
+import { Combobox } from "../combobox/Combobox";
+import type { ComboboxOption } from "../combobox/types";
 
 import type { ColumnMapperProps, ColumnMapperField, ColumnSample } from "./types";
 
@@ -55,6 +55,11 @@ export function ColumnMapper<T extends string = string>({
     };
   }, [columnMapping, sheetColumns]);
 
+  const options = useMemo<ComboboxOption[]>(
+    () => sheetColumns.map((column) => ({ value: column, label: column })),
+    [sheetColumns]
+  );
+
   return (
     <div className={styles.mappingGrid}>
       {fields.map((field) => {
@@ -69,21 +74,16 @@ export function ColumnMapper<T extends string = string>({
               <label className={styles.mappingLabel} htmlFor={`column-${field.key}`}>
                 {field.label}
               </label>
-              <select
+              <Combobox
                 id={`column-${field.key}`}
-                className={sharedStyles.select}
                 value={selectedColumn}
-                onChange={(event: ChangeEvent<HTMLSelectElement>) =>
-                  onColumnMappingChange(field.key, event.target.value)
+                options={options}
+                placeholder="Sélectionnez une colonne…"
+                emptyOptionLabel="Aucune colonne"
+                onChange={(column: string) =>
+                  onColumnMappingChange(field.key, column)
                 }
-              >
-                <option value="">Sélectionnez une colonne…</option>
-                {sheetColumns.map((column) => (
-                  <option key={column} value={column}>
-                    {column}
-                  </option>
-                ))}
-              </select>
+              />
               <div
                 className={styles.columnSample}
                 ref={(el) => {
