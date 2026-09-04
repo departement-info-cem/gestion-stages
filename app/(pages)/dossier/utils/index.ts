@@ -1,5 +1,5 @@
 export * from "./dateUtils";
 export * from "./stringUtils";
-export * from "./pathUtils";
+export * from "@/app/utils/pathUtils";
 export * from "./columnUtils";
 export * from "./excelUtils";

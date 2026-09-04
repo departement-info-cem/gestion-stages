@@ -1,14 +1,4 @@
-export function normalizeToken(value: string): string {
-  return value
-    // Normalize accents and common non-breaking spaces
-    .replace(/\u00A0/g, " ")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .toLowerCase();
-}
+export { normalizeToken } from "@/app/utils/stringUtils";
 
 export function slugify(value: string): string {
   return value

@@ -30,7 +30,7 @@ export function ExcelImportSection({
       {sheetNames.length > 0 && (
         <>
           <h4 className={styles.sheetSelectLabel}>
-            Sélectionnez l'onglet du excel à traiter
+            Sélectionnez l&apos;onglet du excel à traiter
           </h4>
           <select
             className={sharedStyles.select}

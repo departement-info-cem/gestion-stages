@@ -1,6 +1,6 @@
 import type { ColumnKey, ColumnMapping, ColumnSample } from "../types";
 import { COLUMN_KEYWORDS } from "../constants";
-import { normalizeToken } from "./stringUtils";
+import { detectColumnMapping } from "@/app/utils/columnMatching";
 import { parseDate, formatDateFrench } from "./dateUtils";
 
 export function createEmptyMapping(): ColumnMapping {
@@ -74,48 +74,8 @@ export function toColumnSamples(
 }
 
 export function autoDetectMapping(headers: string[]): ColumnMapping {
-  const suggestions = createEmptyMapping();
-  const normalizedHeaders = headers.map((header, index) => ({
-    original: header,
-    normalized: normalizeToken(header),
-    index,
-  }));
-  const assigned = new Set<number>();
-
-  const assignMatch = (
-    key: ColumnKey,
-    predicate: (candidate: {
-      original: string;
-      normalized: string;
-      index: number;
-    }) => boolean
-  ) => {
-    if (suggestions[key]) return;
-    const match = normalizedHeaders.find(
-      (candidate) => !assigned.has(candidate.index) && predicate(candidate)
-    );
-    if (match) {
-      suggestions[key] = match.original;
-      assigned.add(match.index);
-    }
+  return {
+    ...createEmptyMapping(),
+    ...detectColumnMapping<ColumnKey>(headers, COLUMN_KEYWORDS),
   };
-
-  (Object.keys(COLUMN_KEYWORDS) as ColumnKey[]).forEach((key) => {
-    const keywords = COLUMN_KEYWORDS[key].map(normalizeToken);
-    assignMatch(key, (candidate) => keywords.includes(candidate.normalized));
-  });
-
-  (Object.keys(COLUMN_KEYWORDS) as ColumnKey[]).forEach((key) => {
-    const keywords = COLUMN_KEYWORDS[key].map(normalizeToken);
-    assignMatch(key, (candidate) => {
-      const tokens = candidate.normalized.split(" ");
-      return keywords.some((keyword) =>
-        keyword.includes(" ")
-          ? candidate.normalized.includes(keyword)
-          : tokens.includes(keyword)
-      );
-    });
-  });
-
-  return suggestions;
 }

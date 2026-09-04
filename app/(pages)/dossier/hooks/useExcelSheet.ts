@@ -3,6 +3,7 @@ import * as XLSX from "xlsx";
 import type { ColumnMapping, ColumnSample } from "../types";
 import { autoDetectMapping, createEmptyMapping, toColumnSamples } from "../utils";
 import { REQUIRED_KEYS } from "../constants";
+import { readWorkbookFromFile } from "@/app/utils/spreadsheetUtils";
 
 export interface UseExcelSheetResult {
   workbook: XLSX.WorkBook | null;
@@ -79,8 +80,7 @@ export function useExcelSheet(
       if (!file) return;
 
       try {
-        const buffer = await file.arrayBuffer();
-        const parsedWorkbook = XLSX.read(buffer, { type: "array" });
+        const parsedWorkbook = await readWorkbookFromFile(file);
         
         if (!parsedWorkbook.SheetNames.length) {
           onError("Le fichier Excel ne contient aucun onglet.");

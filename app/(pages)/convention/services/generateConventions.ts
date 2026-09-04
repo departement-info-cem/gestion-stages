@@ -4,6 +4,7 @@ import * as XLSX from "xlsx";
 import type { ProgramConfig, ConventionData } from "../types";
 import { generateConventionData, generateConventionDocument, sanitizeFileName, validateColumnMapping } from "../utils";
 import type { ColumnMapperField } from "@/app/components/column-mapper/ColumnMapper";
+import { resolveAssetPath } from "@/app/utils/pathUtils";
 
 export interface GenerateConventionsParams {
   programConfig: ProgramConfig;
@@ -62,10 +63,7 @@ export async function generateConventions(
   }
 
   // Charger le template
-  const rawBase = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
-  const base = rawBase ? (rawBase.startsWith('/') ? rawBase : `/${rawBase}`) : '';
-  const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
-  const templateUrl = `${normalizedBase}${programConfig.templatePath}`;
+  const templateUrl = resolveAssetPath(programConfig.templatePath);
   const templateResponse = await fetch(templateUrl);
   if (!templateResponse.ok) {
     throw new Error("Erreur lors du chargement du template");
