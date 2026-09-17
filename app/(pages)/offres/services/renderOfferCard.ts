@@ -1,4 +1,5 @@
-import type { OfferContent } from '../types';
+import type { OfferContent, OfferDetail, OfferDetailGroup } from '../types';
+import { toOfferDetailGroups } from '../utils/offerDetails';
 
 export function escapeHtml(value: string): string {
   return value
@@ -33,9 +34,20 @@ export function offerAnchor(offer: OfferContent, index: number): string {
   return `offre-${reference.replace(/[^A-Za-z0-9_-]+/g, '-')}`;
 }
 
-function detail(label: string, value: string): string {
-  if (!value) return '';
+function renderDetail({ label, value }: OfferDetail): string {
   return `<div><dt>${escapeHtml(label)}</dt><dd>${paragraph(value)}</dd></div>`;
+}
+
+function renderDetailGroup(group: OfferDetailGroup): string {
+  const details = group.details.map(renderDetail).join('');
+  return `<section class="compartiment"><h3>${escapeHtml(group.title)}</h3><dl>${details}</dl></section>`;
+}
+
+/** Détails de l'offre regroupés par thème, un bloc par compartiment rempli */
+function renderDetailGroups(offer: OfferContent): string {
+  const groups = toOfferDetailGroups(offer);
+  if (!groups.length) return '';
+  return `<div class="compartiments">${groups.map(renderDetailGroup).join('')}</div>`;
 }
 
 function section(title: string, value: string): string {
@@ -71,6 +83,10 @@ function searchIndex(offer: OfferContent): string {
     offer.location,
     offer.remoteModes,
     offer.remunerationType,
+    offer.salary,
+    offer.schedule,
+    offer.teamSize,
+    offer.followUp,
   ]
     .join(' ')
     .normalize('NFD')
@@ -80,16 +96,6 @@ function searchIndex(offer: OfferContent): string {
 
 export function renderOfferCard(offer: OfferContent, index: number): string {
   const company = offer.companyName || 'Entreprise non précisée';
-  const details = [
-    detail('Rémunération', offer.remunerationType),
-    detail('Salaire ou compensation', offer.salary),
-    detail('Horaire', offer.schedule),
-    detail('Télétravail', offer.remoteModes),
-    detail('Lieu du stage', offer.location),
-    detail('Équipe', offer.teamSize),
-    detail('Véhicule requis', offer.vehicleRequired),
-    detail('Après le stage', offer.followUp),
-  ].join('');
 
   return `<article class="offre" id="${escapeHtml(offerAnchor(offer, index))}" data-recherche="${escapeHtml(searchIndex(offer))}">
         <div class="offre-entete">
@@ -100,7 +106,7 @@ export function renderOfferCard(offer: OfferContent, index: number): string {
         <div class="offre-corps">
           ${section('Mandat', offer.mandate)}
           ${section('Contexte technologique', offer.techContext)}
-          ${details ? `<dl class="details">${details}</dl>` : ''}
+          ${renderDetailGroups(offer)}
         </div>
       </article>`;
 }
