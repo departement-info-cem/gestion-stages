@@ -62,3 +62,28 @@ export type OfferContent = Record<OfferContentKey, string> & {
   /** Identifiant publié de l'offre, ex. « R-H27-01 » */
   reference: string;
 };
+
+/** Paire libellé/valeur affichée dans une carte d'offre */
+export interface OfferDetail {
+  label: string;
+  value: string;
+}
+
+/** Bloc thématique regroupant les détails apparentés d'une offre */
+export interface OfferDetailGroup {
+  title: string;
+  details: OfferDetail[];
+}
+
+/**
+ * Gabarit d'un compartiment : chaque entrée sait extraire sa valeur d'une
+ * offre, ce qui permet de masquer un champ selon le contexte (le montant d'un
+ * stage non rémunéré, le lieu d'un stage entièrement à distance).
+ */
+export interface OfferDetailGroupDefinition {
+  title: string;
+  entries: readonly {
+    label: string;
+    resolve: (offer: OfferContent) => string;
+  }[];
+}

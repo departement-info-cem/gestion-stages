@@ -238,8 +238,8 @@
       padding: 1.5rem 1.75rem 1.75rem;
     }
 
-    .offre-corps section + section,
-    .offre-corps section + .details {
+    .offre-corps > section + section,
+    .offre-corps > section + .compartiments {
       margin-top: 1.5rem;
     }
 
@@ -256,29 +256,51 @@
       margin: 0;
     }
 
-    .details {
+    /* ---------- Compartiments de détails ---------- */
+
+    .compartiments {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-      gap: 1rem 2rem;
-      margin: 0;
-      padding-top: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      align-items: start;
+      gap: 0.9rem;
+      padding-top: 1.35rem;
       border-top: 1px solid var(--bord);
     }
 
-    .details div {
+    .compartiment {
+      min-width: 0;
+      padding: 0.85rem 1rem 0.95rem;
+      background: var(--fond);
+      border: 1px solid var(--bord);
+      border-left: 3px solid var(--accent);
+      border-radius: 5px;
+    }
+
+    .compartiment h3 {
+      color: var(--accent);
+      margin-bottom: 0.65rem;
+    }
+
+    .compartiment dl {
+      display: grid;
+      gap: 0.65rem;
+      margin: 0;
+    }
+
+    .compartiment div {
       min-width: 0;
     }
 
-    .details dt {
-      font-size: 0.78rem;
+    .compartiment dt {
+      font-size: 0.74rem;
       font-weight: 600;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       color: var(--texte-doux);
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.1rem;
     }
 
-    .details dd {
+    .compartiment dd {
       margin: 0;
       overflow-wrap: anywhere;
     }
@@ -339,6 +361,8 @@
       body { background: #fff; font-size: 11pt; }
       .outils, .haut-de-page, .sommaire { display: none; }
       .offre { break-inside: avoid; border-color: #999; }
+      .compartiments { gap: 0.6rem; }
+      .compartiment { break-inside: avoid; background: #fff; border-color: #999; }
       a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.85em; word-break: break-all; }
     }
   </style>
