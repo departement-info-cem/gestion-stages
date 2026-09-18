@@ -252,8 +252,83 @@
       margin: 0 0 0.45rem;
     }
 
-    .offre-corps p {
-      margin: 0;
+    /* ---------- Texte Markdown des champs libres ---------- */
+
+    .markdown > :first-child { margin-top: 0; }
+    .markdown > :last-child { margin-bottom: 0; }
+
+    .markdown p {
+      margin: 0 0 0.7rem;
+    }
+
+    .offre-corps .markdown h4,
+    .offre-corps .markdown h5,
+    .offre-corps .markdown h6 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--texte);
+      margin: 1.1rem 0 0.4rem;
+    }
+
+    .markdown ul,
+    .markdown ol {
+      margin: 0 0 0.7rem;
+      padding-left: 1.4rem;
+    }
+
+    .markdown li + li {
+      margin-top: 0.3rem;
+    }
+
+    .markdown li > ul,
+    .markdown li > ol {
+      margin: 0.3rem 0 0;
+    }
+
+    .markdown li > p {
+      margin: 0 0 0.4rem;
+    }
+
+    .markdown blockquote {
+      margin: 0 0 0.7rem;
+      padding: 0.1rem 0 0.1rem 0.9rem;
+      border-left: 3px solid var(--bord-fort);
+      color: var(--texte-doux);
+    }
+
+    .markdown code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.9em;
+      padding: 0.1em 0.35em;
+      background: var(--accent-clair);
+      border-radius: 3px;
+    }
+
+    .markdown pre {
+      margin: 0 0 0.7rem;
+      padding: 0.8rem 1rem;
+      overflow-x: auto;
+      background: var(--accent-clair);
+      border: 1px solid var(--bord);
+      border-radius: 4px;
+    }
+
+    .markdown pre code {
+      padding: 0;
+      background: none;
+    }
+
+    .markdown hr {
+      margin: 1.1rem 0;
+      border: 0;
+      border-top: 1px solid var(--bord);
+    }
+
+    .markdown a {
+      overflow-wrap: anywhere;
     }
 
     /* ---------- Compartiments de détails ---------- */
@@ -363,6 +438,8 @@
       .offre { break-inside: avoid; border-color: #999; }
       .compartiments { gap: 0.6rem; }
       .compartiment { break-inside: avoid; background: #fff; border-color: #999; }
+      .markdown pre { white-space: pre-wrap; background: #fff; }
+      .markdown code { background: #fff; }
       a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.85em; word-break: break-all; }
     }
   </style>
