@@ -1,5 +1,6 @@
 import { SectionTile } from '@/app/components/section-tile/SectionTile';
-import type { StatusMessage } from '../../hooks/useStatusMessages';
+import { StatusMessageList } from '@/app/components/status-messages/StatusMessageList';
+import type { StatusMessage } from '@/app/components/status-messages/types';
 import styles from './GenerationSection.module.css';
 
 export interface GenerationSectionProps {
@@ -32,18 +33,7 @@ export function GenerationSection({
           {isGenerating ? 'Génération en cours...' : 'Générer les pages HTML'}
         </button>
 
-        {statusMessages.length > 0 && (
-          <div className={styles.messages}>
-            {statusMessages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`${styles.message} ${styles[msg.type]}`}
-              >
-                {msg.text}
-              </div>
-            ))}
-          </div>
-        )}
+        <StatusMessageList messages={statusMessages} />
       </div>
     </SectionTile>
   );

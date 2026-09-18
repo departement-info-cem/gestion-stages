@@ -17,6 +17,8 @@ export default function OffresPage() {
     columnMapping,
     columnSamples,
     offerStats,
+    importProgress,
+    importMessages,
     statusMessages,
     isGenerating,
     columnsReady,
@@ -41,7 +43,12 @@ export default function OffresPage() {
     <div className={styles.container}>
       <div className={styles.grid}>
         <SessionSelectorSection session={session} onSessionChange={setSession} />
-        <ExcelImportSection fileName={file?.name} onFileUpload={handleFileChange} />
+        <ExcelImportSection
+          fileName={file?.name}
+          progress={importProgress}
+          messages={importMessages}
+          onFileUpload={handleFileChange}
+        />
       </div>
 
       {columnsReady && (
