@@ -1,4 +1,5 @@
 import type { ColumnMapping, ColumnSample, RequiredColumnKey } from '../types';
+import type { SheetTable } from '@/app/utils/types';
 import { COLUMN_KEYWORDS } from '../constants';
 import { detectColumnMapping } from '@/app/utils/columnMatching';
 
@@ -21,37 +22,12 @@ export function createEmptyMapping(): ColumnMapping {
   };
 }
 
-export function toColumnSamples(
-  rows: unknown[][],
-  headers: string[]
-): ColumnSample[] {
-  const allColumnValues = headers.map((header) => {
-    const columnIndex = headers.indexOf(header);
-
-    return rows.slice(1).map((row) => {
-      if (!Array.isArray(row)) return '';
-      const rawValue = String(row[columnIndex] ?? '').trim();
-      return rawValue;
-    });
-  });
-
-  let lastNonEmptyRowIndex = -1;
-  for (let rowIndex = 0; rowIndex < rows.length - 1; rowIndex++) {
-    const hasNonEmptyValue = allColumnValues.some(
-      (columnValues) => columnValues[rowIndex] && columnValues[rowIndex] !== ''
-    );
-    if (hasNonEmptyValue) {
-      lastNonEmptyRowIndex = rowIndex;
-    }
-  }
-
-  return headers.map((header, headerIndex) => {
-    const values = allColumnValues[headerIndex].slice(
-      0,
-      lastNonEmptyRowIndex + 1
-    );
-    return { header, values };
-  });
+/** Regroupe les valeurs de chaque colonne pour alimenter l'aperçu */
+export function toColumnSamples(table: SheetTable): ColumnSample[] {
+  return table.headers.map((header, columnIndex) => ({
+    header,
+    values: table.rows.map((row) => (row[columnIndex] ?? '').trim()),
+  }));
 }
 
 export function autoDetectMapping(headers: string[]): ColumnMapping {

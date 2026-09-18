@@ -1,11 +1,9 @@
 import { useState, useCallback, useMemo } from 'react';
-import * as XLSX from 'xlsx';
-import type { ProcessedOffer, ColumnMapping, ColumnSample, RequiredColumnKey } from './types';
+import type { ProcessedOffer, ColumnMapping, RequiredColumnKey } from './types';
 import { useStatusMessages } from './hooks/useStatusMessages';
+import { useOfferImport } from './hooks/useOfferImport';
 import { processOffers, countOffersByProfile } from './utils';
-import { createEmptyMapping, autoDetectMapping, toColumnSamples } from './utils/columnUtils';
 import { generateAllPages } from './services/generateAllPages';
-import { readWorkbookFromFile } from '@/app/utils/spreadsheetUtils';
 import { PROGRAM_PROFILES, MANDATORY_COLUMN_KEYS } from './constants';
 
 function getDefaultSession(): string {
@@ -19,96 +17,28 @@ function getDefaultSession(): string {
 
 export function useOffreGenerator() {
   const [session, setSession] = useState<string>(getDefaultSession());
-  const [file, setFile] = useState<File | null>(null);
-  const [sheetColumns, setSheetColumns] = useState<string[]>([]);
-  const [columnMapping, setColumnMapping] = useState<ColumnMapping>(createEmptyMapping());
-  const [columnSamples, setColumnSamples] = useState<ColumnSample[]>([]);
-  const [offers, setOffers] = useState<ProcessedOffer[]>([]);
   const [processedOffers, setProcessedOffers] = useState<ProcessedOffer[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
 
+  const {
+    file,
+    sheetColumns,
+    columnMapping,
+    columnSamples,
+    offers,
+    importProgress,
+    importMessages,
+    importFile,
+    updateColumnMapping,
+  } = useOfferImport();
+
   const { statusMessages, pushStatus, clearStatus } = useStatusMessages();
 
-  // Lecture du fichier Excel
-  const handleFileUpload = useCallback(
-    async (uploadedFile: File) => {
-      try {
-        clearStatus();
-        pushStatus('info', 'Lecture du fichier Excel...');
-
-        const workbook = await readWorkbookFromFile(uploadedFile);
-
-        if (!workbook.SheetNames.length) {
-          pushStatus('error', 'Le fichier Excel ne contient aucun onglet.');
-          return;
-        }
-
-        // Utiliser le premier onglet
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-
-        // Lire les en-têtes et les données
-        const rows = XLSX.utils.sheet_to_json<unknown[]>(worksheet, {
-          header: 1,
-        });
-        
-        const rawHeaders = Array.isArray(rows[0]) ? (rows[0] as unknown[]) : [];
-        const normalizedHeaders = rawHeaders.map((cell) =>
-          String(cell ?? '').trim()
-        );
-        const headers = normalizedHeaders.filter(
-          (value, index, array) => value && array.indexOf(value) === index
-        );
-
-        if (!headers.length) {
-          pushStatus('error', 'Le fichier ne contient aucune colonne.');
-          return;
-        }
-
-        // Convertir en JSON avec les en-têtes nettoyés
-        const jsonData = XLSX.utils.sheet_to_json<ProcessedOffer>(worksheet, {
-          raw: false,
-        });
-
-        // Nettoyer les noms de colonnes dans les données (enlever les espaces trailing)
-        const cleanedData = jsonData.map((row) => {
-          const cleanedRow: ProcessedOffer = {};
-          Object.keys(row).forEach((key) => {
-            const cleanKey = key.trim();
-            cleanedRow[cleanKey] = row[key];
-          });
-          return cleanedRow;
-        });
-
-        if (!cleanedData.length) {
-          pushStatus('error', 'Le fichier ne contient aucune donnée.');
-          return;
-        }
-
-        // Auto-détecter les colonnes
-        const suggestions = autoDetectMapping(headers);
-        
-        setFile(uploadedFile);
-        setSheetColumns(headers);
-        setColumnMapping(suggestions);
-        setColumnSamples(toColumnSamples(rows as unknown[][], normalizedHeaders));
-        setOffers(cleanedData);
-        
-        pushStatus('success', `${cleanedData.length} offre(s) chargée(s).`);
-      } catch (error) {
-        console.error('Error reading Excel file:', error);
-        pushStatus('error', 'Erreur lors de la lecture du fichier Excel.');
-      }
-    },
-    [clearStatus, pushStatus]
-  );
-
-  // Gérer le changement de mapping de colonnes
   const handleColumnMappingChange = useCallback(
     (key: RequiredColumnKey, value: string) => {
-      setColumnMapping((prev) => ({ ...prev, [key]: value }));
+      updateColumnMapping(key, value);
     },
-    []
+    [updateColumnMapping]
   );
 
   // Traiter les offres et assigner les IDs
@@ -128,30 +58,15 @@ export function useOffreGenerator() {
     }
 
     try {
-      // Créer un mapping des clés vers les noms de colonnes du fichier
-      const keyToColumnName: Record<string, string> = {};
-      (Object.keys(columnMapping) as RequiredColumnKey[]).forEach((key) => {
-        const columnName = columnMapping[key];
-        if (columnName) {
-          keyToColumnName[key] = columnName;
-        }
-      });
+      const targetProfilesColumn = columnMapping.targetProfiles;
 
-      // Transformer les données pour utiliser les noms de colonnes mappés
-      const transformedOffers = offers.map((offer) => {
-        const transformed: ProcessedOffer = { ...offer };
-        
-        // Ajouter le champ avec le nom de colonne standard attendu par processOffers
-        const targetProfilesColumn = keyToColumnName.targetProfiles;
-        if (targetProfilesColumn && targetProfilesColumn in offer) {
-          const profileValue = offer[targetProfilesColumn] as string;
-          transformed['À quel profil s\'adresse l\'offre de stage ?'] = profileValue;
-        } else {
-          console.warn('⚠️ targetProfilesColumn not found in offer. Available keys:', Object.keys(offer));
-        }
-        
-        return transformed;
-      });
+      // Republier la colonne des profils sous le libellé attendu par
+      // processOffers, quel que soit son intitulé dans le fichier.
+      const transformedOffers = offers.map((offer) => ({
+        ...offer,
+        'À quel profil s\'adresse l\'offre de stage ?':
+          offer[targetProfilesColumn] ?? '',
+      }));
 
       const processed = processOffers(transformedOffers, session);
       setProcessedOffers(processed);
@@ -250,6 +165,8 @@ export function useOffreGenerator() {
     offers,
     processedOffers,
     offerStats,
+    importProgress,
+    importMessages,
     statusMessages,
     isGenerating,
     columnsReady,
@@ -257,7 +174,7 @@ export function useOffreGenerator() {
     readyToProcess,
     readyToGenerate,
     setSession,
-    handleFileUpload,
+    handleFileUpload: importFile,
     handleColumnMappingChange,
     handleProcessOffers,
     handleGenerate,

@@ -1,4 +1,18 @@
 import type { ProgramProfile, RequiredColumnKey } from './types';
+import type { ProgressState } from '@/app/components/progress-indicator/types';
+
+/** Étapes annoncées pendant la lecture du fichier d'offres */
+export const IMPORT_STEPS: Record<
+  'reading' | 'parsing' | 'detecting',
+  ProgressState
+> = {
+  reading: { label: 'Lecture du fichier…', value: 25 },
+  parsing: { label: 'Analyse des lignes…', value: 65 },
+  detecting: { label: 'Détection des colonnes…', value: 90 },
+};
+
+/** Durée minimale d'affichage de l'indicateur de lecture, en millisecondes */
+export const MINIMUM_IMPORT_FEEDBACK_MS: number = 400;
 
 export const PROGRAM_PROFILES: ProgramProfile[] = [
   {

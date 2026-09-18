@@ -1,12 +1,11 @@
 import { useState, useCallback, useRef } from 'react';
+import type {
+  StatusMessage,
+  StatusMessageType,
+} from '@/app/components/status-messages/types';
 
-export type MessageType = 'info' | 'success' | 'error';
-
-export interface StatusMessage {
-  id: number;
-  type: MessageType;
-  text: string;
-}
+export type MessageType = StatusMessageType;
+export type { StatusMessage };
 
 export function useStatusMessages() {
   const [messages, setMessages] = useState<StatusMessage[]>([]);
