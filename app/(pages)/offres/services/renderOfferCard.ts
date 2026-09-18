@@ -1,31 +1,17 @@
+import { escapeHtml, toWebsiteUrl } from '@/app/utils/htmlUtils';
+import { markdownToPlainText, renderMarkdown } from '@/app/utils/markdown';
 import type { OfferContent, OfferDetail, OfferDetailGroup } from '../types';
 import { toOfferDetailGroups } from '../utils/offerDetails';
 
-export function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
+/**
+ * Les titres de section de la carte sont des `<h3>` : un « # » Markdown doit
+ * donc produire un `<h4>` pour ne pas casser la hiérarchie de la page.
+ */
+const SECTION_HEADING_LEVEL = 3;
 
 /** Conserve les retours à la ligne saisis dans le formulaire */
 function paragraph(text: string): string {
   return escapeHtml(text).replace(/\r?\n/g, '<br>');
-}
-
-function normalizeUrl(url: string): string | null {
-  if (!url) return null;
-  const candidate = /^https?:\/\//i.test(url) ? url : `https://${url}`;
-  try {
-    const parsed = new URL(candidate);
-    return parsed.protocol === 'http:' || parsed.protocol === 'https:'
-      ? parsed.href
-      : null;
-  } catch {
-    return null;
-  }
 }
 
 /** Ancre partageable, stable d'une génération à l'autre */
@@ -50,9 +36,14 @@ function renderDetailGroups(offer: OfferContent): string {
   return `<div class="compartiments">${groups.map(renderDetailGroup).join('')}</div>`;
 }
 
-function section(title: string, value: string): string {
-  if (!value) return '';
-  return `<section><h3>${escapeHtml(title)}</h3><p>${paragraph(value)}</p></section>`;
+/** Les champs libres du formulaire sont rédigés en Markdown. */
+function markdownSection(title: string, value: string): string {
+  const content = renderMarkdown(value, {
+    headingBaseLevel: SECTION_HEADING_LEVEL,
+  });
+  if (!content) return '';
+
+  return `<section><h3>${escapeHtml(title)}</h3><div class="markdown">${content}</div></section>`;
 }
 
 function highlights(offer: OfferContent): string {
@@ -63,7 +54,7 @@ function highlights(offer: OfferContent): string {
     items.push(`<li>${escapeHtml(offer.numberOfInterns)} ${label}</li>`);
   }
 
-  const website = normalizeUrl(offer.website);
+  const website = toWebsiteUrl(offer.website);
   if (website) {
     items.push(
       `<li><a href="${escapeHtml(website)}" target="_blank" rel="noopener noreferrer">Site de l&#39;entreprise</a></li>`
@@ -78,8 +69,8 @@ function searchIndex(offer: OfferContent): string {
   return [
     offer.reference,
     offer.companyName,
-    offer.mandate,
-    offer.techContext,
+    markdownToPlainText(offer.mandate),
+    markdownToPlainText(offer.techContext),
     offer.location,
     offer.remoteModes,
     offer.remunerationType,
@@ -104,8 +95,8 @@ export function renderOfferCard(offer: OfferContent, index: number): string {
           ${highlights(offer)}
         </div>
         <div class="offre-corps">
-          ${section('Mandat', offer.mandate)}
-          ${section('Contexte technologique', offer.techContext)}
+          ${markdownSection('Mandat', offer.mandate)}
+          ${markdownSection('Contexte technologique', offer.techContext)}
           ${renderDetailGroups(offer)}
         </div>
       </article>`;
