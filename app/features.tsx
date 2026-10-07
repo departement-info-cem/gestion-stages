@@ -3,9 +3,10 @@ import { ConventionIcon } from "./assets/icons/ConventionIcon";
 import { DossierIcon } from "./assets/icons/DossierIcon";
 import { OfferIcon } from "./assets/icons/OfferIcon";
 import { DevoirIcon } from "./components/icons/ToolIcons";
+import { RapportIcon } from "./assets/icons/RapportIcon";
 import { FeatureTile, type FeatureTileAccent } from "./components/feature-tile/FeatureTile";
 
-type FeatureIdentifier = "offre" | "convention" | "devoir" | "dossier";
+type FeatureIdentifier = "offre" | "convention" | "devoir" | "dossier" | "rapport";
 
 interface FeatureDefinition {
   id: FeatureIdentifier;
@@ -52,5 +53,14 @@ export const features: FeatureDefinition[] = [
     href: "/convention",
     accent: "convention",
     icon: <ConventionIcon />,
+  },
+  {
+    id: "rapport",
+    title: "Rapports de stage",
+    description:
+      "Génère des rapports de stage personnalisés en Word à partir des réponses d'un formulaire Excel.",
+    href: "/rapport",
+    accent: "convention",
+    icon: <RapportIcon />,
   },
 ];
