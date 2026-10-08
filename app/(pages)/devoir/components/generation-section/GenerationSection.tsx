@@ -9,7 +9,7 @@ interface Props {
   reportRowsCount: number;
   statusMessages: string[];
   isProcessing: boolean;
-  onProcess: (assignmentName: string | null) => Promise<Blob | null>;
+  onProcess: (assignmentName: string | null) => Promise<void>;
   onDownloadCsv: () => void;
 }
 
@@ -24,15 +24,7 @@ export function GenerationSection({
   const [selectedAssignment, setSelectedAssignment] = useState<string>("");
 
   async function handleProcess() {
-    const zipBlob = await onProcess(selectedAssignment || null);
-    if (zipBlob) {
-      const url = URL.createObjectURL(zipBlob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = selectedAssignment ? `${selectedAssignment}.zip` : "devoirs.zip";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
+    await onProcess(selectedAssignment || null);
   }
 
   return (
@@ -76,7 +68,7 @@ export function GenerationSection({
 
       {statusMessages.length > 0 && (
         <div className={styles.logsContainer}>
-          <h3 className={styles.logsTitle}>Logs d'exécution</h3>
+          <h3 className={styles.logsTitle}>Logs d’exécution</h3>
           <div className={styles.logsList}>
             {statusMessages.map((m, i) => (
               <div key={i} className={styles.logItem}>
