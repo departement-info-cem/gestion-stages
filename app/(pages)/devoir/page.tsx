@@ -9,7 +9,6 @@ import { SectionTile } from "@/app/components/section-tile/SectionTile";
 export default function DevoirPage() {
   const {
     sourceHandle,
-    sourcePath,
     students,
     assignments,
     report,
@@ -17,20 +16,9 @@ export default function DevoirPage() {
     isProcessing,
     isScanning,
     pickSourceDirectory,
-    processAssignment,
-    generateCsv,
+    downloadAssignmentsZip,
+    downloadReportCsv,
   } = useDevoirGenerator();
-
-  function downloadCsv() {
-    const csv = generateCsv();
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "rapport_devoirs.csv";
-    a.click();
-    URL.revokeObjectURL(url);
-  }
 
   return (
     <div className={styles.container}>
@@ -50,7 +38,7 @@ export default function DevoirPage() {
               <li><span className={styles.stepNumber}>7️⃣</span> <span>Une fois synchronisé, le dossier sera accessible localement sur votre ordinateur</span></li>
             </ol>
             <p className={styles.instructionNote}>
-              📌 <strong>Alternative :</strong> Si OneDrive n'est pas installé, vous pouvez télécharger le dossier en cliquant sur <strong>Télécharger</strong> dans le menu du haut, puis extraire le fichier ZIP.
+              📌 <strong>Alternative :</strong> Si OneDrive n’est pas installé, vous pouvez télécharger le dossier en cliquant sur <strong>Télécharger</strong> dans le menu du haut, puis extraire le fichier ZIP.
             </p>
           </div>
         </SectionTile>
@@ -70,8 +58,8 @@ export default function DevoirPage() {
           reportRowsCount={report.length}
           statusMessages={statusMessages}
           isProcessing={isProcessing}
-          onProcess={processAssignment}
-          onDownloadCsv={downloadCsv}
+          onProcess={downloadAssignmentsZip}
+          onDownloadCsv={downloadReportCsv}
         />
       )}
     </div>
